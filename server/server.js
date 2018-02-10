@@ -2,8 +2,11 @@
 require('dotenv').config();
 const express = require('express'),
     bodyParser = require('body-parser'),
-    session = require('express-session')
-    massive = require('massive');
+    session = require('express-session'),
+    massive = require('massive'),
+    multer =  require('multer'),
+    AWS = require('aws-sdk');
+
 
 //App Setup
 const app = express();
