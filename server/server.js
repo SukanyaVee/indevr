@@ -5,7 +5,11 @@ const express = require('express'),
     session = require('express-session'),
     massive = require('massive'),
     multer =  require('multer'),
-    AWS = require('aws-sdk');
+    AWS = require('aws-sdk'),
+    socket = require('socket.io');
+
+
+
 
 
 //App Setup
@@ -17,6 +21,7 @@ app.use(session({
     cookie: { maxAge: 24 * 60 * 60 * 1000 } //24 hours
 }));
 app.use(express.static(`${__dirname}/../build`));
+
 
 // AWS declare
 AWS.config.update({
@@ -66,4 +71,17 @@ massive(process.env.CONNECTION_STRING)
 
 //Shhh Listen...
 const port = process.env.SERVER_PORT;
-app.listen(port, () => console.log(`Up and running on port ${port}`));
+const server = app.listen(port, () => console.log(`Up and running on port ${port}`));
+
+//Socket.io Setup
+const io = socket(server);
+io.on('connection', (socket) => {
+    console.log(socket.id);
+});
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', function(data){
+        io.emit('RECEIVE_MESSAGE', data);
+    })
+});

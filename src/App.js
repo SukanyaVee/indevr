@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import DropZone from './components/DropZone';
+import router from './router';
 
 class App extends Component {
     render() {
         return (
             <div>
-                
+                {router}
             </div>
         );
     }
