@@ -3,13 +3,24 @@ import { login } from '../ducks/reducer'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Auth0Lock from 'auth0-lock'
+import glam from 'glamorous'
+import SearchBar from '../components/SearchBar'
 
 const options = {
     theme: {}, 
     languageDictionary: {
         title: 'Indevr'
-    }
+    },
+    additionalSignUpFields: [{
+        name: 'first_name',
+        placeholder: 'Enter your first name'
+    },
+    {
+        name: 'last_name',
+        placeholder: 'Enter your last name'
+    }]
 }
+
 class LandingPage extends Component {
     constructor() {
         super()
@@ -38,13 +49,35 @@ class LandingPage extends Component {
 
     render() {
         return (
-            <div>
-                <h1> Welcome to Indevr </h1>
-               <button onClick={this.login}>Login/Register</button>
-            </div>
+            <Main>
+                <Heading> Welcome to Indevr </Heading>
+               <button style={btnlogin} onClick={this.login}>Login/Register</button>
+               <SearchBar />
+            </Main>
         )
     }
 }
+
+const Heading = glam.h1 ({
+    fontSize: '2.5em',
+    textAlign: 'center',
+})
+
+const Main = glam.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+})
+
+const btnlogin = {
+    color: 'white',
+    backgroundColor: 'blue',
+    height: 75,
+    width: 150,
+    margin: 100,
+}
+
 
 const mapDispatchToProps = {
     login
