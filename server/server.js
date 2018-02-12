@@ -63,6 +63,43 @@ massive(process.env.CONNECTION_STRING)
 //API Endpoints
 
 
+// ---------------USER-------------------
+const userAPIurl = '/indevr/users'
+
+app.get(userAPIurl, user.sessionCheck); 
+app.post(`${userAPIurl}/login`, user.get); 
+app.post(`${userAPIurl}/create`, user.create); 
+app.put(`${userAPIurl}/:id`, user.update);  
+app.delete(`${userAPIurl}/logout`, user.logout);
+app.get(`${userAPIurl}/connect`, user.connect);
+
+// ---------------CONTACTS-------------------
+const contactAPIurl = '/indevr/contacts'
+
+app.post(`${contactAPIurl}/create`, contact.create); 
+app.put(`${contactAPIurl}/:id`, contact.update);  
+app.delete(`${contactAPIurl}/logout`, contact.unfriend);
+app.get(`${contactAPIurl}/connect`, contact.get);
+
+//-------------NEWS FEED--------------
+const newsAPIurl = '/indevr/news'
+app.get(newsAPIurl, news.get)
+
+//-----------PROJECTS----------------
+const projAPIurl = '/indevr/projects'
+
+app.get(projAPIurl, proj.get);
+app.post(projAPIurl, proj.create);
+app.put(projAPIurl, proj.update);
+app.delete(projAPIurl, proj.delete);
+
+//----------PROJECT DERIVATIVES--------
+const goalsAPIurl = '/indevr/goals'
+
+app.get(goalsAPIurl, goals.get);
+app.post(goalsAPIurl, goals.post);
+app.put(goalsAPIurl, goals.put);
+app.delete(goalsAPIurl, goals.delete);
 
 //Shhh Listen...
 const port = process.env.SERVER_PORT;
