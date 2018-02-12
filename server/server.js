@@ -5,7 +5,8 @@ const express = require('express'),
     session = require('express-session'),
     massive = require('massive'),
     multer =  require('multer'),
-    AWS = require('aws-sdk');
+    AWS = require('aws-sdk'),
+    auth_ctrl = require('./controller/auth0_controller');
 
 
 //App Setup
@@ -100,6 +101,19 @@ app.get(goalsAPIurl, goals.get);
 app.post(goalsAPIurl, goals.post);
 app.put(goalsAPIurl, goals.put);
 app.delete(goalsAPIurl, goals.delete);
+
+
+const userUrl = '/'
+//Auth0 
+app.post(`${userUrl}/login`, (req, res) => {
+    const {userId} = req.body;
+    const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
+    axios.get(auth0Url)
+})
+
+app.get("/checkSession", auth_ctrl.sessionCheck);
+
+
 
 //Shhh Listen...
 const port = process.env.SERVER_PORT;
