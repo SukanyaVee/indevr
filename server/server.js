@@ -15,6 +15,8 @@ const express = require('express'),
 
 //App Setup
 const app = express();
+
+app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -73,41 +75,41 @@ massive(process.env.CONNECTION_STRING)
 const userAPIurl = '/indevr/users'
 
 app.get(userAPIurl, auth_ctrl.sessionCheck);
-app.post(`${userAPIurl}/login`, auth_ctrl.get);
-app.post(`${userAPIurl}/create`, auth_ctrl.create);
-app.put(`${userAPIurl}/:id`, user.update);
+app.post(`/login`, auth_ctrl.user);
+// app.post(`${userAPIurl}/create`, auth_ctrl.create);
+// app.put(`${userAPIurl}/:id`, user.update);
 app.post(`${userAPIurl}/logout`, auth_ctrl.logout);
-app.get(`${userAPIurl}/connect`, user.connect);
+// app.get(`${userAPIurl}/connect`, user.connect);
 
 app.get(`${userAPIurl}/search/:term`, auth_ctrl.search);
 
 // ---------------CONTACTS-------------------
-const contactAPIurl = '/indevr/contacts'
+// const contactAPIurl = '/indevr/contacts'
 
-app.post(`${contactAPIurl}/create`, contact.create);
-app.put(`${contactAPIurl}/:id`, contact.update);
-app.delete(`${contactAPIurl}/logout`, contact.unfriend);
-app.get(`${contactAPIurl}/connect`, contact.get);
+// app.post(`${contactAPIurl}/create`, contact.create);
+// app.put(`${contactAPIurl}/:id`, contact.update);
+// app.delete(`${contactAPIurl}/logout`, contact.unfriend);
+// app.get(`${contactAPIurl}/connect`, contact.get);
 
-//-------------NEWS FEED--------------
-const newsAPIurl = '/indevr/news'
-app.get(newsAPIurl, news.get)
+// //-------------NEWS FEED--------------
+// const newsAPIurl = '/indevr/news'
+// app.get(newsAPIurl, news.get)
 
-//-----------PROJECTS----------------
-const projAPIurl = '/indevr/projects'
+// //-----------PROJECTS----------------
+// const projAPIurl = '/indevr/projects'
 
-app.get(projAPIurl, proj.get);
-app.post(projAPIurl, proj.create);
-app.put(projAPIurl, proj.update);
-app.delete(projAPIurl, proj.delete);
+// app.get(projAPIurl, proj.get);
+// app.post(projAPIurl, proj.create);
+// app.put(projAPIurl, proj.update);
+// app.delete(projAPIurl, proj.delete);
 
-//----------PROJECT DERIVATIVES--------
-const goalsAPIurl = '/indevr/goals'
+// //----------PROJECT DERIVATIVES--------
+// const goalsAPIurl = '/indevr/goals'
 
-app.get(goalsAPIurl, goals.get);
-app.post(goalsAPIurl, goals.post);
-app.put(goalsAPIurl, goals.put);
-app.delete(goalsAPIurl, goals.delete);
+// app.get(goalsAPIurl, goals.get);
+// app.post(goalsAPIurl, goals.post);
+// app.put(goalsAPIurl, goals.put);
+// app.delete(goalsAPIurl, goals.delete);
 
 
 const userUrl = '/'

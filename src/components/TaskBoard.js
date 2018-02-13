@@ -67,8 +67,8 @@ class TaskBoard extends Component {
                     <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" key={j}>
                         <Card>
                             {task.title}
-                            <div class="collapse" id="collapseExample">
-                                <div class="well">
+                            <div className="collapse" id="collapseExample">
+                                <div className="well">
                                 {task.description}
                                 </div>
                             </div>

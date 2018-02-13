@@ -6,6 +6,7 @@ import Auth0Lock from 'auth0-lock'
 import glam from 'glamorous'
 import SearchBar from '../components/SearchBar'
 import logo from '../assets/in_DEV_rwhite.png'
+import Tasks from './landing-page-assets/taskboard/tasks';
 
 const options = {
     theme: {
@@ -41,8 +42,9 @@ class LandingPage extends Component {
         this.lock = new Auth0Lock(process.env.REACT_APP_AUTH0_CLIENT_ID, process.env.REACT_APP_AUTH0_DOMAIN, options);
         this.lock.on('authenticated', authResult => {
             this.lock.getUserInfo(authResult.accessToken, (error, user) => {
-                axios.post('/login', { userId: user.sub }).then(response => {
+                axios.post("/login", { userId: user.sub }).then(response => {
                     this.props.login(response.data.user);
+                    this.props.history.push('/dashboard');
                 });
             });
         });
@@ -77,6 +79,7 @@ class LandingPage extends Component {
                 </Signup>
             </Aside> */}
             </Initial>
+            <Tasks />
             </div>
         )
     }

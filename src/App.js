@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {Switch, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
 import router from './router';
-import ProjectView from './components/ProjectView';
-import DropZone from './components/DropZone';
-import LandingPage from './components/LandingPage';
 // import PropTypes from 'prop-types';
 // import axios from 'axios';
 import { logout } from './ducks/reducer';
