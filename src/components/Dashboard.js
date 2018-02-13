@@ -84,26 +84,32 @@ const PostTitle = glam.div ({
     fontStyle: 'Oblique'
 })
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     constructor(){
-        super()
+        super();
         this.state={
             user: {},
             projects: [],
            posts: [],
             contacts: [],
             skills: []
-        }
+        };
     }
 
-    // componentDidMount(){
-    //     // axios.all(
-    //         //axios.get checksession
-    //         //axios.get projects
-    //         //axios.get contacts
-    //         //axios.getposts
-    //     // )
-    // }
+    componentDidMount(){
+            axios.get('/indevr/users').then(res=>{
+                this.props.login(res.data)
+                axios.get('/indevr/projects').then(res=>{
+                    this.setState({projects: res.data})
+                    axios.get('/indevr/contacts').then(res=>{
+                        this.setState({contacts: res.data})
+                        axios.get('/indevr/news').then(res=>{
+                            this.setState({posts: res.data})
+                        }).catch(error=>console.log(error))
+                    }).catch(error=>console.log(error))
+                }).catch(error=>console.log(error))
+            }).catch(error=>console.log(error))
+    }
 
 
     render() {
@@ -167,13 +173,13 @@ export default class Dashboard extends Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//       user: state.user
-//     }
-//   }
-//   const mapDispatchToProps = {
-//     login: login
-//   }
+const mapStateToProps = state => {
+    return {
+      user: state.user
+    }
+  }
+  const mapDispatchToProps = {
+    login: login
+  }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

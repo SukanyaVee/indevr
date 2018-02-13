@@ -4,12 +4,6 @@ import {login} from '../ducks/reducer';
 import glam from 'glamorous';
 
 
-
-
-
-
-
-
 class Whiteboard extends Component {
     constructor(props){
         super()
@@ -19,42 +13,62 @@ class Whiteboard extends Component {
             stack: [],
             goals: []
             // showTool:''
-        }
+        }       
     }
 
     componentDidMount () {
         window.addEventListener('DOMContentLoaded', ()=> {
-            var mouse = { 
-                click: false,
-                move: false,
-                pos: {x:0, y:0},
-                pos_prev: false
-            }
-        }
-        canvas.addEventListener('onMouseDown', function(e){
-            mouse.click = true;
-         }
-        canvas.addEventListener('onMouseUp', function(e){
-            mouse.click = false;
-         }
-        canvas.addEventListener('onMouseMove', function(e){
-            mouse.pos.x = e.clientX / width;
-            mouse.pos.y = e.clientY / height;
-            mouse.move = true;         }
+            
+        })
     }
 
     componentWillUnmount () {
         
     }
+
+    onMouseDown (e, mouse) {
+        mouse.click = true;
+    }
+
+    onMouseUp (e, mouse) {
+        mouse.click = false;
+    }
+
+    onMouseMove (e, mouse){
+        
+        mouse.pos.x = e.clientX / width;
+        mouse.pos.y = e.clientY / height;
+        mouse.move = true;
+    }
+    // canvas.addEventListener('onMouseDown', function(e){
+    //     mouse.click = true;
+    //  }
+    // canvas.addEventListener('onMouseUp', function(e){
+    //     mouse.click = false;
+    //  }
+    // canvas.addEventListener('onMouseMove', function(e){
+    //     mouse.pos.x = e.clientX / width;
+    //     mouse.pos.y = e.clientY / height;
+    //     mouse.move = true;         
+    // }
     
+    const canvas = document.getElementById('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    var context = canvas.getContext('2d');
+    var socket  = io.connect()
+    var mouse = { 
+        click: false,
+        move: false,
+        pos: {x:0, y:0},
+        pos_prev: false
+    }
 
     render() {
-        const canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var socket  = io.connect()
+        
 
         return (
-            <div id="canvas">
+            <div id="canvas" onMouseDown={e=>{this.onMouseDown(e, mouse)}} onMouseDown={e=>{this.onMouseDown(e, mouse)}} onMouseDown={e=>{this.onMouseDown(e, mouse)}}>
                 
             </div>
         );

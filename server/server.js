@@ -99,9 +99,9 @@ app.put(`${contactAPIurl}/:id`, contact.update);
 app.delete(`${contactAPIurl}/logout`, contact.unfriend);
 app.get(`${contactAPIurl}/connect`, contact.get);
 
-//-------------NEWS FEED--------------
-const newsAPIurl = '/indevr/news'
-app.get(newsAPIurl, news.get)
+//-------------PUBLIC POST FEED--------------
+const newsAPIurl = '/indevr/posts'
+app.get(newsAPIurl, posts.get)
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects'
