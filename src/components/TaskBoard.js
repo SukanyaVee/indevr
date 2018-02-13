@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import glam from 'glamorous';
 import _ from 'lodash';
+import axios from 'axios';
 
 
 class TaskBoard extends Component {
@@ -69,6 +70,34 @@ class TaskBoard extends Component {
         }
     }
 
+    componentDidMount(){
+        let projectID = 1;
+        let taskboard = [];
+        axios.get(`/indevr/taskboard/${projectID}`).then(res => {
+            let {lists, tasks} = res.data;
+            console.log(lists);
+            lists.forEach(list => {
+                tasks.forEach(task => {
+                    //Unassigned tasks
+                    if(!task.user_id){
+                        lists[0].tasks.push(task);
+                    }
+                    //Match task to user lists
+                    if(task.user_id === list.user_id){
+                        list.tasks.push(task);
+                    }
+                })
+                taskboard.push(list);
+            })
+            //Remove duplicates from Unassigned
+            let unassigned = _.uniq(taskboard[0].tasks);
+            taskboard[0].tasks = unassigned
+            this.setState({lists: taskboard})
+        }).catch( err => console.log(err))
+        console.log(this.state);
+
+    }
+
     updateCard(id){
         let card = {};
         this.state.lists.forEach( list => {
@@ -125,7 +154,7 @@ class TaskBoard extends Component {
                                             {task.title}</h4>
                                         <h4>
                                             <input className="form-control hidden"
-                                            value={task.title}
+                                            value={task.title ? task.title : ''}
                                             id={`listTitle${task.id}`}
                                             onChange={e => this.updateLists(i, j, task.id)}
                                             />
@@ -136,7 +165,7 @@ class TaskBoard extends Component {
                                             <div className="form-group">
                                                 <label>Description</label>
                                                 <textarea className="form-control"
-                                                    value={task.description}
+                                                    value={task.description ? task.description : ''}
                                                     id={`listDesc${task.id}`}
                                                     onChange={e => this.updateLists(i, j, task.id)}>
                                                 </textarea>
@@ -145,7 +174,7 @@ class TaskBoard extends Component {
                                                 <div className="form-group">
                                                     <label>Status</label>
                                                     <select className="form-control"
-                                                        value={task.status}
+                                                        value={task.status ? task.status : ''}
                                                         id={`listStatus${task.id}`}
                                                         onChange={e => this.updateLists(i, j, task.id)}>
                                                         <option>Not Started</option>
@@ -159,7 +188,7 @@ class TaskBoard extends Component {
                                                     <input type="date"
                                                         className="form-control"
                                                         id={`listDue${task.id}`}
-                                                        value={task.due}
+                                                        value={task.due ? task.due : ''}
                                                         onChange={e => this.updateLists(i, j, task.id)}
                                                     />
                                                 </div>
@@ -180,20 +209,24 @@ class TaskBoard extends Component {
 
                 );
             })
-            return (<List key={i}>
-                <label>{list.user}</label>
-                {tasks}
-                <a role="button" data-toggle="collapse">
-                    <Card>
-                        <p>Add Card <i className="fas fa-plus"></i></p>
-                    </Card>
-                </a>
-            </List>);
+            return (
+                <List key={i}>
+                    <label>{list.list_name}</label>
+                    {tasks}
+                    <a role="button" data-toggle="collapse">
+                        <Card>
+                            <p>Add Card <i className="fas fa-plus"></i></p>
+                        </Card>
+                    </a>
+                </List>
+            );
         })
 
-        return (<Main>
-            {lists}
-        </Main>);
+        return (
+            <Main>
+                {lists}
+            </Main>
+        );
     }
 }
 

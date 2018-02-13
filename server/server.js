@@ -10,7 +10,8 @@ const express = require('express'),
 
 
 
-    auth_ctrl = require('./controller/auth0_controller');
+    // auth_ctrl = require('./controller/auth0_controller');
+    taskboard_ctrl = require('./controller/taskboard_controller');
 
 
 //App Setup
@@ -70,54 +71,59 @@ massive(process.env.CONNECTION_STRING)
 
 
 // ---------------USER-------------------
-const userAPIurl = '/indevr/users'
+// const userAPIurl = '/indevr/users'
+//
+// app.get(userAPIurl, user.sessionCheck);
+// app.post(`${userAPIurl}/login`, user.get);
+// app.post(`${userAPIurl}/create`, user.create);
+// app.put(`${userAPIurl}/:id`, user.update);
+// app.delete(`${userAPIurl}/logout`, user.logout);
+// app.get(`${userAPIurl}/connect`, user.connect);
+//
+// // ---------------CONTACTS-------------------
+// const contactAPIurl = '/indevr/contacts'
+//
+// app.post(`${contactAPIurl}/create`, contact.create);
+// app.put(`${contactAPIurl}/:id`, contact.update);
+// app.delete(`${contactAPIurl}/logout`, contact.unfriend);
+// app.get(`${contactAPIurl}/connect`, contact.get);
+//
+// //-------------NEWS FEED--------------
+// const newsAPIurl = '/indevr/news'
+// app.get(newsAPIurl, news.get)
+//
+// //-----------PROJECTS----------------
+// const projAPIurl = '/indevr/projects'
+//
+// app.get(projAPIurl, proj.get);
+// app.post(projAPIurl, proj.create);
+// app.put(projAPIurl, proj.update);
+// app.delete(projAPIurl, proj.delete);
+//
+// //----------PROJECT DERIVATIVES--------
+// const goalsAPIurl = '/indevr/goals'
+//
+// app.get(goalsAPIurl, goals.get);
+// app.post(goalsAPIurl, goals.post);
+// app.put(goalsAPIurl, goals.put);
+// app.delete(goalsAPIurl, goals.delete);
 
-app.get(userAPIurl, user.sessionCheck);
-app.post(`${userAPIurl}/login`, user.get);
-app.post(`${userAPIurl}/create`, user.create);
-app.put(`${userAPIurl}/:id`, user.update);
-app.delete(`${userAPIurl}/logout`, user.logout);
-app.get(`${userAPIurl}/connect`, user.connect);
+//-------------PROJECT TASKBOARD-----------
+const taskboardAPIurl = '/indevr/taskboard';
 
-// ---------------CONTACTS-------------------
-const contactAPIurl = '/indevr/contacts'
+app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get)
 
-app.post(`${contactAPIurl}/create`, contact.create);
-app.put(`${contactAPIurl}/:id`, contact.update);
-app.delete(`${contactAPIurl}/logout`, contact.unfriend);
-app.get(`${contactAPIurl}/connect`, contact.get);
-
-//-------------NEWS FEED--------------
-const newsAPIurl = '/indevr/news'
-app.get(newsAPIurl, news.get)
-
-//-----------PROJECTS----------------
-const projAPIurl = '/indevr/projects'
-
-app.get(projAPIurl, proj.get);
-app.post(projAPIurl, proj.create);
-app.put(projAPIurl, proj.update);
-app.delete(projAPIurl, proj.delete);
-
-//----------PROJECT DERIVATIVES--------
-const goalsAPIurl = '/indevr/goals'
-
-app.get(goalsAPIurl, goals.get);
-app.post(goalsAPIurl, goals.post);
-app.put(goalsAPIurl, goals.put);
-app.delete(goalsAPIurl, goals.delete);
-
-
-const userUrl = '/'
-//Auth0
-app.post(`${userUrl}/login`, (req, res) => {
-    const {userId} = req.body;
-    const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
-    axios.get(auth0Url)
-})
-
-app.get("/checkSession", auth_ctrl.sessionCheck);
-
+// //----------------AUTH0----------------
+// const userUrl = '/'
+// //Auth0
+// app.post(`${userUrl}/login`, (req, res) => {
+//     const {userId} = req.body;
+//     const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
+//     axios.get(auth0Url)
+// })
+//
+// app.get("/checkSession", auth_ctrl.sessionCheck);
+//
 
 
 //Shhh Listen...
