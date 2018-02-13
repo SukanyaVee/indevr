@@ -15,7 +15,7 @@ class App extends Component {
 
     // static propTypes = {
     //     location: PropTypes.object.isRequired,
-    
+
     // }
 
     componentDidMount(){
@@ -34,7 +34,7 @@ class App extends Component {
             <div>
                 <Route exact path="/dashboard" component={Dashboard}/>
                 <Route path="/project/overview" component={ProjectView}/>
-                
+
             </div>
         );
     }

@@ -7,8 +7,8 @@ import store from './store';
 // import { store, persistor } from './store';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import { HashRouter } from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 
-ReactDOM.render(<HashRouter><App /></HashRouter>, document.getElementById('root'));
-registerServiceWorker();
+ReactDOM.render(<BrowserRouter>
+    <App />
+</BrowserRouter>, document.getElementById('root'));
