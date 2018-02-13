@@ -16,6 +16,7 @@ const express = require('express'),
 
 //App Setup
 const app = express();
+app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -111,7 +112,8 @@ massive(process.env.CONNECTION_STRING)
 //-------------PROJECT TASKBOARD-----------
 const taskboardAPIurl = '/indevr/taskboard';
 
-app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get)
+app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
+app.put(taskboardAPIurl, taskboard_ctrl.put);
 
 // //----------------AUTH0----------------
 // const userUrl = '/'

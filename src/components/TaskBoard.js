@@ -8,65 +8,7 @@ class TaskBoard extends Component {
     constructor() {
         super();
         this.state = {
-            lists: [
-                {
-                    user: 'Unassigned',
-                    tasks: [
-                        {
-                            id: 1,
-                            title: 'Thing 1',
-                            description: 'Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing Do the thing',
-                            status: 'Not Started',
-                            due: '2018-02-20'
-                        }, {
-                            id: 2,
-                            title: 'Thing 2',
-                            description: 'Do the thing',
-                            status: 'Not Started',
-                            due: '2018-02-20'
-                        }, {
-                            id: 3,
-                            title: 'Thing 3',
-                            description: 'Do the thing',
-                            status: 'Not Started',
-                            due: '2018-02-20'
-                        }
-                    ]
-                }, {
-                    user: 'Andrea',
-                    tasks: [
-                        {
-                            id: 4,
-                            title: 'Thing 1',
-                            description: 'Do the thing',
-                            status: 'Not Started',
-                            due: '2018-02-20'
-                        }
-                    ]
-                }, {
-                    user: 'Brent',
-                    tasks: [
-                        {
-                            id: 5,
-                            title: 'Lots of things and lots of stuffs, etc etc etc and more goes here blah blah',
-                            description: 'Do the thing',
-                            status: 'In Progress',
-                            due: '2018-02-20'
-                        }
-                    ]
-                }, {
-                    user: 'Sukanya',
-                    tasks: [
-                        {
-                            id: 6,
-                            title: 'Thing 1',
-                            description: 'Do the thing',
-                            status: 'Not Started',
-                            due: '2018-02-20'
-                        }
-                    ]
-                }
-            ]
+            lists: [{ list_name: 'Unassigned', tasks: [] }]
         }
     }
 
@@ -103,11 +45,12 @@ class TaskBoard extends Component {
         this.state.lists.forEach( list => {
             if(_.find(list.tasks, {'id': id} )){
                 card = _.find(list.tasks, {'id': id} );
-                console.log(card);
                 //Update database
+                axios.put(`/indevr/taskboard`, card).then(res => {
+                    console.log(res.data);
+                }).catch( err => console.log(err));
             }
         })
-
     }
 
     updateLists(listIndex, taskIndex, id){
@@ -199,7 +142,7 @@ class TaskBoard extends Component {
                                         <button type="button"
                                             className="btn btn-default"
                                             data-dismiss="modal"
-                                            onChange={e => this.updateCard(task.id)}
+                                            onClick={() => this.updateCard(task.id)}
                                         >Close</button>
                                     </div>
                                 </div>
