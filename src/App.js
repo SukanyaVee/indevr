@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import {Switch, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import ProjectView from './components/ProjectView';
-import DropZone from './components/DropZone';
-import LandingPage from './components/LandingPage';
+
 import PropTypes from 'prop-types';
 import { logout } from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import axios from 'axios'; 
+import axios from 'axios';
+import router from './router';
 
 
 class App extends Component {
 
     // static propTypes = {
     //     location: PropTypes.object.isRequired,
-    
+
     // }
     
     componentDidMount(){
@@ -32,9 +29,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/dashboard" component={Dashboard}/>
-                <Route path="/project/overview" component={ProjectView}/>
-                
+                {router}
             </div>
         );
     }
