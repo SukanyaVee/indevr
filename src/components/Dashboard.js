@@ -82,7 +82,7 @@ const PostTitle = glam.div ({
     fontStyle: 'Oblique'
 })
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
     constructor(){
         super()
         this.state={
@@ -115,9 +115,9 @@ export default class Dashboard extends Component {
                         <div>USer stuff</div>
                     </Nav>
                 </Header>
-                
+
                 <Greeting>Hello, Friendly Developer! </Greeting>
-                
+
                 <Main>
                     <Projects>
                         <Nav>
@@ -137,7 +137,7 @@ export default class Dashboard extends Component {
                             <div>Project Title</div>
                         </ProjectList>
                     </Projects>
-                
+
                 <aside>
                     <Contacts>
                         <div><img src={profpic}/></div>
@@ -164,13 +164,13 @@ export default class Dashboard extends Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//       user: state.user
-//     }
-//   }
-//   const mapDispatchToProps = {
-//     login: login
-//   }
+const mapStateToProps = state => {
+    return {
+      user: state.user
+    }
+  }
+  const mapDispatchToProps = {
+    login: login
+  }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

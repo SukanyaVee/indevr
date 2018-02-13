@@ -8,6 +8,6 @@ import store from './store';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<BrowserRouter>
+ReactDOM.render(<Provider store={store}><BrowserRouter>
     <App />
-</BrowserRouter>, document.getElementById('root'));
+</BrowserRouter></Provider>, document.getElementById('root'));
