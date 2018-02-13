@@ -17,7 +17,7 @@ class App extends Component {
 
     componentDidMount(){
         // if(this.props.location.pathname === '/dashboard'){
-        //     axios.get('/checkSession').then(response => {
+        //     axios.get('/indevr/users').then(response => {
         //         if(!response.data.user){
         //             this.props.logout();
         //         }

@@ -72,18 +72,20 @@ massive(process.env.CONNECTION_STRING)
 
 
 // ---------------USER-------------------
-// const userAPIurl = '/indevr/users'
-//
-// app.get(userAPIurl, user.sessionCheck);
-// app.post(`${userAPIurl}/login`, user.get);
-// app.post(`${userAPIurl}/create`, user.create);
+const userAPIurl = '/indevr/users'
+
+app.get(userAPIurl, auth_ctrl.sessionCheck);
+app.post(`/login`, auth_ctrl.user);
+// app.post(`${userAPIurl}/create`, auth_ctrl.create);
 // app.put(`${userAPIurl}/:id`, user.update);
-// app.delete(`${userAPIurl}/logout`, user.logout);
+app.post(`${userAPIurl}/logout`, auth_ctrl.logout);
 // app.get(`${userAPIurl}/connect`, user.connect);
-//
-// // ---------------CONTACTS-------------------
+
+app.get(`${userAPIurl}/search/:term`, auth_ctrl.search);
+
+// ---------------CONTACTS-------------------
 // const contactAPIurl = '/indevr/contacts'
-//
+
 // app.post(`${contactAPIurl}/create`, contact.create);
 // app.put(`${contactAPIurl}/:id`, contact.update);
 // app.delete(`${contactAPIurl}/logout`, contact.unfriend);

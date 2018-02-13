@@ -22,6 +22,7 @@ export function logout(){
 export default function reducer(state = initialState, action){
     switch(action.type){
         case LOGGED_IN: 
+        console.log('Action Received:', action)
             return {...state, user: action.payload};
         case LOGOUT:
             return {...state, user: action.payload};
