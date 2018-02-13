@@ -1,0 +1,1 @@
+Select * FROM contacts JOIN users ON contacts.user_id=users.id WHERE CONTACTS_user_id=$1;
