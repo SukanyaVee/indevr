@@ -60,8 +60,26 @@ massive(process.env.CONNECTION_STRING)
 .then(db => app.set('db', db))
 .catch(err => console.error(err));
 
-//API Endpoints
+// SOCKETS FOR WHITEBOARD
+var io = socketIo.listen(server);
+var line_history = [];
 
+// event-handler for new incoming connections
+io.on('connection', function (socket) {
+
+for (var i in line_history) {
+      socket.emit('draw_line', { line: line_history[i] } );
+   }
+
+   socket.on('draw_line', function (data) {
+      line_history.push(data.line);
+      io.emit('draw_line', { line: data.line });
+   });
+});
+
+
+
+//API Endpoints
 
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'

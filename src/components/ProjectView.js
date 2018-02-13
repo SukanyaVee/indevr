@@ -16,12 +16,14 @@ const ProjectViewer = glam.div ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     flex: 1,
-    padding: 50,
+    // padding: 50,
     '& main': {
-        border: '2px solid green'
+        border: '2px solid green',
+        padding: 20
     },
     '& nav': {
         background: 'grey',
+        padding: 20,
         color: 'white',
         width: 200,
         '& a': {
@@ -30,7 +32,8 @@ const ProjectViewer = glam.div ({
     },
     '& aside': {
         border: '2px solid yellow',
-        width: 300
+        width: 300,
+        padding: 20
     }
 })
 

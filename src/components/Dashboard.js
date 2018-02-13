@@ -31,6 +31,7 @@ const Nav = glam.div ({
     padding: 20,
     '& div': {
         padding: 10,
+        border: '2px solid blue'
     }
 })
 
@@ -53,13 +54,14 @@ const ProjectList = glam.div ({
     '& div': {
         padding: 10,
         textAlign: 'left',
-        border: '2px solid red'
+        // border: '2px solid red'
     }
 })
 
 const Contacts = glam.div ({
     display: 'flex',
     justifyContent: 'flex-end',
+    maxWidth: 400,
     alignItems: 'center',
     '& img': {
         width: 30,
@@ -140,6 +142,7 @@ export default class Dashboard extends Component {
                 
                 <aside>
                     <Contacts>
+                        <div>MY CONNECTIONS</div>
                         <div><img src={profpic}/></div>
                         <div><img src={profpic}/></div>
                         <div><img src={profpic}/></div>
