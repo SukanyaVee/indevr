@@ -1,3 +1,5 @@
+//Search Bar Component used to search users and projects
+
 import React, { Component } from 'react'
 
 class SearchBar extends Component {
@@ -24,6 +26,7 @@ class SearchBar extends Component {
                 <input style={search} onChange={e => this.onInputChange(e.target.value)}></input>
 
                 <br/>
+                <results>{searchTerm}</results>
             </div>
         )
     }
@@ -32,6 +35,7 @@ class SearchBar extends Component {
 const search = {
     backgroundColor: 'red',
     border: 'black solid 2pt',
+    width: '100%',
 }
 
 

@@ -49,14 +49,24 @@ class LandingPage extends Component {
 
     render() {
         return (
+            <div>
+                <Header>Hey</Header>
             <Main>
                 <Heading> Welcome to Indevr </Heading>
                <button style={btnlogin} onClick={this.login}>Login/Register</button>
                <SearchBar />
             </Main>
+            </div>
         )
     }
 }
+
+const Header = glam.header ({
+    height: '100',
+    width: '100vw',
+    backgroundColor: '#BDFAC2',
+    marginTop: '0',
+})
 
 const Heading = glam.h1 ({
     fontSize: '2.5em',
@@ -68,6 +78,8 @@ const Main = glam.div({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
+    height: '90vh',
 })
 
 const btnlogin = {

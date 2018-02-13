@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     auth0_id TEXT NOT NULL,
-    username TEXT,
     first_name TEXT,
     last_name TEXT,
     email TEXT,

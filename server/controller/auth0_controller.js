@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 module.exports = {
-
 //Login & Register User
 get: (req, res) => {
     const {userId} = req.body;
@@ -19,7 +18,7 @@ get: (req, res) => {
                 res.status(200).json({user: req.session.user})
             } else {
                             //May Need to alter this DB file name
-                app.get('db').create_user([userData.user_id, userData.name, userData.email, userData.picture]).then(user => {
+                app.get('db').create_user([userData.user_id, userData.first_name, userData.last_name, userData.email, userData.picture]).then(user => {
                     req.session.user = user[0];
                     res.status(200).json({user: req.sesson.user})
                 })

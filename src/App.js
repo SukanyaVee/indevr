@@ -4,11 +4,12 @@ import Dashboard from './components/Dashboard';
 import ProjectView from './components/ProjectView';
 import DropZone from './components/DropZone';
 import LandingPage from './components/LandingPage';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+// import axios from 'axios';
 import { logout } from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import axios from 'axios';
+
 
 
 class App extends Component {
@@ -32,8 +33,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/dashboard" component={Dashboard}/>
-                <Route path="/project/overview" component={ProjectView}/>
+                <LandingPage />
 
             </div>
         );
