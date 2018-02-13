@@ -5,7 +5,12 @@ const express = require('express'),
     session = require('express-session'),
     massive = require('massive'),
     multer =  require('multer'),
-    AWS = require('aws-sdk');
+    AWS = require('aws-sdk'),
+    socket = require('socket.io');
+
+
+
+    auth_ctrl = require('./controller/auth0_controller');
 
 
 //App Setup
@@ -17,6 +22,7 @@ app.use(session({
     cookie: { maxAge: 24 * 60 * 60 * 1000 } //24 hours
 }));
 app.use(express.static(`${__dirname}/../build`));
+
 
 // AWS declare
 AWS.config.update({
@@ -84,18 +90,18 @@ for (var i in line_history) {
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
-app.get(userAPIurl, user.sessionCheck); 
-app.post(`${userAPIurl}/login`, user.get); 
-app.post(`${userAPIurl}/create`, user.create); 
-app.put(`${userAPIurl}/:id`, user.update);  
+app.get(userAPIurl, user.sessionCheck);
+app.post(`${userAPIurl}/login`, user.get);
+app.post(`${userAPIurl}/create`, user.create);
+app.put(`${userAPIurl}/:id`, user.update);
 app.delete(`${userAPIurl}/logout`, user.logout);
 app.get(`${userAPIurl}/connect`, user.connect);
 
 // ---------------CONTACTS-------------------
 const contactAPIurl = '/indevr/contacts'
 
-app.post(`${contactAPIurl}/create`, contact.create); 
-app.put(`${contactAPIurl}/:id`, contact.update);  
+app.post(`${contactAPIurl}/create`, contact.create);
+app.put(`${contactAPIurl}/:id`, contact.update);
 app.delete(`${contactAPIurl}/logout`, contact.unfriend);
 app.get(`${contactAPIurl}/connect`, contact.get);
 
@@ -119,6 +125,32 @@ app.post(goalsAPIurl, goals.post);
 app.put(goalsAPIurl, goals.put);
 app.delete(goalsAPIurl, goals.delete);
 
+
+const userUrl = '/'
+//Auth0
+app.post(`${userUrl}/login`, (req, res) => {
+    const {userId} = req.body;
+    const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
+    axios.get(auth0Url)
+})
+
+app.get("/checkSession", auth_ctrl.sessionCheck);
+
+
+
 //Shhh Listen...
 const port = process.env.SERVER_PORT;
-app.listen(port, () => console.log(`Up and running on port ${port}`));
+const server = app.listen(port, () => console.log(`Up and running on port ${port}`));
+
+//Socket.io Setup
+const io = socket(server);
+io.on('connection', (socket) => {
+    console.log(socket.id);
+});
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', function(data){
+        io.emit('RECEIVE_MESSAGE', data);
+    })
+});

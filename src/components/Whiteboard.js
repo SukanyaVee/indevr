@@ -53,9 +53,9 @@ class Whiteboard extends Component {
     // }
     
     const canvas = document.getElementById('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    var context = canvas.getContext('2d');
+    // canvas.width = width;
+    // canvas.height = height;
+    // var context = canvas.getContext('2d');
     var socket  = io.connect()
     var mouse = { 
         click: false,
@@ -68,7 +68,7 @@ class Whiteboard extends Component {
         
 
         return (
-            <div id="canvas" onMouseDown={e=>{this.onMouseDown(e, mouse)}} onMouseDown={e=>{this.onMouseDown(e, mouse)}} onMouseDown={e=>{this.onMouseDown(e, mouse)}}>
+            <div id="canvas" onMouseDown={e=>{this.onMouseDown(e, mouse)}} onMouseDown={e=>{this.onMouseDown(e, mouse)}} onMouseMove={e=>{this.onMouseDown(e, mouse)}}>
                 
             </div>
         );

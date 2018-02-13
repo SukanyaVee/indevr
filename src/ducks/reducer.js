@@ -1,47 +1,31 @@
+const LOGGED_IN = 'LOGGED_IN';
+const LOGOUT = 'LOGOUT';
+
 const initialState = {
-    user: {
-        id: 0,
-        auth0ID: '',
-        username: '',
-        firstName: '',
-        lastName: '', 
-        email: '',
-        picture: ''
-    },
-    projects: {
-        id: 0,
-        projectName: '',
-        description: '',
-        public: true,
-        repo: ''
-    }
-};
+    user: {},
+}
 
-const LOGIN = 'LOGIN';
-// const REFRESHPROJECTS = 'REFRESH PROJECTS';
-
-export const login = (user) => {
+export function login(user){
     return {
-        type: LOGIN,
+        type: LOGGED_IN,
         payload: user
     }
 }
-// export const getProjects = (projects) => {
-//     return {
-//         type: REFRESHPROJECTS,
-//         payload: projects
-//     }
-// }
 
-const reducer = (state=initialState, action) => {
-    switch (action.type) {
-        case LOGIN: 
-            return {...initialState, user: action.payload};
-        // case REFRESHPROJECTS:
-        //     return {...initialState, projects: action.payload}
-        default: 
-            return initialState;
+export function logout(){
+    return {
+        type: LOGOUT,
+        payload: {}
     }
-};
+}
 
-export default reducer;
+export default function reducer(state = initialState, action){
+    switch(action.type){
+        case LOGGED_IN: 
+            return {...state, user: action.payload};
+        case LOGOUT:
+            return {...state, user: action.payload};
+        default: 
+            return state;
+    }
+}

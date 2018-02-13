@@ -63,7 +63,7 @@ class ProjectView extends Component {
     openRepo () {
         
         var output = document.getElementById("repo");
-        output.innerHTML=<object type="text/html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
+        output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
     }
 
     render() {

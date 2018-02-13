@@ -123,9 +123,9 @@ class Dashboard extends Component {
                         <div>USer stuff</div>
                     </Nav>
                 </Header>
-                
+
                 <Greeting>Hello, Friendly Developer! </Greeting>
-                
+
                 <Main>
                     <Projects>
                         <Nav>
@@ -145,7 +145,7 @@ class Dashboard extends Component {
                             <div>Project Title</div>
                         </ProjectList>
                     </Projects>
-                
+
                 <aside>
                     <Contacts>
                         <div>MY CONNECTIONS</div>
@@ -182,4 +182,8 @@ const mapStateToProps = state => {
     login: login
   }
 
+<<<<<<< HEAD
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+=======
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+>>>>>>> master
