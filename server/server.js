@@ -72,12 +72,14 @@ massive(process.env.CONNECTION_STRING)
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
-app.get(userAPIurl, user.sessionCheck);
-app.post(`${userAPIurl}/login`, user.get);
-app.post(`${userAPIurl}/create`, user.create);
+app.get(userAPIurl, auth_ctrl.sessionCheck);
+app.post(`${userAPIurl}/login`, auth_ctrl.get);
+app.post(`${userAPIurl}/create`, auth_ctrl.create);
 app.put(`${userAPIurl}/:id`, user.update);
-app.delete(`${userAPIurl}/logout`, user.logout);
+app.post(`${userAPIurl}/logout`, auth_ctrl.logout);
 app.get(`${userAPIurl}/connect`, user.connect);
+
+app.get(`${userAPIurl}/search/:term`, auth_ctrl.search);
 
 // ---------------CONTACTS-------------------
 const contactAPIurl = '/indevr/contacts'
@@ -110,13 +112,6 @@ app.delete(goalsAPIurl, goals.delete);
 
 const userUrl = '/'
 //Auth0
-app.post(`${userUrl}/login`, (req, res) => {
-    const {userId} = req.body;
-    const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
-    axios.get(auth0Url)
-})
-
-app.get("/checkSession", auth_ctrl.sessionCheck);
 
 
 

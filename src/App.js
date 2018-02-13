@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Switch, Route } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
+import router from './router';
 import ProjectView from './components/ProjectView';
 import DropZone from './components/DropZone';
 import LandingPage from './components/LandingPage';
@@ -21,7 +22,7 @@ class App extends Component {
 
     componentDidMount(){
         // if(this.props.location.pathname === '/dashboard'){
-        //     axios.get('/checkSession').then(response => {
+        //     axios.get('/indevr/users').then(response => {
         //         if(!response.data.user){
         //             this.props.logout();
         //         }
@@ -33,8 +34,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <LandingPage />
-
+                {router}
             </div>
         );
     }

@@ -1,15 +1,17 @@
 //Search Bar Component used to search users and projects
 
 import React, { Component } from 'react'
+import glam from 'glamorous'
+import axios from 'axios'
 
 class SearchBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
             searchTerm: '',
-            searchResults: [],
         }
         this.onInputChange = this.onInputChange.bind(this);
+        this.search = this.search.bind(this);
     }
 
     onInputChange(value){
@@ -19,24 +21,35 @@ class SearchBar extends Component {
         console.log(this.state.searchTerm)
     };
 
+    search(e, searchTerm){
+        // e.preventDefault();
+        axios.get(`/search/${searchTerm}`).then(response => {
+                console.log(response)
+        })
+        this.props.history.push(`/search/${searchTerm}`)
+    }
+
     render() {
-        const {searchTerm} = this.state;
+        // const {searchTerm} = this.state;
         return (
             <div>
-                <input style={search} onChange={e => this.onInputChange(e.target.value)}></input>
+                <Search 
+                // style={search} 
+                placeholder='Search Indevr'
+                onChange={e => this.onInputChange(e.target.value)}
+                onSubmit={(e, searchTerm) => this.search(e, searchTerm)}></Search>
 
                 <br/>
-                <results>{searchTerm}</results>
             </div>
         )
     }
 }
 
-const search = {
-    backgroundColor: 'red',
+const Search = glam.input({
     border: 'black solid 2pt',
     width: '100%',
-}
+    height: 40,
+})
 
 
 export default SearchBar;
