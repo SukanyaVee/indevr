@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Link, Switch, Route} from 'react-router-dom';
-import {login} from '../ducks/reducer';
+// import {login} from '../ducks/reducer';
 import glam from 'glamorous';
 
 import Overview from './Overview';
@@ -52,15 +52,15 @@ class ProjectView extends Component {
         // axios.all(
             //axios.get single projects or passed through props
             //axios.get project stack
-            //axios.get project group chat            
-            //axios.get project goals        
+            //axios.get project group chat
+            //axios.get project goals
         // )
     }
 
     openRepo () {
-        
-        var output = document.getElementById("repo");
-        output.innerHTML=<object type="text/html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
+
+        // var output = document.getElementById("repo");
+        // output.innerHTML=<object type="text/html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
     }
 
     render() {
@@ -85,7 +85,7 @@ class ProjectView extends Component {
                     </Switch>
                     <div id="repo"></div>
                 </main>
-                
+
                 <aside>
                     <div>Chat message</div>
                     <div>Chat message</div>

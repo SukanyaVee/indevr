@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
-import axios from 'react-redux';
+// import axios from 'react-redux';
 import profpic from '../assets/prof-pic.png';
 import logo from '../assets/logo.png';
 import glam from 'glamorous';
@@ -108,7 +108,7 @@ class Dashboard extends Component {
         return (
             <Dashboard1>
                 <Header>
-                    <img src={logo}/>
+                    <img src={logo} alt=""/>
                     <Nav>
                         <div>About</div>
                         <div>Explore</div>
@@ -140,11 +140,11 @@ class Dashboard extends Component {
 
                 <aside>
                     <Contacts>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
+                        <div><img src={profpic} alt=""/></div>
+                        <div><img src={profpic} alt=""/></div>
+                        <div><img src={profpic} alt=""/></div>
+                        <div><img src={profpic} alt=""/></div>
+                        <div><img src={profpic} alt=""/></div>
                     </Contacts>
                     <PostFeed>
                         {this.state.posts.map(item => <div key={item.id} item={item}> {item.title} <br/> <div>Comment</div><div> Upvote</div></div>)}
