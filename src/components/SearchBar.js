@@ -3,6 +3,9 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { searchResults } from '../ducks/reducer'
+import { connect } from 'react-redux'
 
 class SearchBar extends Component {
     constructor(props) {
@@ -21,12 +24,14 @@ class SearchBar extends Component {
         console.log(this.state.searchTerm)
     };
 
-    search(e, searchTerm){
+    search(){
         // e.preventDefault();
+        const {searchTerm} = this.state
         axios.get(`/search/${searchTerm}`).then(response => {
-                console.log(response)
+                this.props.searchResults(response)
         })
-        this.props.history.push(`/search/${searchTerm}`)
+        console.log('Bar props', this.props)
+        // this.state.searchResults ? this.props.history.push(`/search`) : null
     }
 
     render() {
@@ -37,8 +42,14 @@ class SearchBar extends Component {
                 // style={search} 
                 placeholder='Search Indevr'
                 onChange={e => this.onInputChange(e.target.value)}
-                onSubmit={(e, searchTerm) => this.search(e, searchTerm)}></Search>
-
+                ></Search>
+                <Link to='/search'>
+                <button 
+                // onClick={searchTerm => this.search(searchTerm)}
+                onClick={this.search}
+                // results={this.state.searchResults}
+                >Search</button>
+                </Link>
                 <br/>
             </div>
         )
@@ -51,5 +62,8 @@ const Search = glam.input({
     height: 40,
 })
 
+const mapDispatchToProps = {
+    searchResults
+}
 
-export default SearchBar;
+export default connect(null, mapDispatchToProps)(SearchBar);

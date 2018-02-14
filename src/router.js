@@ -5,6 +5,7 @@ import ProjectView from './components/ProjectView';
 import Chat from './components/Chat';
 import TaskBoard from './components/TaskBoard';
 import LandingPage from './components/LandingPage';
+import SearchPage from './components/SearchPage';
 
 
 export default (
@@ -14,5 +15,6 @@ export default (
         <Route path="/project/overview" component={ProjectView}/>
         <Route path="/chat" component={Chat} />
         <Route path="/tasks" component={TaskBoard} />
+        <Route path='/search' component={SearchPage} />
     </Switch>
 )

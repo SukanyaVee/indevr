@@ -1,8 +1,10 @@
 const LOGGED_IN = 'LOGGED_IN';
 const LOGOUT = 'LOGOUT';
+const SEARCH = 'SEARCH';
 
 const initialState = {
     user: {},
+    results: [],
 }
 
 export function login(user){
@@ -19,6 +21,14 @@ export function logout(){
     }
 }
 
+export function searchResults(results){
+    console.log('Reducer', results.data)
+    return {
+        type: SEARCH,
+        payload: results.data
+    }
+}
+
 export default function reducer(state = initialState, action){
     switch(action.type){
         case LOGGED_IN: 
@@ -26,6 +36,8 @@ export default function reducer(state = initialState, action){
             return {...state, user: action.payload};
         case LOGOUT:
             return {...state, user: action.payload};
+        case SEARCH:
+            return {...state, results: action.payload}
         default: 
             return state;
     }

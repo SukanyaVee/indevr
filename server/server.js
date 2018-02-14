@@ -10,8 +10,9 @@ const express = require('express'),
 
 
 
-    // auth_ctrl = require('./controller/auth0_controller');
+    auth_ctrl = require('./controller/auth0_controller');
     taskboard_ctrl = require('./controller/taskboard_controller');
+    search = require('./controller/search_controller');
 
 
 //App Setup
@@ -116,6 +117,11 @@ const taskboardAPIurl = '/indevr/taskboard';
 
 app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
 app.put(taskboardAPIurl, taskboard_ctrl.put);
+
+
+//-------------------Search------------------
+app.get('/search/:term', search.getInfo);
+
 
 // //----------------AUTH0----------------
 // const userUrl = '/'

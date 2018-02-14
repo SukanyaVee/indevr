@@ -12,11 +12,11 @@ class tasks extends Component {
     render() {
         return (
             <Main>
-                <h1 className='heading'><strong>Task Management</strong></h1>
-                <h3 className='heading'>Improve the way you focus</h3>
+                <h3 className='heading'><strong>Task Management</strong></h3>
+                <h1 className='heading'><i>Improve the way you focus</i></h1>
                 <Topic>
                 <Desc><div className='p'><strong>Delegate and Celebrate,</strong>{' '}
-                with an in-house taskboard that allows the entire team to identify who is working on what task anytime, from anywhere with an internet connection.</div></Desc>
+                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc>
                 <Image src={one} />
                 </Topic>
                 <Topic>
