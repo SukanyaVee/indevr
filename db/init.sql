@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     auth0_id TEXT NOT NULL,
-    username TEXT,
     first_name TEXT,
     last_name TEXT,
     email TEXT,
@@ -35,6 +34,12 @@ CREATE TABLE IF NOT EXISTS project_stacks (
     project_id INTEGER REFERENCES projects (id) ON DELETE CASCADE,
     skill TEXT NOT NULL,
     level INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS project_users (
+    id SERIAL PRIMARY KEY,
+    project_id INTEGER REFERENCES projects (id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS posts (
@@ -95,3 +100,12 @@ INSERT INTO contacts
 VALUES
 (1,2),
 (1,3);
+CREATE TABLE IF NOT EXISTS taskboard_items (
+    id SERIAL PRIMARY KEY,
+    project_id INTEGER REFERENCES projects (id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users (id) ON DELETE SET NULL,
+    title TEXT,
+    description TEXT,
+    status TEXT,
+    due DATE
+);

@@ -12,6 +12,7 @@ const express = require('express'),
     contact = require('./controller/contact_controller');
     proj = require('./controller/project_controller');
     auth_ctrl = require('./controller/auth0_controller');
+    taskboard_ctrl = require('./controller/taskboard_controller');
 
 
 //App Setup
@@ -152,6 +153,14 @@ app.post(`${userUrl}/login`, (req, res) => {
 })
 
 app.get("/checkSession", auth_ctrl.sessionCheck);
+app.get(userAPIurl, auth_ctrl.sessionCheck);
+app.post(`/login`, auth_ctrl.user);
+// app.post(`${userAPIurl}/create`, auth_ctrl.create);
+// app.put(`${userAPIurl}/:id`, user.update);
+app.post(`${userAPIurl}/logout`, auth_ctrl.logout);
+// app.get(`${userAPIurl}/connect`, user.connect);
+
+app.get(`${userAPIurl}/search/:term`, auth_ctrl.search);
 
 
 
