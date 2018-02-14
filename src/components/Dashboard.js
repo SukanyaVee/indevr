@@ -4,7 +4,7 @@ import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import profpic from '../assets/prof-pic.png';
-import logo from '../assets/logo.png';
+import logo from '../assets/in_DEV_r.png';
 import glam from 'glamorous';
 
 const Dashboard1 = glam.div ({
@@ -31,7 +31,11 @@ const Nav = glam.div ({
     padding: 20,
     '& div': {
         padding: 10,
-        border: '2px solid blue'
+        marginRight: 10,
+        color: 'white',
+        background: '#593c8f',
+        border: ' 2px solid green'
+
     }
 })
 
@@ -68,15 +72,17 @@ const ProjectList = glam.div ({
 })
 
 const Contacts = glam.div ({
-    display: 'flex',
-    justifyContent: 'flex-end',
     maxWidth: 400,
-    alignItems: 'center',
     '& img': {
         width: 30,
         height: 30,
         margin: 10,
         borderRadius: '50%'
+    },
+    '& div': {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     }
 })
 
@@ -86,7 +92,12 @@ const PostFeed = glam.div ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 10,
-    width: 300
+    width: 300,
+    '& img': {
+        height: 25,
+        width: 25,
+        borderRadius: '50%'
+    }
 })
 
 const PostTitle = glam.div ({
@@ -153,19 +164,13 @@ class Dashboard extends Component {
                 <aside>
                     <Contacts>
                         <div>MY CONNECTIONS</div>
-                        {this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}
+                        <div>{this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}</div>
                         
                     </Contacts>
                     <PostFeed>
-                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.title} <br/> <div>Comment</div><div> Upvote</div></div>)}
-                        <div> <PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
+                        THE LATEST NEWS
+                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.content} <br/> <div><img src={item.picture}/>{item.first_name}{item.last_name}</div><div> Upvote</div></div>)}
+                        
                     </PostFeed>
                 </aside>
                 </Main>

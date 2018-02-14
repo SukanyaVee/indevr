@@ -63,17 +63,17 @@ const ProjectOverview = glam.div ({
 const ProjectTitle = glam.div ({
     fontSize: '3em',
     marginBottom: 10,
-    borderLeft: '3px solid purple'
+    borderLeft: '3px solid #593c8f'
 })
 
 const ProjectDescription = glam.div ({
     marginBottom: 10,
     fontStyle: 'oblique',
-    borderLeft: '3px solid purple'
+    borderLeft: '3px solid #593c8f'
 })
 const ProjectCollaborators = glam.div ({
     marginBottom: 10,
-    borderLeft: '3px solid purple',
+    borderLeft: '3px solid #593c8f',
     '& div': {
         padding: 10,
         background: '#eeeeee'
@@ -86,7 +86,7 @@ const ProjectCollaborators = glam.div ({
 })
 const ProjectSkills = glam.div ({
     marginBottom: 10,
-    borderLeft: '3px solid purple'
+    borderLeft: '3px solid #593c8f'
 })
 
 export default Overview
