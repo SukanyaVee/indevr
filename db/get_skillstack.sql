@@ -1,1 +1,1 @@
-SELECT * FROM project_stack WHERE project_id=$1;
+SELECT * FROM project_stacks WHERE project_id=$1;

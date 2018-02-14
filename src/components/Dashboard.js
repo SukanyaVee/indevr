@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
-import axios from 'react-redux';
+import axios from 'axios';
 import profpic from '../assets/prof-pic.png';
 import logo from '../assets/logo.png';
 import glam from 'glamorous';
@@ -41,13 +41,22 @@ const Greeting = glam.div ({
 
 const Main = glam.div ({
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     flex: 1
 })
 
 const Projects = glam.div ({
     padding: 10
+})
+
+const ProjectItem = glam.div ({
+    cursor: 'pointer',
+    background: '#eeeeee',
+    margin: 2,
+    '& a': {
+        textDecoration: 'none'
+    }
 })
 
 const ProjectList = glam.div ({
@@ -66,7 +75,8 @@ const Contacts = glam.div ({
     '& img': {
         width: 30,
         height: 30,
-        margin: 10
+        margin: 10,
+        borderRadius: '50%'
     }
 })
 
@@ -92,23 +102,25 @@ class Dashboard extends Component {
             projects: [],
            posts: [],
             contacts: [],
-            skills: []
         };
     }
 
     componentDidMount(){
-            axios.get('/indevr/users').then(res=>{
-                this.props.login(res.data)
-                axios.get('/indevr/projects').then(res=>{
-                    this.setState({projects: res.data})
-                    axios.get('/indevr/contacts').then(res=>{
-                        this.setState({contacts: res.data})
-                        axios.get('/indevr/news').then(res=>{
-                            this.setState({posts: res.data})
-                        }).catch(error=>console.log(error))
-                    }).catch(error=>console.log(error))
-                }).catch(error=>console.log(error))
+            // axios.get('/indevr/users').then(res=>{
+            //     this.props.login(res.data)
+            // }).catch(error=>console.log(error))
+            axios.get('/indevr/contacts?user_id=1').then(res=>{
+                this.setState({contacts: res.data})
+                console.log(this.state.contacts)
             }).catch(error=>console.log(error))
+            axios.get('/indevr/projects?user_id=1').then(res=>{
+                this.setState({projects: res.data})
+                console.log(this.state.projects)
+            }).catch(error=>console.log(error))
+        axios.get('/indevr/posts').then(res=>{
+            this.setState({posts: res.data})
+        console.log(this.state.posts)
+        }).catch(error=>console.log(error))
     }
 
 
@@ -134,26 +146,15 @@ class Dashboard extends Component {
                         </Nav>
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
-                            {this.state.projects.map(proj => <div key={proj.id} project={proj}><Link to="/project/:id"> {proj.title} </Link><br/></div>)}
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
+                            {this.state.projects.map(proj => <ProjectItem key={proj.id} project={proj}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
                         </ProjectList>
                     </Projects>
 
                 <aside>
                     <Contacts>
                         <div>MY CONNECTIONS</div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
+                        {this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}
+                        
                     </Contacts>
                     <PostFeed>
                         {this.state.posts.map(item => <div key={item.id} item={item}> {item.title} <br/> <div>Comment</div><div> Upvote</div></div>)}
@@ -182,8 +183,4 @@ const mapStateToProps = state => {
     login: login
   }
 
-<<<<<<< HEAD
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-=======
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
->>>>>>> master
