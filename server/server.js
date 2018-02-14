@@ -12,6 +12,7 @@ const express = require('express'),
 
     auth_ctrl = require('./controller/auth0_controller');
     taskboard_ctrl = require('./controller/taskboard_controller');
+    news_feed_ctrl = require('./controller/news_feed_controller');
 
 
 //App Setup
@@ -92,8 +93,9 @@ app.get(`${userAPIurl}/search/:term`, auth_ctrl.search);
 // app.get(`${contactAPIurl}/connect`, contact.get);
 //
 // //-------------NEWS FEED--------------
-// const newsAPIurl = '/indevr/news'
+const newsAPIurl = '/indevr/news'
 // app.get(newsAPIurl, news.get)
+app.get(`${newsAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 //
 // //-----------PROJECTS----------------
 // const projAPIurl = '/indevr/projects'

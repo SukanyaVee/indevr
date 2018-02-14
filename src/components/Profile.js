@@ -2,13 +2,52 @@ import React, {Component} from 'react'
 import glam from 'glamorous';
 import ConnectButton from './ConnectButton';
 import grate from '../assets/background-grate.png';
+import ToggleDisplay from 'react-toggle-display';
+import axios from 'axios';
+import Post from './Post';
+
 
 class Profile extends Component {
     constructor(){
         super();
         this.state = {
-
+            showPosts: true,
+            showNetwork: false,
+            showProjects: false,
+            posts: [
+                {
+                    id: 1,
+                    content: 'This is a post',
+                    timestamp: ''
+                },
+                {
+                    id: 2,
+                    content: 'More posts!',
+                    timestamp: ''
+                },
+            ],
+            network: [],
+            projects: []
         }
+    }
+
+    componentDidMount(){
+        //Get Posts
+        const userID = 1
+        axios.get(`/indevr/news/${userID}`).then(res => {
+            this.setState({posts: res.data})
+        }).catch( err => console.log(err))
+    }
+
+    switchTab(tab){
+        document.querySelector('.active').classList.remove('active');
+        document.getElementById(tab).classList.add('active');
+
+        this.setState({
+            showPosts: tab === 'posts' ? true : false,
+            showNetwork: tab === 'network' ? true : false,
+            showProjects: tab === 'projects' ? true : false,
+        })
     }
 
     render(){
@@ -24,7 +63,7 @@ class Profile extends Component {
                                 <p>Short bio goes here so people can say things about themselves or whatever</p>
                                 <div>
                                     <li><i className="fas fa-map-pin"></i> &nbsp; Location</li>
-                                    <li><i class="far fa-envelope"></i> &nbsp; email@indevr.io</li>
+                                    <li><i className="far fa-envelope"></i> &nbsp; email@indevr.io</li>
                                     <li><i className="fab fa-github"></i> &nbsp; Github</li>
                                     <li><i className="fab fa-bitbucket"></i> &nbsp; Bitbucket</li>
                                     <li><i className="fab fa-gitlab"></i> &nbsp; GitLab</li>
@@ -48,10 +87,40 @@ class Profile extends Component {
                                 </div>
                             </Projects>
                             <Nav>
-                                <div>Posts</div>
-                                <div>Network</div>
-                                <div>Projects</div>
+                                <div id="posts" className="active" onClick={() => this.switchTab('posts')}>Posts</div>
+                                <div id="network" onClick={() => this.switchTab('network')}>Network</div>
+                                <div id="projects" onClick={() => this.switchTab('projects')}>Projects</div>
                             </Nav>
+                            <Content>
+                                <ToggleDisplay show={this.state.showPosts}>
+                                    <PostsWrapper>
+                                        {this.state.posts.map((post,i) => {
+                                            return (
+                                                    <Post key={i}
+                                                        id={post.id}
+                                                        name={post.first_name + ' ' + post.lastname}
+                                                        user_id={post.user_id}
+                                                        content={post.content}
+                                                        timestamp={post.created_at}/>
+                                            )
+                                        })}
+                                    </PostsWrapper>
+                                </ToggleDisplay>
+
+                                <ToggleDisplay show={this.state.showNetwork}>
+                                    Network
+                                    {/* {this.state.network.map(post => {
+                                        return ' Connection'
+                                    })} */}
+                                </ToggleDisplay>
+
+                                <ToggleDisplay show={this.state.showProjects}>
+                                    Projects
+                                    {/* {this.state.posts.map(post => {
+                                        return ' Project'
+                                    })} */}
+                                </ToggleDisplay>
+                            </Content>
                         </Body>
                     </div>
                 </Main>
@@ -171,4 +240,20 @@ const Nav = glam.div({
     alignItems: 'center',
     width: 300,
     fontSize: 18,
+    cursor: 'pointer',
+    '& .active':{
+        borderBottom: '3px solid var(--main-purple)',
+    },
+})
+
+const Content = glam.div({
+    width: '100%',
+    padding: 20,
+})
+
+const PostsWrapper = glam.div({
+    display: 'grid',
+    gridGap: 20,
+    gridTemplateColumns: 'repeat(auto-fill, 300px)',
+    justifyContent: 'center'
 })
