@@ -1,31 +1,92 @@
-import React  from 'react';
+import React, {Component}  from 'react';
+import axios from 'axios';
+import {Link,  Route} from 'react-router-dom';
+import glam from 'glamorous';
 
 
-function Overview(props) {
+class Overview extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            projectId: 1,
+            project: {},
+            projectCons: [],
+            skills: []
+        }
+    }
+
+    componentDidMount(){
+        console.log(this.state.projectId);
+        axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
+            this.setState({project: res.data[0]})
+            console.log(res.data)
+        }).catch(error=>console.log(error))        
+        axios.get(`/indevr/projects/skills/${this.state.projectId}`).then(res=>{
+            this.setState({skills: res.data})
+            console.log(this.state.skills)
+        }).catch(error=>console.log(error))        
+        axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
+            this.setState({projectCons: res.data})
+            console.log(this.state.projectCons)
+        }).catch(error=>console.log(error))        
+    }
+
+
+
+    render(){
         return (
-            <div className="proj-overview">
-                <div className="proj-title">
-                    {/* {props.projects.title}  */}
-                    RPOJECT TITLE
-                </div>
-                <div className="proj-description">
-                    {/* {props.projects.description}  */}
-                    PROJECT DESCRIPTION<br/>
-                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                </div>
-                <div className="proj-collaborators">
-                    {/* {props.projects.contacts} */}
-                    Apple Barrel, Cherry Drum, Eggplant Flower
-                </div>
-                <div className="proj-skills">
-                    {/* //map over array */}
-                    {/* {props.stack.skills} - {props.stack.levels}<br/>  */}
-                    React - Advanced<br/>
-                    Express - Intermediate<br/>
-                    HTML/CSS - Novice
-                </div>
-            </div>
+            <ProjectOverview>
+                <ProjectTitle>
+                    {this.state.project.project_name} 
+                </ProjectTitle>
+                <ProjectDescription>
+                    {this.state.project.description} 
+                </ProjectDescription>
+                <ProjectCollaborators>
+                    Contributors<br/>
+                    {this.state.projectCons.map(contributor => <div key={contributor.id}><Link to={`/project/${contributor.id}`}> <img src={contributor.picture}/> {contributor.first_name} {contributor.last_name}</Link></div>)}
+                    </ProjectCollaborators>
+                <ProjectSkills>
+                    Skill Stack<br/>
+                    {this.state.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level==1?'Shadow Warrior':skill.level==2?'Wannabe Ninja':'Samurai'}</div>)}
+                </ProjectSkills>
+            </ProjectOverview>
         );
+    }
 }
+
+const ProjectOverview = glam.div ({
+    padding: 50,
+    fontSize: 16
+})
+
+const ProjectTitle = glam.div ({
+    fontSize: '3em',
+    marginBottom: 10,
+    borderLeft: '3px solid #593c8f'
+})
+
+const ProjectDescription = glam.div ({
+    marginBottom: 10,
+    fontStyle: 'oblique',
+    borderLeft: '3px solid #593c8f'
+})
+const ProjectCollaborators = glam.div ({
+    marginBottom: 10,
+    borderLeft: '3px solid #593c8f',
+    '& div': {
+        padding: 10,
+        background: '#eeeeee'
+    },
+    '& img': {
+        width: 30,
+        height: 30,
+        borderRadius: '50%'
+    }
+})
+const ProjectSkills = glam.div ({
+    marginBottom: 10,
+    borderLeft: '3px solid #593c8f'
+})
 
 export default Overview

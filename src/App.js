@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {Switch, Route } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import ProjectView from './components/ProjectView';
+import Overview from './components/Overview';
+// import Whiteboard from './components/Whiteboard';
 
 import PropTypes from 'prop-types';
 import { logout } from './ducks/reducer';
@@ -29,7 +34,9 @@ class App extends Component {
     render() {
         return (
             <div>
-                {router}
+                <Route exact path="/dashboard" component={Dashboard}/>
+                <Route path="/project/:id" component={ProjectView}/>
+                {/* <Route path="/whiteboard" component={Whiteboard}/> */}
             </div>
         );
     }
