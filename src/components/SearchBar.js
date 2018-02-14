@@ -29,6 +29,9 @@ class SearchBar extends Component {
         const {searchTerm} = this.state
         axios.get(`/search/${searchTerm}`).then(response => {
                 this.props.searchResults(response)
+        });
+        axios.get(`/search/projects/${searchTerm}`).then(response => {
+            console.log('proj-front', response)
         })
         console.log('Bar props', this.props)
         // this.state.searchResults ? this.props.history.push(`/search`) : null
@@ -37,29 +40,47 @@ class SearchBar extends Component {
     render() {
         // const {searchTerm} = this.state;
         return (
-            <div>
+            <Bar class="input-group">
                 <Search 
-                // style={search} 
+                type="text" className="form-control"
                 placeholder='Search Indevr'
                 onChange={e => this.onInputChange(e.target.value)}
-                ></Search>
+                >
+                </Search>
                 <Link to='/search'>
-                <button 
+                <Btn 
                 // onClick={searchTerm => this.search(searchTerm)}
                 onClick={this.search}
                 // results={this.state.searchResults}
-                >Search</button>
+                ><i className="fab fa-searchengin fa-2x"></i></Btn>
                 </Link>
                 <br/>
-            </div>
+            </Bar>
         )
     }
 }
+
+const Bar = glam.div({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+})
 
 const Search = glam.input({
     border: 'black solid 2pt',
     width: '100%',
     height: 40,
+})
+
+const Btn = glam.button({
+    height: 35,
+    width: 100,
+    backgroundColor: 'transparent',
+    border: 'solid white 2px',
+    color: 'white',
+    textAlign: 'center',
 })
 
 const mapDispatchToProps = {

@@ -120,7 +120,8 @@ app.put(taskboardAPIurl, taskboard_ctrl.put);
 
 
 //-------------------Search------------------
-app.get('/search/:term', search.getInfo);
+app.get('/search/:term', search.getUsers);
+app.get('/search/projects/:term', search.getProjects);
 
 
 // //----------------AUTH0----------------

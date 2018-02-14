@@ -123,7 +123,7 @@ const Desc = glam.p({
 const Header = glam.header({
   height: "100",
   width: "100vw",
-  backgroundColor: "#BDFAC2",
+  backgroundColor: 'var(--main-black)',
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-around",
