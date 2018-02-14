@@ -7,14 +7,16 @@ const express = require('express'),
     multer =  require('multer'),
     AWS = require('aws-sdk'),
     socket = require('socket.io');
-
-
-
+    user = require('./controller/user_controller');
+    posts = require('./controller/post_controller');
+    contact = require('./controller/contact_controller');
+    proj = require('./controller/project_controller');
     auth_ctrl = require('./controller/auth0_controller');
 
 
 //App Setup
 const app = express();
+app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -67,21 +69,21 @@ massive(process.env.CONNECTION_STRING)
 .catch(err => console.error(err));
 
 // SOCKETS FOR WHITEBOARD
-var io = socketIo.listen(server);
-var line_history = [];
+// var io = socketIo.listen(server);
+// var line_history = [];
 
 // event-handler for new incoming connections
-io.on('connection', function (socket) {
+// io.on('connection', function (socket) {
 
-for (var i in line_history) {
-      socket.emit('draw_line', { line: line_history[i] } );
-   }
+// for (var i in line_history) {
+//       socket.emit('draw_line', { line: line_history[i] } );
+//    }
 
-   socket.on('draw_line', function (data) {
-      line_history.push(data.line);
-      io.emit('draw_line', { line: data.line });
-   });
-});
+//    socket.on('draw_line', function (data) {
+//       line_history.push(data.line);
+//       io.emit('draw_line', { line: data.line });
+//    });
+// });
 
 
 
@@ -90,51 +92,54 @@ for (var i in line_history) {
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
-app.get(userAPIurl, user.sessionCheck);
-app.post(`${userAPIurl}/login`, user.get);
-app.post(`${userAPIurl}/create`, user.create);
-app.put(`${userAPIurl}/:id`, user.update);
-app.delete(`${userAPIurl}/logout`, user.logout);
-app.get(`${userAPIurl}/connect`, user.connect);
+// app.put(`${userAPIurl}/:id`, user.update);
+// app.delete(`${userAPIurl}/:id`, user.delete);
 
 // ---------------CONTACTS-------------------
 const contactAPIurl = '/indevr/contacts'
 
-app.post(`${contactAPIurl}/create`, contact.create);
-app.put(`${contactAPIurl}/:id`, contact.update);
-app.delete(`${contactAPIurl}/logout`, contact.unfriend);
-app.get(`${contactAPIurl}/connect`, contact.get);
+// app.post(`${contactAPIurl}/create`, contact.add);
+// app.put(`${contactAPIurl}/:id`, contact.update);
+// app.delete(`${contactAPIurl}/logout`, contact.unfriend);
+app.get(`${contactAPIurl}`, contact.get);
 
 //-------------PUBLIC POST FEED--------------
 const newsAPIurl = '/indevr/posts'
-app.get(newsAPIurl, posts.get)
+// app.get(newsAPIurl, posts.get)
+// app.post(newsAPIurl, posts.create)
+// app.put(newsAPIurl, posts.update)
+// app.delete(newsAPIurl, posts.delete)
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects'
 
-app.get(projAPIurl, proj.get);
-app.post(projAPIurl, proj.create);
-app.put(projAPIurl, proj.update);
-app.delete(projAPIurl, proj.delete);
+app.get(projAPIurl, proj.getUserProj);
+
+app.get(`${projAPIurl}/:id`, proj.getSingle);
+app.get(`${projAPIurl}/skills/:id`, proj.getSkillStack);
+app.get(`${projAPIurl}/contributors`, proj.getProjCons);
+// app.post(projAPIurl, proj.create);
+// app.put(projAPIurl, proj.update);
+// app.delete(projAPIurl, proj.delete);
 
 //----------PROJECT DERIVATIVES--------
 const goalsAPIurl = '/indevr/goals'
 
-app.get(goalsAPIurl, goals.get);
-app.post(goalsAPIurl, goals.post);
-app.put(goalsAPIurl, goals.put);
-app.delete(goalsAPIurl, goals.delete);
+// app.get(goalsAPIurl, goals.get);
+// app.post(goalsAPIurl, goals.post);
+// app.put(goalsAPIurl, goals.put);
+// app.delete(goalsAPIurl, goals.delete);
 
 
-const userUrl = '/'
-//Auth0
-app.post(`${userUrl}/login`, (req, res) => {
-    const {userId} = req.body;
-    const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
-    axios.get(auth0Url)
-})
+// const userUrl = '/'
+// //Auth0
+// app.post(`${userUrl}/login`, (req, res) => {
+//     const {userId} = req.body;
+//     const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
+//     axios.get(auth0Url)
+// })
 
-app.get("/checkSession", auth_ctrl.sessionCheck);
+// app.get("/checkSession", auth_ctrl.sessionCheck);
 
 
 
@@ -142,7 +147,7 @@ app.get("/checkSession", auth_ctrl.sessionCheck);
 const port = process.env.SERVER_PORT;
 const server = app.listen(port, () => console.log(`Up and running on port ${port}`));
 
-//Socket.io Setup
+//Socket.io chat Setup
 const io = socket(server);
 io.on('connection', (socket) => {
     console.log(socket.id);

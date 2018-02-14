@@ -1,0 +1,1 @@
+SELECT * FROM project_stack WHERE project_id=$1;
