@@ -63,7 +63,7 @@ class LandingPage extends Component {
                 <Heading><strong>By Developers - <i>For Developers</i></strong><br/>
                 <Desc><strong><i>inDevr</i></strong> is a project development application designed to help you and your team of connections <strong>accomplish </strong>your goals. From internal communication and access to project multi-tools, welcome to your one-stop developer platform.</Desc>
                 </Heading>
-               <button style={btnlogin} onClick={this.login}>Login</button>
+               <button style={btnlogin} onClick={this.login}>Login/Register</button>
             </Main>
             {/* <Aside>
                 <Signup>
@@ -160,9 +160,10 @@ const Main = glam.div({
 
 const btnlogin = {
     color: 'white',
-    backgroundColor: '#9b9b9b',
-    height: 75,
-    width: 150,
+    backgroundColor: 'transparent',
+    fontSize: '16pt',
+    height: 100,
+    width: 200,
     marginRight: 100,
 }
 
