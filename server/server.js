@@ -13,6 +13,7 @@ const express = require('express'),
     proj = require('./controller/project_controller');
     auth_ctrl = require('./controller/auth0_controller');
     taskboard_ctrl = require('./controller/taskboard_controller');
+    news_feed_ctrl = require('./controller/news_feed_controller');
 
 
 //App Setup
@@ -102,6 +103,17 @@ const contactAPIurl = '/indevr/contacts'
 // app.post(`${contactAPIurl}/create`, contact.add);
 // app.put(`${contactAPIurl}/:id`, contact.update);
 // app.delete(`${contactAPIurl}/logout`, contact.unfriend);
+// app.get(`${contactAPIurl}/connect`, contact.get);
+//
+// //-------------NEWS FEED--------------
+const newsAPIurl = '/indevr/news'
+// app.get(newsAPIurl, news.get)
+app.get(`${newsAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
+//
+// //-----------PROJECTS----------------
+// const projAPIurl = '/indevr/projects'
+//
+// app.get(projAPIurl, proj.get);
 app.get(`${contactAPIurl}`, contact.get);
 
 //-------------PUBLIC POST FEED--------------

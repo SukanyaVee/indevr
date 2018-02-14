@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS project_users (
 CREATE TABLE IF NOT EXISTS posts (
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-    content TEXT
+    content TEXT,
+    created_at TIMESTAMP DEFAULT NOW();
 );
 
 CREATE TABLE IF NOT EXISTS images (
