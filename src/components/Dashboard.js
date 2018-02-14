@@ -5,7 +5,119 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import profpic from '../assets/prof-pic.png';
 import logo from '../assets/in_DEV_r.png';
-import glam from 'glamorous';
+import glam, { ClipPath, Aside } from 'glamorous';
+
+
+
+class Dashboard extends Component {
+    constructor(){
+        super();
+        this.state={
+            user: {},
+            projects: [],
+            publicProj: [],
+           posts: [],
+            contacts: [],
+            showConnections: false,
+            projectView: 'mine',
+            postContent: ''
+        };
+        this.showConn = this.showConn.bind(this)
+    }
+
+    componentDidMount(){
+            // axios.get('/indevr/users').then(res=>{
+            //     this.props.login(res.data)
+            // }).catch(error=>console.log(error))
+        axios.get('/indevr/contacts?user_id=1').then(res=>{
+            this.setState({contacts: res.data})
+            console.log(this.state.contacts)
+        }).catch(error=>console.log(error))
+        axios.get('/indevr/projects?user_id=1').then(res=>{
+            this.setState({projects: res.data})
+            console.log(this.state.projects)
+        }).catch(error=>console.log(error))
+        // axios.get('/indevr/public?user_id=1').then(res=>{
+        //     this.setState({projects: res.data})
+        //     console.log(this.state.projects)
+        // }).catch(error=>console.log(error))
+        axios.get('/indevr/posts').then(res=>{
+            this.setState({posts: res.data})
+        console.log(this.state.posts)
+        }).catch(error=>console.log(error))
+    }
+
+    showConn() {
+        this.state.showConnections ? this.setState({showConnections: false}) : this.setState({showConnections: true})
+    }
+    switchProjectView (which) {
+        this.setState({projectView: which})
+    }
+    submitPost(content, userId) {
+        axios.post('/indevr/posts', {user_Id: 1, content:content}).then(resp=>{
+            console.log('this is the response', resp.data)
+            this.setState(prevState=>{
+                return {posts: [...prevState.posts, resp.data[0]]}
+            })
+            console.log('this is the state after setting response to it', this.state.posts)
+        }).catch(error=>console.log(error))
+    }
+
+    render() {
+        return (
+            <Dashboard1>
+                <Header>
+                    <img src={logo} alt=""/>
+                    <Nav>
+                        <div>About</div>
+                        <div>Explore</div>
+                        <div>USer stuff</div>
+                    </Nav>
+                </Header>
+
+                <Greeting>
+                    <Hi>Hello, Friendly Developer! </Hi>
+                    <Contacts>
+                        <div onClick={e=>this.showConn()}>My Connections +</div>
+                        {this.state.showConnections && <div>{this.state.contacts.map(contact => <ContactItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ContactItem>)}</div>}
+                        
+                    </Contacts>
+                </Greeting>
+
+
+                <Main>
+                    <Projects>
+                        <Nav>
+                            <div onClick={e=>this.switchProjectView('mine')}>My projects</div>
+                            <div onClick={e=>this.switchProjectView('others')}>Explore projects</div>
+                        </Nav>
+                        {/* {this.state.projects[0] && */}
+                        <ProjectList>
+                            {this.state.projectView=='mine' && this.state.projects.map(proj => <ProjectItem key={`mine${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
+                            {this.state.projectView=='others' && this.state.publicProj.map(proj => <ProjectItem key={`others${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
+                        </ProjectList>
+                    </Projects>
+
+                <Side>
+                    
+                    <PostFeed>
+                        <Newpost>
+                            <textarea placeholder="what gem did you find?" cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea>
+                            <button onClick={e=>{this.submitPost(this.state.postContent)}}>Post</button>
+                        </Newpost>
+                        THE LATEST NEWS
+                        {this.state.posts.map(item => <div> <PostTitle>{item.content}</PostTitle><small><small>{item.created_at}</small></small> <div><img src={item.picture}/>{item.first_name}{item.last_name}</div></div>)}
+                        
+                    </PostFeed>
+                </Side>
+                </Main>
+            </Dashboard1>
+        );
+    }
+}
+
+
+
 
 const Dashboard1 = glam.div ({
     padding: 50
@@ -14,12 +126,12 @@ const Dashboard1 = glam.div ({
 const Header = glam.div ({
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    background: 'rgb(200,200,200)',
+    alignItems: 'flex-end',
+    borderBottom: '10px solid #593c8f',
+    marginBottom: 25,
     padding: 20,
     '& img': {
         width: 200,
-        height: 100
     }
 
 })
@@ -32,22 +144,49 @@ const Nav = glam.div ({
     '& div': {
         padding: 10,
         marginRight: 10,
-        color: 'white',
-        background: '#593c8f',
-        border: ' 2px solid green'
-
+        color: 'black',
+        borderBottom: '3px solid #593c8f'
     }
 })
 
 const Greeting = glam.div ({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start'
+})
+
+const Hi= glam.div ({
     fontSize: 24
+})
+
+const Contacts = glam.div ({
+    fontSize: 14,
+    maxWidth: 300,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginBottom: 20,
+    '& img': {
+        width: 30,
+        height: 30,
+        borderRadius: '50%'
+    },
+    cursor: 'Pointer'
+})
+
+const ContactItem = glam.div ({
+    cursor: 'pointer',
+    margin: 2,
+    '& a': {
+        textDecoration: 'none'
+    }
 })
 
 const Main = glam.div ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    flex: 1
 })
 
 const Projects = glam.div ({
@@ -67,23 +206,20 @@ const ProjectList = glam.div ({
     '& div': {
         padding: 10,
         textAlign: 'left',
-        // border: '2px solid red'
     }
 })
 
-const Contacts = glam.div ({
-    maxWidth: 400,
-    '& img': {
-        width: 30,
-        height: 30,
-        margin: 10,
-        borderRadius: '50%'
+const Side = glam.div ({
+    maxWidth: 300,
+    background: '#d4c631'
+})
+
+const Newpost = glam.div ({
+    '& textarea': {
+        borderRadius: 3,
+        padding: 3
     },
-    '& div': {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    }
+    marginBottom: 10
 })
 
 const PostFeed = glam.div ({
@@ -92,92 +228,19 @@ const PostFeed = glam.div ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 10,
-    width: 300,
     '& img': {
         height: 25,
         width: 25,
         borderRadius: '50%'
-    }
+    },
+    
 })
 
 const PostTitle = glam.div ({
     padding: 5,
-    fontStyle: 'Oblique'
+    fontStyle: 'Oblique',
+
 })
-
-class Dashboard extends Component {
-    constructor(){
-        super();
-        this.state={
-            user: {},
-            projects: [],
-           posts: [],
-            contacts: [],
-        };
-    }
-
-    componentDidMount(){
-            // axios.get('/indevr/users').then(res=>{
-            //     this.props.login(res.data)
-            // }).catch(error=>console.log(error))
-            axios.get('/indevr/contacts?user_id=1').then(res=>{
-                this.setState({contacts: res.data})
-                console.log(this.state.contacts)
-            }).catch(error=>console.log(error))
-            axios.get('/indevr/projects?user_id=1').then(res=>{
-                this.setState({projects: res.data})
-                console.log(this.state.projects)
-            }).catch(error=>console.log(error))
-        axios.get('/indevr/posts').then(res=>{
-            this.setState({posts: res.data})
-        console.log(this.state.posts)
-        }).catch(error=>console.log(error))
-    }
-
-
-    render() {
-        return (
-            <Dashboard1>
-                <Header>
-                    <img src={logo} alt=""/>
-                    <Nav>
-                        <div>About</div>
-                        <div>Explore</div>
-                        <div>USer stuff</div>
-                    </Nav>
-                </Header>
-
-                <Greeting>Hello, Friendly Developer! </Greeting>
-
-                <Main>
-                    <Projects>
-                        <Nav>
-                            <div>My projects Tab</div>
-                            <div>Explore projects Tab</div>
-                        </Nav>
-                        {/* {this.state.projects[0] && */}
-                        <ProjectList>
-                            {this.state.projects.map(proj => <ProjectItem key={proj.id} project={proj}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
-                        </ProjectList>
-                    </Projects>
-
-                <aside>
-                    <Contacts>
-                        <div>MY CONNECTIONS</div>
-                        <div>{this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}</div>
-                        
-                    </Contacts>
-                    <PostFeed>
-                        THE LATEST NEWS
-                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.content} <br/> <div><img src={item.picture}/>{item.first_name}{item.last_name}</div><div> Upvote</div></div>)}
-                        
-                    </PostFeed>
-                </aside>
-                </Main>
-            </Dashboard1>
-        );
-    }
-}
 
 const mapStateToProps = state => {
     return {

@@ -36,7 +36,7 @@ const ProjectViewer = glam.div ({
         width: 300,
         padding: 20,
         height: '100vh',
-        background: '#ffffee'
+        background: '#d4c631'
     }
 })
 

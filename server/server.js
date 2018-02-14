@@ -110,14 +110,15 @@ app.get(`${contactAPIurl}`, contact.get);
 //-------------PUBLIC POST FEED--------------
 const newsAPIurl = '/indevr/posts'
 app.get(newsAPIurl, posts.get)
-// app.post(newsAPIurl, posts.create)
+app.post(newsAPIurl, posts.create)
 // app.put(newsAPIurl, posts.update)
 // app.delete(newsAPIurl, posts.delete)
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects'
 
-app.get(projAPIurl, proj.getUserProj); //uses query
+app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
+app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
 app.get(`${projAPIurl}/skills/:id`, proj.getSkillStack); //uses params
 app.get(`/indevr/contributors`, proj.getProjCons); //uses query?

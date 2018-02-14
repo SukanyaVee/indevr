@@ -1,1 +1,1 @@
-SELECT * FROM project_users JOIN users ON project_users.user_id=users.id WHERE project_users.project_id=$1;
+SELECT * FROM projects JOIN project_stacks ON projects.id=project_stacks.project_id WHERE public=true AND projects.user_id<>1;
