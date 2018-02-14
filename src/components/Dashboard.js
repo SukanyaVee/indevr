@@ -139,7 +139,7 @@ class Dashboard extends Component {
         return (
             <Dashboard1>
                 <Header>
-                    <img src={logo}/>
+                    <img src={logo} alt=""/>
                     <Nav>
                         <div>About</div>
                         <div>Explore</div>
