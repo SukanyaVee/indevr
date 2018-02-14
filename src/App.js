@@ -35,9 +35,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/dashboard" component={Dashboard}/>
-                <Route path="/project/:id" component={ProjectView}/>
-                {/* <Route path="/whiteboard" component={Whiteboard}/> */}
+            {router}
             </div>
         );
     }
