@@ -4,20 +4,25 @@ import ConnectButton from './ConnectButton';
 import grate from '../assets/background-grate.png';
 import ToggleDisplay from 'react-toggle-display';
 import axios from 'axios';
-import Post from './Post';
-import User from './User';
+import PostTile from './PostTile';
+import UserTile from './UserTile';
+import ProjectTile from './ProjectTile';
 
 
 class Profile extends Component {
     constructor(){
         super();
         this.state = {
-            showPosts: true,
+            showPosts: false,
             showNetwork: false,
-            showProjects: false,
+            showProjects: true,
             posts: [],
-            network: [{name: 'john smith'}, {name: 'jane doe'}, {name: 'bob jones'}, {name: 'jack ryan'}, {name: 'tony stark'}, {name: 'bruce banner'}, {name: 'barrack obama' }, {name: 'someone withareallylongname'}],
-            projects: []
+            network: [],
+            projects: [
+                {id: 1, project_name: 'inDevr', description: 'A super cool project!'},
+                {id: 1, project_name: 'inDevr', description: 'A super cool project!'},
+                {id: 1, project_name: 'inDevr', description: 'A super cool project! A super cool project! A super cool project! A super cool project! A super cool project! A super cool project! A super cool project! A super cool project!'}
+            ]
         }
     }
 
@@ -29,8 +34,11 @@ class Profile extends Component {
         }).catch( err => console.log(err))
 
         axios.get(`/indevr/contacts?user_id=${userID}`).then(res => {
-            console.log(res.data);
             this.setState({network: res.data})
+        }).catch( err => console.log(err))
+
+        axios.get(`/indevr/projects?user_id=${userID}`).then(res => {
+            this.setState({projects: res.data})
         }).catch( err => console.log(err))
     }
 
@@ -53,6 +61,7 @@ class Profile extends Component {
                     <div className="container">
                         <Sidebar>
                             <ProfileImg src="http://i.pravatar.cc/300" alt="profile picture" />
+                            <h3>Apple Barrel</h3>
                             <ConnectButton />
                             <UserDetails>
                                 <p>Short bio goes here so people can say things about themselves or whatever</p>
@@ -91,7 +100,7 @@ class Profile extends Component {
                                     <PostsWrapper>
                                         {this.state.posts.map((post,i) => {
                                             return (
-                                                    <Post key={i}
+                                                    <PostTile key={i}
                                                         id={post.id}
                                                         name={post.first_name + ' ' + post.last_name}
                                                         user_id={post.user_id}
@@ -107,7 +116,7 @@ class Profile extends Component {
                                     <NetworkWrapper>
                                         {this.state.network.map((user,i) => {
                                             return (
-                                                    <User key={i}
+                                                    <UserTile key={i}
                                                     name={user.first_name + ' ' + user.last_name}
                                                     img={user.img}/>
                                             )
@@ -116,10 +125,16 @@ class Profile extends Component {
                                 </ToggleDisplay>
 
                                 <ToggleDisplay show={this.state.showProjects}>
-                                    Projects
-                                    {/* {this.state.posts.map(post => {
-                                        return ' Project'
-                                    })} */}
+                                    {this.state.projects.map((project,i) => {
+                                        return (
+                                            <ProjectTile
+                                            key={i}
+                                            id={project.id}
+                                            title={project.project_name}
+                                            desc={project.description}
+                                            public={project.public}/>
+                                        );
+                                    })}
                                 </ToggleDisplay>
                             </Content>
                         </Body>
@@ -139,7 +154,7 @@ const Main = glam.div({
     '> .container':{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
         flexWrap: 'wrap',
     }
 })
@@ -158,6 +173,9 @@ const Sidebar = glam.div({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    '> h3':{
+        marginTop: 0
+    },
     '> div':{
         width: '100%'
     },

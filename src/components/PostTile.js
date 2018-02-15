@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import glam from 'glamorous';
 
-class Post extends Component {
+class PostTile extends Component {
     render(){
         return (
             <Main>
@@ -22,7 +22,7 @@ class Post extends Component {
     }
 }
 
-export default Post;
+export default PostTile;
 
 const Main = glam.div({
     backgroundColor: 'var(--main-grey)',

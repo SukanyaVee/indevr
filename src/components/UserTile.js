@@ -1,7 +1,7 @@
 import React from 'react';
 import glam from 'glamorous';
 
-const User = (props) => {
+const UserTile = (props) => {
     return (
         <Main>
             <img src={props.img || "http://i.pravatar.cc/150"} alt="profile pic"/>
@@ -10,7 +10,7 @@ const User = (props) => {
     );
 }
 
-export default User;
+export default UserTile;
 
 const Main = glam.div({
     backgroundColor: 'var(--main-grey)',
