@@ -4,76 +4,50 @@ import {Link,  Route} from 'react-router-dom';
 import glam from 'glamorous';
 
 
-class Overview extends Component {
-    constructor(props){
-        super(props)
-        this.state={
-            projectId: 1,
-            project: {},
-            projectCons: [],
-            skills: []
-        }
-    }
-
-    componentDidMount(){
-        console.log(this.state.projectId);
-        axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
-            this.setState({project: res.data[0]})
-            console.log(res.data)
-        }).catch(error=>console.log(error))        
-        axios.get(`/indevr/projects/skills/${this.state.projectId}`).then(res=>{
-            this.setState({skills: res.data})
-            console.log(this.state.skills)
-        }).catch(error=>console.log(error))        
-        axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
-            this.setState({projectCons: res.data})
-            console.log(this.state.projectCons)
-        }).catch(error=>console.log(error))        
-    }
-
-
-
-    render(){
+function Overview(props) {
         return (
             <ProjectOverview>
                 <ProjectTitle>
-                    {this.state.project.project_name} 
+                    {props.project.project_name} 
                 </ProjectTitle>
                 <ProjectDescription>
-                    {this.state.project.description} 
+                    {props.project.description} 
                 </ProjectDescription>
                 <ProjectCollaborators>
-                    Contributors<br/>
-                    {this.state.projectCons.map(contributor => <div key={contributor.id}><Link to={`/project/${contributor.id}`}> <img src={contributor.picture}/> {contributor.first_name} {contributor.last_name}</Link></div>)}
+                    <h4>Contributors</h4>
+                    {props.projectCons.map(contributor => <div key={contributor.id}><Link to={`/project/${contributor.id}`}> <img src={contributor.picture}/> {contributor.first_name} {contributor.last_name}</Link></div>)}
                     </ProjectCollaborators>
                 <ProjectSkills>
-                    Skill Stack<br/>
-                    {this.state.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level==1?'Shadow Warrior':skill.level==2?'Wannabe Ninja':'Samurai'}</div>)}
+                    <h4>Skill Stack</h4>
+                    {props.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level==1?'Worthy Warrior':skill.level==2?'Noble Ninja':'Supreme Samurai'}</div>)}
                 </ProjectSkills>
             </ProjectOverview>
         );
     }
-}
+
 
 const ProjectOverview = glam.div ({
-    padding: 50,
+    padding: 10,
     fontSize: 16
 })
 
 const ProjectTitle = glam.div ({
     fontSize: '3em',
     marginBottom: 10,
-    borderLeft: '3px solid #593c8f'
+    // borderTop: '3px solid #593c8f'
 })
 
 const ProjectDescription = glam.div ({
     marginBottom: 10,
     fontStyle: 'oblique',
-    borderLeft: '3px solid #593c8f'
+    // borderTop: '3px solid #593c8f'
 })
 const ProjectCollaborators = glam.div ({
     marginBottom: 10,
+    padding: 12,
     borderLeft: '3px solid #593c8f',
+    borderRight: '3px solid #593c8f',
+    borderRadius: 10,
     '& div': {
         padding: 10,
         background: '#eeeeee'
@@ -86,7 +60,10 @@ const ProjectCollaborators = glam.div ({
 })
 const ProjectSkills = glam.div ({
     marginBottom: 10,
-    borderLeft: '3px solid #593c8f'
+    padding: 12,
+    borderLeft: '3px solid #593c8f',
+    borderRight: '3px solid #593c8f',
+    borderRadius: 10
 })
 
 export default Overview
