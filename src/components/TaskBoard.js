@@ -54,6 +54,7 @@ class TaskBoard extends Component {
         })
         return (
             <Main>
+                task
                 {lists}
             </Main>
         );

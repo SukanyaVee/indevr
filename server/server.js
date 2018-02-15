@@ -94,6 +94,7 @@ massive(process.env.CONNECTION_STRING)
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
+app.get(`${userAPIurl}/:userID`, user.get)
 // app.put(`${userAPIurl}/:id`, user.update);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
@@ -134,6 +135,14 @@ const goalsAPIurl = '/indevr/goals'
 // app.post(goalsAPIurl, goals.post);
 // app.put(goalsAPIurl, goals.put);
 // app.delete(goalsAPIurl, goals.delete);
+
+
+//-------------PROJECT TASKBOARD-----------
+const taskboardAPIurl = '/indevr/taskboard';
+
+app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
+app.put(taskboardAPIurl, taskboard_ctrl.put);
+
 
 
 

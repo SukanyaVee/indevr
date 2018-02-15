@@ -13,30 +13,36 @@ class Profile extends Component {
     constructor(){
         super();
         this.state = {
-            showPosts: false,
+            showPosts: true,
             showNetwork: false,
-            showProjects: true,
+            showProjects: false,
             posts: [],
             network: [],
-            projects: [
-                {id: 1, project_name: 'inDevr', description: 'A super cool project!'},
-                {id: 1, project_name: 'inDevr', description: 'A super cool project!'},
-                {id: 1, project_name: 'inDevr', description: 'A super cool project! A super cool project! A super cool project! A super cool project! A super cool project! A super cool project! A super cool project! A super cool project!'}
-            ]
+            projects: [],
+            links: {}
         }
     }
 
     componentDidMount(){
-        //Get Posts
         const userID = 1
+
+        //Get User information
+        axios.get(`/indevr/users/${userID}`).then(res => {
+            const {first_name, last_name, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} = res.data;
+            this.setState({ user: first_name + ' ' + last_name, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} })
+        }).catch( err => console.log(err))
+
+        //Get Posts
         axios.get(`/indevr/posts/${userID}`).then(res => {
             this.setState({posts: res.data})
         }).catch( err => console.log(err))
 
+        //Get Network
         axios.get(`/indevr/contacts?user_id=${userID}`).then(res => {
             this.setState({network: res.data})
         }).catch( err => console.log(err))
 
+        //Get Projects
         axios.get(`/indevr/projects?user_id=${userID}`).then(res => {
             this.setState({projects: res.data})
         }).catch( err => console.log(err))
@@ -61,34 +67,49 @@ class Profile extends Component {
                     <div className="container">
                         <Sidebar>
                             <ProfileImg src="http://i.pravatar.cc/300" alt="profile picture" />
-                            <h3>Apple Barrel</h3>
+                            <h3>{this.state.user}</h3>
                             <ConnectButton />
                             <UserDetails>
-                                <p>Short bio goes here so people can say things about themselves or whatever</p>
+                                <p>{this.state.bio}</p>
                                 <div>
-                                    <li><i className="fas fa-map-pin"></i> &nbsp; Location</li>
-                                    <li><i className="far fa-envelope"></i> &nbsp; email@indevr.io</li>
-                                    <li><i className="fab fa-github"></i> &nbsp; Github</li>
-                                    <li><i className="fab fa-bitbucket"></i> &nbsp; Bitbucket</li>
-                                    <li><i className="fab fa-gitlab"></i> &nbsp; GitLab</li>
-                                    <li><i className="far fa-briefcase"></i> &nbsp; Portfolio</li>
-                                    <li><i className="far fa-globe"></i> &nbsp; Website</li>
-                                    <li><i className="far fa-rss-square"></i> &nbsp; Blog</li>
-                                    <li><i className="far fa-podcast"></i> &nbsp; Podcast</li>
-                                    <li><i className="fab fa-codepen"></i> &nbsp; Codepen</li>
-                                    <li><i className="fab fa-twitter"></i> &nbsp; Twitter</li>
-                                    <li><i className="fab fa-stack-overflow"></i> &nbsp; Stack Overflow</li>
+                                    {this.state.links.location &&
+                                        <li><i className="fas fa-map-pin"></i> &nbsp; {this.state.links.location}</li>}
+                                    {this.state.links.email &&
+                                        <li><a href={`mailto:${this.state.links.email}`}><i className="far fa-envelope"></i> &nbsp; {this.state.links.email}</a></li>}
+                                    {this.state.links.website &&
+                                        <li><a href={`${this.state.links.website}`}><i className="far fa-globe"></i> &nbsp; {this.state.links.website}</a></li>}
+                                    {this.state.links.github &&
+                                        <li><a href={`https://github.com/${this.state.links.github}`}><i className="fab fa-github"></i> &nbsp; Github</a></li>}
+                                    {this.state.links.bitbucket &&
+                                        <li><a href={`https://bitbucket.org/${this.state.links.bitbucket}`}><i className="fab fa-bitbucket"></i> &nbsp; Bitbucket</a></li>}
+                                    {this.state.links.gitlab &&
+                                        <li><a href={`https://gitlab.com/${this.state.links.gitlab}`}><i className="fab fa-gitlab"></i> &nbsp; {this.state.links.gitlab}</a></li>}
+                                    {this.state.links.portfolio &&
+                                        <li><a href={`${this.state.links.portfolio}`}><i className="far fa-briefcase"></i> &nbsp; Portfolio</a></li>}
+                                    {this.state.links.codepen &&
+                                        <li><a href={`https://codepen.io/${this.state.links.codepen}`}><i className="fab fa-codepen"></i> &nbsp; {this.state.links.codepen}</a></li>}
+                                    {this.state.links.twitter &&
+                                        <li><a href={`https://twitter.com/${this.state.links.twitter}`}><i className="fab fa-twitter"></i> &nbsp; @{this.state.links.twitter}</a></li>}
                                 </div>
                             </UserDetails>
                         </Sidebar>
                         <Body>
                             <Projects>
-                                <div>
-                                    <h3>Current Project</h3>
-                                </div>
-                                <div>
-                                    <h3>Featured Project</h3>
-                                </div>
+                                {!this.state.projects.length &&
+                                    <div>
+                                        <h3>No Projects Yet!</h3>
+                                        <p>{this.state.user} hasn't joined any projects on inDevr yet :(</p>
+                                    </div>}
+                                {this.state.projects.length >= 1 &&
+                                    <div>
+                                        <h3>{this.state.projects[0].project_name}</h3>
+                                        <p>{this.state.projects[0].description}</p>
+                                    </div>}
+                                {this.state.projects.length >= 2 &&
+                                    <div>
+                                        <h3>{this.state.projects[1].project_name}</h3>
+                                        <p>{this.state.projects[1].description}</p>
+                                    </div>}
                             </Projects>
                             <Nav>
                                 <div id="posts" className="active" onClick={() => this.switchTab('posts')}>Posts</div>
@@ -178,6 +199,10 @@ const Sidebar = glam.div({
     },
     '> div':{
         width: '100%'
+    },
+    '& a':{
+        color: 'inherit',
+        textDecoration: 'none',
     },
     '@media (max-width: 729px)':{
         width: '100%',
