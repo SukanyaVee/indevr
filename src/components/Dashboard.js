@@ -114,7 +114,7 @@ class Dashboard extends Component {
                             <PostItem key={item.post_id}> 
                                 <PostTitle>
                                     {item.content}
-                                    <div onClick={e=>{this.deletePost(item.post_id)}}>x</div>
+                                    <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
                                 </PostTitle>
                                 <small><small>{item.created_at}</small></small> 
                                  
@@ -242,22 +242,33 @@ const PostFeed = glam.div ({
     '& img': {
         height: 25,
         width: 25,
-        borderRadius: '50%'
+        borderRadius: '50%',
+        marginRight: 10
     },
     
 })
 
 const PostItem = glam.div({
     marginBottom: 5,
+    padding: 5,
     borderLeft: '2px solid #d4c631'
 })
 
 const PostTitle = glam.div ({
-    padding: 5,
-    fontStyle: 'Oblique',
     display: 'flex',
     justifyContent: 'space-between'
 
+})
+
+const Xxx = glam.div({
+    cursor: 'pointer',
+    '&:hover': {
+        opacity: '1',
+        transform: 'scale(1.2)'
+    },
+    '&:not(:hover)': {
+        opacity: '0.4'
+    }
 })
 
 const mapStateToProps = state => {
