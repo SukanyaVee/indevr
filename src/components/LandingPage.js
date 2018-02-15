@@ -68,12 +68,12 @@ class LandingPage extends Component {
         </Header>
         <Initial>
           <Main>
-            <Heading>
+            <Heading >
               <strong>
                 Made By Developers - <i>For Developers</i>
               </strong>
               <br />
-              <Desc>
+              <Desc className='text'>
                 <strong>
                   <i>inDevr</i>
                 </strong>{" "}
@@ -117,7 +117,10 @@ const Initial = glam.section({
 
 const Desc = glam.p({
   margin: 20,
-  width: "75%"
+  width: "75%",
+  "hover & .text": {
+    color: 'black'
+  }
 });
 
 const Header = glam.header({
@@ -138,9 +141,7 @@ const Heading = glam.h1({
   width: "75%",
   padding: 10,
   // boxShadow: '0 0 0 4px white',
-  "hover .text": {
-    color: "black"
-  }
+  
 });
 
 const Main = glam.div({

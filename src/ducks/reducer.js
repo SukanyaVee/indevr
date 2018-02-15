@@ -1,10 +1,14 @@
 const LOGGED_IN = 'LOGGED_IN';
 const LOGOUT = 'LOGOUT';
-const SEARCH = 'SEARCH';
+const SEARCHUSERS = 'SEARCHUSERS';
+const SEARCHPROJ = 'SEARCHPROJ';
+const SEARCHPOSTS = 'SEARCHPOSTS';
 
 const initialState = {
     user: {},
     results: [],
+    projects: [],
+    posts: [],
 }
 
 export function login(user){
@@ -21,10 +25,31 @@ export function logout(){
     }
 }
 
-export function searchResults(results){
-    console.log('Reducer', results.data)
+export function searchUsers(results){
+    // console.log('Reducer', results.data)
     return {
-        type: SEARCH,
+        type: SEARCHUSERS,
+        payload: results.data
+    }
+}
+export function searchProj(results){
+    console.log('Reducer Proj', results.data)
+    let pro = results.data.filter(elem => {
+        if(elem.public === true){
+            return elem;
+        }
+        return null
+    })
+    console.log('Pro', pro)
+    return {
+        type: SEARCHPROJ,
+        payload: pro
+    }
+}
+export function searchPosts(results){
+    console.log('Reducer Post', results.data)
+    return {
+        type: SEARCHPOSTS,
         payload: results.data
     }
 }
@@ -36,8 +61,12 @@ export default function reducer(state = initialState, action){
             return {...state, user: action.payload};
         case LOGOUT:
             return {...state, user: action.payload};
-        case SEARCH:
-            return {...state, results: action.payload}
+        case SEARCHUSERS:
+            return {...state, results: action.payload};
+        case SEARCHPROJ:
+            return {...state, projects: action.payload};
+        case SEARCHPOSTS:
+            return {...state, posts: action.payload}
         default: 
             return state;
     }
