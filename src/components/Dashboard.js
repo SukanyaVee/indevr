@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import profpic from '../assets/prof-pic.png';
+// import profpic from '../assets/prof-pic.png';
 import logo from '../assets/in_DEV_r.png';
 import glam from 'glamorous';
 
@@ -100,10 +100,10 @@ const PostFeed = glam.div ({
     }
 })
 
-const PostTitle = glam.div ({
-    padding: 5,
-    fontStyle: 'Oblique'
-})
+// const PostTitle = glam.div ({
+//     padding: 5,
+//     fontStyle: 'Oblique'
+// })
 
 class Dashboard extends Component {
     constructor(){
@@ -164,13 +164,13 @@ class Dashboard extends Component {
                 <aside>
                     <Contacts>
                         <div>MY CONNECTIONS</div>
-                        <div>{this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}</div>
-                        
+                        <div>{this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture} alt=""/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}</div>
+
                     </Contacts>
                     <PostFeed>
                         THE LATEST NEWS
-                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.content} <br/> <div><img src={item.picture}/>{item.first_name}{item.last_name}</div><div> Upvote</div></div>)}
-                        
+                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.content} <br/> <div><img src={item.picture} alt=""/>{item.first_name}{item.last_name}</div><div> Upvote</div></div>)}
+
                     </PostFeed>
                 </aside>
                 </Main>

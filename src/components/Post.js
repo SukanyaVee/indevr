@@ -29,11 +29,12 @@ const Main = glam.div({
     width: 300,
     height: 300,
     padding: 10,
-
+    borderRadius: 3,
+    boxShadow: '3px 3px 5px 0px rgba(0,0,0,0.75)',
 })
 
 const Header = glam.div({
-    backgroundColor: 'var(--main-black)',
+    backgroundColor: 'var(--main-purple)',
     color: '#fff',
     display: 'flex',
     justifyContent: 'flex-start',

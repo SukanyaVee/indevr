@@ -5,6 +5,7 @@ import grate from '../assets/background-grate.png';
 import ToggleDisplay from 'react-toggle-display';
 import axios from 'axios';
 import Post from './Post';
+import User from './User';
 
 
 class Profile extends Component {
@@ -14,19 +15,8 @@ class Profile extends Component {
             showPosts: true,
             showNetwork: false,
             showProjects: false,
-            posts: [
-                {
-                    id: 1,
-                    content: 'This is a post',
-                    timestamp: ''
-                },
-                {
-                    id: 2,
-                    content: 'More posts!',
-                    timestamp: ''
-                },
-            ],
-            network: [],
+            posts: [],
+            network: [{name: 'john smith'}, {name: 'jane doe'}, {name: 'bob jones'}, {name: 'jack ryan'}, {name: 'tony stark'}, {name: 'bruce banner'}, {name: 'barrack obama' }, {name: 'someone withareallylongname'}],
             projects: []
         }
     }
@@ -34,8 +24,13 @@ class Profile extends Component {
     componentDidMount(){
         //Get Posts
         const userID = 1
-        axios.get(`/indevr/news/${userID}`).then(res => {
+        axios.get(`/indevr/posts/${userID}`).then(res => {
             this.setState({posts: res.data})
+        }).catch( err => console.log(err))
+
+        axios.get(`/indevr/contacts?user_id=${userID}`).then(res => {
+            console.log(res.data);
+            this.setState({network: res.data})
         }).catch( err => console.log(err))
     }
 
@@ -57,7 +52,7 @@ class Profile extends Component {
                 <Main>
                     <div className="container">
                         <Sidebar>
-                            <ProfileImg src="http://via.placeholder.com/300x300" alt="profile picture" />
+                            <ProfileImg src="http://i.pravatar.cc/300" alt="profile picture" />
                             <ConnectButton />
                             <UserDetails>
                                 <p>Short bio goes here so people can say things about themselves or whatever</p>
@@ -98,7 +93,7 @@ class Profile extends Component {
                                             return (
                                                     <Post key={i}
                                                         id={post.id}
-                                                        name={post.first_name + ' ' + post.lastname}
+                                                        name={post.first_name + ' ' + post.last_name}
                                                         user_id={post.user_id}
                                                         content={post.content}
                                                         timestamp={post.created_at}/>
@@ -109,9 +104,15 @@ class Profile extends Component {
 
                                 <ToggleDisplay show={this.state.showNetwork}>
                                     Network
-                                    {/* {this.state.network.map(post => {
-                                        return ' Connection'
-                                    })} */}
+                                    <NetworkWrapper>
+                                        {this.state.network.map((user,i) => {
+                                            return (
+                                                    <User key={i}
+                                                    name={user.first_name + ' ' + user.last_name}
+                                                    img={user.img}/>
+                                            )
+                                        })}
+                                    </NetworkWrapper>
                                 </ToggleDisplay>
 
                                 <ToggleDisplay show={this.state.showProjects}>
@@ -145,7 +146,7 @@ const Main = glam.div({
 
 const Header = glam.div({
     height: 100,
-    backgroundColor: 'var(--main-grey)',
+    backgroundColor: 'var(--main-black)',
     width: '100vw',
 })
 
@@ -183,7 +184,9 @@ const Body = glam.div({
 
 const ProfileImg = glam.img({
     borderRadius: 3,
-    marginBottom: 20
+    marginBottom: 20,
+    height: 300,
+    width: 300
 })
 
 const Projects = glam.div({
@@ -255,5 +258,12 @@ const PostsWrapper = glam.div({
     display: 'grid',
     gridGap: 20,
     gridTemplateColumns: 'repeat(auto-fill, 300px)',
+    justifyContent: 'center'
+})
+
+const NetworkWrapper = glam.div({
+    display: 'grid',
+    gridGap: 20,
+    gridTemplateColumns: 'repeat(auto-fill, 170px)',
     justifyContent: 'center'
 })

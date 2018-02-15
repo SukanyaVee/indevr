@@ -103,12 +103,8 @@ const contactAPIurl = '/indevr/contacts'
 // app.post(`${contactAPIurl}/create`, contact.add);
 // app.put(`${contactAPIurl}/:id`, contact.update);
 // app.delete(`${contactAPIurl}/logout`, contact.unfriend);
-// app.get(`${contactAPIurl}/connect`, contact.get);
+app.get(`${contactAPIurl}/connect`, contact.get);
 //
-// //-------------NEWS FEED--------------
-const newsAPIurl = '/indevr/news'
-// app.get(newsAPIurl, news.get)
-app.get(`${newsAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 //
 // //-----------PROJECTS----------------
 // const projAPIurl = '/indevr/projects'
@@ -117,8 +113,9 @@ app.get(`${newsAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 app.get(`${contactAPIurl}`, contact.get);
 
 //-------------PUBLIC POST FEED--------------
-const newsAPIurl = '/indevr/posts'
-app.get(newsAPIurl, posts.get)
+const postAPIurl = '/indevr/posts'
+app.get(postAPIurl, posts.get)
+app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 // app.post(newsAPIurl, posts.create)
 // app.put(newsAPIurl, posts.update)
 // app.delete(newsAPIurl, posts.delete)
