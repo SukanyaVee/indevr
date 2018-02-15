@@ -3,15 +3,50 @@ import SearchBar from "./SearchBar";
 import logo from "../assets/in_DEV_rwhite.png";
 import glam from "glamorous";
 import { connect } from "react-redux";
-// import { Link } from "react-router-dom";
+import axios from 'axios';
+import { Link } from "react-router-dom";
 
 class SearchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: false
+      data: false,
+      results: [],
+      projects: [],
+      posts: [],
     };
   }
+
+  componentDidMount(){
+      console.log(this.props)
+        const {term} = this.props
+        axios.get(`/search/${term}`).then(response => {
+                this.setState({
+                    results: response.data,
+                    data: true,
+                })
+                console.log(this.state)
+        });
+        axios.get(`/search/projects/${term}`).then(response => {
+            let pro = response.data.filter(elem => {
+                if(elem.public === true){
+                    return elem
+                }
+                return null;
+            })
+            this.setState({
+                projects: response.data
+            })
+        });
+        axios.get(`/search/posts/${term}`).then(response => {
+            this.setState({
+                posts: response.data
+            })
+        })
+        console.log('Bar props', this.props)
+        // this.state.searchResults ? this.props.history.push(`/search`) : null
+    }
+  
 
   componentWillReceiveProps(nextProps) {
    if( nextProps.results || nextProps.projects )
@@ -30,26 +65,21 @@ class SearchPage extends Component {
         </Header>
 
         <Content>
-          {this.state.data && (
+          {/* {this.state.data && ( */}
             <Main>
+            <Span><Title>Users</Title></Span>
               <User>
-                {this.state.data && (
-                  <Span>
-                    <h1>Users:</h1>
-                  </Span>
-                )}
-                {this.props.results
-                  ? this.props.results.map(user => {
+                {this.state.results
+                  ? this.state.results.map(user => {
                       return (
-                        <div key={user.id}>
-                          <Image key={user.id} src={user.picture} alt="" />
-                          <h3>Name:</h3>
-                          <h1>
-                            {user.first_name} {user.last_name}
-                          </h1>
-                          <h3>UserName:</h3>
+                        <Div key={user.id}>
+                        <Image key={user.id} src={user.picture} alt="" />
+                          <Column>
+                          <h1>{user.first_name} {user.last_name}</h1>
                           <h1>{user.username}</h1>
-                        </div>
+                          <Link to='/profile'>Profile Page</Link>
+                          </Column>
+                        </Div>
                       );
                     })
                   : () => {
@@ -57,35 +87,32 @@ class SearchPage extends Component {
                     }}
               </User>
 
-              <Projects>
-                {this.state.data && (
-                  <Span>
-                    <h1>Projects:</h1>
-                  </Span>
-                )}
-                {this.props.projects
-                  ? this.props.projects.map(project => {
+                  <Span><Title>Projects:</Title></Span>
+               <Projects>
+                {this.state.projects
+                  ? this.state.projects.map(project => {
                       return (
-                        <div key={project.id}>
-                          <h3>Project Name:</h3>
+                        <Div key={project.id}>
+                        <Column>
                           <h1>{project.project_name}</h1>
-                        </div>
+                          <p>{project.description}</p>
+                          <link href={project.repo} value='Git Hub Repository'/>
+                        </Column>
+                        </Div>
                       );
                     })
                   : () => {
                       return <div> No project results available :(</div>;
                     }}
               </Projects>
-              <Posts>
-                {this.state.data && (
-                  <Span>
-                    <h1>Posts:</h1>
-                  </Span>
-                )}
-                {this.props.posts
-                  ? this.props.posts.map(post => {
+              {/*<Posts>
+                {this.state.posts
+                  ? this.state.posts.map(post => {
                       return (
-                        <div key={post.id}>
+                          <div key={post.id}>
+                          <Span>
+                            <h1>Posts:</h1>
+                          </Span>
                           <h3>Post:</h3>
                           <h1>{post.content}</h1>
                         </div>
@@ -94,15 +121,10 @@ class SearchPage extends Component {
                   : () => {
                       return <div> No post results available :(</div>;
                     }}
-              </Posts>
+              </Posts> */}
             </Main>
           )}
-          {/* <Aside>
-                <Links> Search By: </Links>
-                <Links> <Link to='search/projects'>Projects</Link> </Links>
-                <Links> <Link to='search/skills'>Skills</Link> </Links>
-                <Links> <Link to='search/stacks'>Stacks</Link> </Links>
-                </Aside> */}
+        
         </Content>
       </div>
     );
@@ -128,6 +150,37 @@ const Content = glam.div({
   backgroundColor: 'var(--main-grey)',
 });
 
+const Div = glam.div({
+  hieght: '100%',
+  width: '100%',
+  // border: 'solid black 2pt',
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'flex-end',
+  margin: 0,
+})
+
+const Column = glam.div({
+  display: "flex",
+  flexDirection: "Column",
+  alignItems: "flex-end",
+  height: 200,
+  width: '100%',
+  marginTop: 10,
+})
+// const Row2 = glam.div({
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: 'space-around',
+//   alignItems: "center",
+//   width: '50%',
+// })
+
+const Title = glam.h1({
+    margin: 5,
+
+})
+
 const Main = glam.section({
   width: "100%",
   height: "100%",
@@ -140,8 +193,11 @@ const Main = glam.section({
 });
 
 const Image = glam.img({
-  height: 100,
-  width: 100
+  marginTop: 0,
+  marginLeft: 0,
+  height: 200,
+  width: '20%',
+  border: 'solid black 2pt',
 });
 
 // const Aside = glam.aside({
@@ -162,11 +218,12 @@ const Image = glam.img({
 
 const User = glam.div({
   width: "75%",
+  height: 200,
   border: "solid black 2px",
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
+  flexDirection: "row",
+  justifyContent: "space-between",
+//   alignItems: "center",
   backgroundColor: 'white'
 });
 
@@ -175,7 +232,7 @@ const Projects = glam.div({
   border: "solid black 2px",
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
+  justifyContent: "space-between",
   alignItems: "center",
   backgroundColor: 'white'
 });
@@ -191,17 +248,21 @@ const Posts = glam.div({
 });
 
 const Span = glam.span({
-  float: "left",
-  position: "absolute",
-  left: 180
+  color: 'white',
+  position: "relative",
+  height: '5%',
+  // width: '10%',
+  textAlign: 'center',
+  margin: 10,
+  // top: 0,
+  // right: 0,
+  border: 'solid black 2pt',
 });
 
 function mapStateToProps(state) {
-  const { results, projects, posts } = state;
+  const { term } = state;
   return {
-    results,
-    projects,
-    posts
+    term
   };
 }
 
