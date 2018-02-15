@@ -7,6 +7,7 @@ import axios from 'axios';
 import PostTile from './PostTile';
 import UserTile from './UserTile';
 import ProjectTile from './ProjectTile';
+import {Link} from 'react-router-dom';
 
 
 class Profile extends Component {
@@ -16,6 +17,8 @@ class Profile extends Component {
             showPosts: true,
             showNetwork: false,
             showProjects: false,
+            user: '',
+            picture: '',
             posts: [],
             network: [],
             projects: [],
@@ -24,12 +27,34 @@ class Profile extends Component {
     }
 
     componentDidMount(){
-        const userID = 1
+        this.getInfo();
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.getInfo();
+    }
+
+    getInfo(){
+        //Reset back to initial
+        this.setState({
+            showPosts: true,
+            showNetwork: false,
+            showProjects: false,
+            user: '',
+            picture: '',
+            posts: [],
+            network: [],
+            projects: [],
+            links: {}
+        })
+        document.querySelector('.active').classList.remove('active');
+        document.getElementById('posts').classList.add('active');
 
         //Get User information
+        const userID = this.props.history.location.pathname.slice(5);
         axios.get(`/indevr/users/${userID}`).then(res => {
-            const {first_name, last_name, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} = res.data;
-            this.setState({ user: first_name + ' ' + last_name, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} })
+            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} = res.data;
+            this.setState({ user: first_name + ' ' + last_name, picture, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} })
         }).catch( err => console.log(err))
 
         //Get Posts
@@ -59,6 +84,8 @@ class Profile extends Component {
         })
     }
 
+
+
     render(){
         return (
             <div>
@@ -66,7 +93,7 @@ class Profile extends Component {
                 <Main>
                     <div className="container">
                         <Sidebar>
-                            <ProfileImg src="http://i.pravatar.cc/300" alt="profile picture" />
+                            <ProfileImg src={this.state.picture} alt="profile picture" />
                             <h3>{this.state.user}</h3>
                             <ConnectButton />
                             <UserDetails>
@@ -133,13 +160,14 @@ class Profile extends Component {
                                 </ToggleDisplay>
 
                                 <ToggleDisplay show={this.state.showNetwork}>
-                                    Network
                                     <NetworkWrapper>
                                         {this.state.network.map((user,i) => {
                                             return (
-                                                    <UserTile key={i}
+                                                <Link to={`/dev/${user.id}`} key={i}>
+                                                    <UserTile
                                                     name={user.first_name + ' ' + user.last_name}
-                                                    img={user.img}/>
+                                                    img={user.picture}/>
+                                                </Link>
                                             )
                                         })}
                                     </NetworkWrapper>

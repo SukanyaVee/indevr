@@ -16,7 +16,7 @@ export default (
         <Route path="/project/overview" component={ProjectView}/>
         <Route path="/chat" component={Chat} />
         <Route path="/tasks" component={TaskBoard} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/dev/:userID" component={Profile} />
         <Route path='/search' component={SearchPage} />
     </Switch>
 )
