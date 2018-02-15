@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
-import axios from 'react-redux';
-import profpic from '../assets/prof-pic.png';
-import logo from '../assets/logo.png';
+import axios from 'axios';
+// import profpic from '../assets/prof-pic.png';
+import logo from '../assets/in_DEV_r.png';
 import glam from 'glamorous';
 
 const Dashboard1 = glam.div ({
@@ -31,6 +31,11 @@ const Nav = glam.div ({
     padding: 20,
     '& div': {
         padding: 10,
+        marginRight: 10,
+        color: 'white',
+        background: '#593c8f',
+        border: ' 2px solid green'
+
     }
 })
 
@@ -40,8 +45,8 @@ const Greeting = glam.div ({
 
 const Main = glam.div ({
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     flex: 1
 })
 
@@ -49,22 +54,35 @@ const Projects = glam.div ({
     padding: 10
 })
 
+const ProjectItem = glam.div ({
+    cursor: 'pointer',
+    background: '#eeeeee',
+    margin: 2,
+    '& a': {
+        textDecoration: 'none'
+    }
+})
+
 const ProjectList = glam.div ({
     '& div': {
         padding: 10,
         textAlign: 'left',
-        border: '2px solid red'
+        // border: '2px solid red'
     }
 })
 
 const Contacts = glam.div ({
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    maxWidth: 400,
     '& img': {
         width: 30,
         height: 30,
-        margin: 10
+        margin: 10,
+        borderRadius: '50%'
+    },
+    '& div': {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     }
 })
 
@@ -74,41 +92,54 @@ const PostFeed = glam.div ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 10,
-    width: 300
+    width: 300,
+    '& img': {
+        height: 25,
+        width: 25,
+        borderRadius: '50%'
+    }
 })
 
-const PostTitle = glam.div ({
-    padding: 5,
-    fontStyle: 'Oblique'
-})
+// const PostTitle = glam.div ({
+//     padding: 5,
+//     fontStyle: 'Oblique'
+// })
 
 class Dashboard extends Component {
     constructor(){
-        super()
+        super();
         this.state={
             user: {},
             projects: [],
            posts: [],
             contacts: [],
-            skills: []
-        }
+        };
     }
 
-    // componentDidMount(){
-    //     // axios.all(
-    //         //axios.get checksession
-    //         //axios.get projects
-    //         //axios.get contacts
-    //         //axios.getposts
-    //     // )
-    // }
+    componentDidMount(){
+            // axios.get('/indevr/users').then(res=>{
+            //     this.props.login(res.data)
+            // }).catch(error=>console.log(error))
+            axios.get('/indevr/contacts?user_id=1').then(res=>{
+                this.setState({contacts: res.data})
+                console.log(this.state.contacts)
+            }).catch(error=>console.log(error))
+            axios.get('/indevr/projects?user_id=1').then(res=>{
+                this.setState({projects: res.data})
+                console.log(this.state.projects)
+            }).catch(error=>console.log(error))
+        axios.get('/indevr/posts').then(res=>{
+            this.setState({posts: res.data})
+        console.log(this.state.posts)
+        }).catch(error=>console.log(error))
+    }
 
 
     render() {
         return (
             <Dashboard1>
                 <Header>
-                    <img src={logo}/>
+                    <img src={logo} alt=""/>
                     <Nav>
                         <div>About</div>
                         <div>Explore</div>
@@ -126,36 +157,20 @@ class Dashboard extends Component {
                         </Nav>
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
-                            {this.state.projects.map(proj => <div key={proj.id} project={proj}><Link to="/project/:id"> {proj.title} </Link><br/></div>)}
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
-                            <div>Project Title</div>
+                            {this.state.projects.map(proj => <ProjectItem key={proj.id} project={proj}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
                         </ProjectList>
                     </Projects>
 
                 <aside>
                     <Contacts>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
-                        <div><img src={profpic}/></div>
+                        <div>MY CONNECTIONS</div>
+                        <div>{this.state.contacts.map(contact => <ProjectItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture} alt=""/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ProjectItem>)}</div>
+
                     </Contacts>
                     <PostFeed>
-                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.title} <br/> <div>Comment</div><div> Upvote</div></div>)}
-                        <div> <PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
-                        <div><PostTitle>Post title</PostTitle> <br/> <div>Comment Upvote</div></div>
+                        THE LATEST NEWS
+                        {this.state.posts.map(item => <div key={item.id} item={item}> {item.content} <br/> <div><img src={item.picture} alt=""/>{item.first_name}{item.last_name}</div><div> Upvote</div></div>)}
+
                     </PostFeed>
                 </aside>
                 </Main>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Link, Switch, Route} from 'react-router-dom';
-import {login} from '../ducks/reducer';
+import {Link} from 'react-router-dom';
+// import {login} from '../ducks/reducer';
 import glam from 'glamorous';
 
 import Overview from './Overview';
@@ -16,21 +16,27 @@ const ProjectViewer = glam.div ({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     flex: 1,
-    padding: 50,
+    // padding: 50,
     '& main': {
-        border: '2px solid green'
+        borderTop: '10px solid purple',
+        padding: 20
     },
     '& nav': {
         background: 'grey',
+        padding: 20,
         color: 'white',
         width: 200,
+        height: '100vh',
         '& a': {
             textDecoration: 'none'
         }
     },
     '& aside': {
         border: '2px solid yellow',
-        width: 300
+        width: 300,
+        padding: 20,
+        height: '100vh',
+        background: '#ffffee'
     }
 })
 
@@ -52,15 +58,15 @@ class ProjectView extends Component {
         // axios.all(
             //axios.get single projects or passed through props
             //axios.get project stack
-            //axios.get project group chat            
-            //axios.get project goals        
+            //axios.get project group chat
+            //axios.get project goals
         // )
     }
 
     openRepo () {
-        
-        var output = document.getElementById("repo");
-        output.innerHTML=<object type="text/html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
+
+        // var output = document.getElementById("repo");
+        // output.innerHTML=<object type="text/html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
     }
 
     render() {
@@ -76,16 +82,18 @@ class ProjectView extends Component {
                     <div><Link to="/project/whiteboard">Whiteboard</Link></div>
                 </nav>
                 <main>
-                    <Switch>
-                        <Route path="/project/overview" render={()=><Overview project={this.state.project} stack={this.state.stack}/>}/>
+                    {/* <Switch> */}
+                        {/* <Route path="/project/overview" render={()=> */}
+                        <Overview project={this.state.project} stack={this.state.stack}/>
+                        {/* }/> */}
                         {/* <Route path="/project/repo" component={Repo}/>
                         <Route path="/project/progress" component={Progress}/>
                         <Route path="/project/trello" component={Trello}/>
                         <Route path="/project/whiteboard" component={Whiteboard}/> */}
-                    </Switch>
+                    {/* </Switch> */}
                     <div id="repo"></div>
                 </main>
-                
+
                 <aside>
                     <div>Chat message</div>
                     <div>Chat message</div>

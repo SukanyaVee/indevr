@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { logout } from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import axios from 'axios';
 import router from './router';
 
 

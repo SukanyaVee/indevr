@@ -8,6 +8,12 @@ import store from './store';
 import './index.css';
 import App from './App';
 
+
+// ReactDOM.render(<Provider store={store}><HashRouter><App /></HashRouter></Provider>, document.getElementById('root'));
+// registerServiceWorker();
+
 ReactDOM.render(<Provider store={store}><BrowserRouter>
     <App />
 </BrowserRouter></Provider>, document.getElementById('root'));
+
+

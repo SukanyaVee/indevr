@@ -5,7 +5,7 @@ module.exports = {
 
         //Get users for project and set up return array
         db.get_project_users([projectID]).then(users => {
-            let lists = [{list_name: 'Unassigned', tasks: []}];
+            let lists = [{user_id: 0, list_name: 'Unassigned', tasks: []}];
             users.forEach(user => {
                 lists.push({user_id: user.id, list_name: `${user.first_name} ${user.last_name}`, tasks: []})
             })

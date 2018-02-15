@@ -1,0 +1,1 @@
+INSERT INTO contacts (user_id, content) VALUES ($1, $2);
