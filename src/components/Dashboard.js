@@ -62,6 +62,12 @@ class Dashboard extends Component {
             console.log('this is the state after setting response to it', this.state.posts)
         }).catch(error=>console.log(error))
     }
+    deletePost(postId){
+        console.log(postId)
+        axios.delete(`/indevr/posts/${postId}`).then(resp=>{
+            this.setState({posts: resp.data})
+        })
+    }
 
     render() {
         return (
@@ -97,17 +103,23 @@ class Dashboard extends Component {
                             {this.state.projectView=='others' && this.state.publicProj.map(proj => <ProjectItem key={`others${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
                         </ProjectList>
                     </Projects>
-
                 <Side>
-                    
-                    <PostFeed>
                         <Newpost>
                             <textarea placeholder="what gem did you find?" cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea>
                             <button onClick={e=>{this.submitPost(this.state.postContent)}}>Post</button>
                         </Newpost>
+                    <PostFeed>
                         THE LATEST NEWS
-                        {this.state.posts.map(item => <div> <PostTitle>{item.content}</PostTitle><small><small>{item.created_at}</small></small> <div><img src={item.picture}/>{item.first_name}{item.last_name}</div></div>)}
-                        
+                        {this.state.posts.map(item => 
+                            <PostItem key={item.post_id}> 
+                                <PostTitle>
+                                    {item.content}
+                                    <div onClick={e=>{this.deletePost(item.post_id)}}>x</div>
+                                </PostTitle>
+                                <small><small>{item.created_at}</small></small> 
+                                 
+                                <div><img src={item.picture}/> {item.first_name}{item.last_name}</div>
+                            </PostItem>)}
                     </PostFeed>
                 </Side>
                 </Main>
@@ -210,8 +222,7 @@ const ProjectList = glam.div ({
 })
 
 const Side = glam.div ({
-    maxWidth: 300,
-    background: '#d4c631'
+    maxWidth: 300
 })
 
 const Newpost = glam.div ({
@@ -226,7 +237,7 @@ const PostFeed = glam.div ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: 10,
     '& img': {
         height: 25,
@@ -236,9 +247,16 @@ const PostFeed = glam.div ({
     
 })
 
+const PostItem = glam.div({
+    marginBottom: 5,
+    borderLeft: '2px solid #d4c631'
+})
+
 const PostTitle = glam.div ({
     padding: 5,
     fontStyle: 'Oblique',
+    display: 'flex',
+    justifyContent: 'space-between'
 
 })
 

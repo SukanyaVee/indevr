@@ -109,10 +109,10 @@ app.get(`${contactAPIurl}`, contact.get);
 
 //-------------PUBLIC POST FEED--------------
 const newsAPIurl = '/indevr/posts'
-app.get(newsAPIurl, posts.get)
-app.post(newsAPIurl, posts.create)
+app.get(newsAPIurl, posts.get) 
+app.post(newsAPIurl, posts.create) //uses req.body
 // app.put(newsAPIurl, posts.update)
-// app.delete(newsAPIurl, posts.delete)
+app.delete(`${newsAPIurl}/:id`, posts.delete) //uses params to delete record
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects'
