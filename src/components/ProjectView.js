@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-// import {login} from '../ducks/reducer';
+import {Link, Switch, Route} from 'react-router-dom';
+import axios from 'axios';
+import logo from '../assets/in_DEV_r.png';
 import glam from 'glamorous';
-
+import Header from './Header'
 import Overview from './Overview';
 // import Repo from './Repo';
-// import Progress from './Progress';
-// import Trello from './Trello';
+import Chat from './Chat';
+import TaskBoard from './TaskBoard';
 // import Whiteboard from './Whiteboard';
 
 
+const Nav = glam.div ({
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 20,
+    '& div': {
+        padding: 10,
+        marginRight: 10,
+        color: 'black',
+        borderBottom: '3px solid #593c8f',
+        cursor: 'pointer'
+    }
+})
 
 const ProjectViewer = glam.div ({
     display: 'flex',
@@ -18,7 +32,6 @@ const ProjectViewer = glam.div ({
     flex: 1,
     // padding: 50,
     '& main': {
-        borderTop: '10px solid purple',
         padding: 20
     },
     '& nav': {
@@ -27,13 +40,14 @@ const ProjectViewer = glam.div ({
         color: 'white',
         width: 200,
         height: '100vh',
-        '& a': {
-            textDecoration: 'none'
-        }
+        '& div': {
+            cursor: 'pointer'
+        } 
     },
     '& aside': {
         border: '2px solid yellow',
-        width: 300,
+        maxWidth: 300,
+        minWidth: 200,
         padding: 20,
         height: '100vh',
         background: '#d4c631'
@@ -42,51 +56,64 @@ const ProjectViewer = glam.div ({
 
 
 
-class ProjectView extends Component {
+export default class ProjectView extends Component {
     constructor(props){
         super()
         this.state={
-            user: {},
-            // project: this.props.project,
-            stack: [],
-            goals: []
-            // showTool:''
+            projectId: 1,
+            // user: {},
+            project: {},
+            skills: [],
+            projectsCons: [] ,           
+            viewToggler: 'overview'
         }
+        this.openRepo = this.openRepo.bind(this)
+        this.toggleView = this.toggleView.bind(this)
     }
 
     componentDidMount(){
-
+        axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
+            this.setState({project: res.data[0]})
+            // console.log('single project', res.data[0])
+        }).catch(error=>console.log(error))        
+        axios.get(`/indevr/projects/skills/${this.state.projectId}`).then(res=>{
+            this.setState({skills: res.data})
+            // console.log('skill stack', this.state.skills)
+        }).catch(error=>console.log(error))        
+        axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
+            this.setState({projectCons: res.data})
+            // console.log('contributors', this.state.projectCons)
+        }).catch(error=>console.log(error))       
     }
 
     openRepo () {
-        
         var output = document.getElementById("repo");
         output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
+    }
+
+    toggleView(view) {
+        console.log('what to show', view)
+        this.state.viewToggler=view
     }
 
     render() {
 
         return (
+            <div>
+            <Header/>
             <ProjectViewer>
                 <nav>
                     PROJECT TOOLS
-                    <div><Link to="/project/overview">Overview</Link></div>
-                    <div onClick={e=>this.openRepo()}>Repo</div>
-                    <div><Link to="/project/progress">Progress</Link></div>
-                    <div><Link to="/project/trello">Trello</Link></div>
-                    <div><Link to="/project/whiteboard">Whiteboard</Link></div>
+                    <div onClick={e=>this.toggleView('overview')}>Overview</div>
+                    <div onClick={e=>this.toggleView('repo')}>Repo</div>
+                    <div onClick={e=>this.toggleView('tasks')}>Tasks</div>
+                    {/* <div onClick={e=>this.toggleView('white')}>Whiteboard</div> */}
                 </nav>
                 <main>
-                    {/* <Switch> */}
-                        {/* <Route path="/project/overview" render={()=> */}
-                        <Overview project={this.state.project} stack={this.state.stack}/>
-                        {/* }/> */}
-                        {/* <Route path="/project/repo" component={Repo}/>
-                        <Route path="/project/progress" component={Progress}/>
-                        <Route path="/project/trello" component={Trello}/>
-                        <Route path="/project/whiteboard" component={Whiteboard}/> */}
-                    {/* </Switch> */}
-                    <div id="repo"></div>
+                        {this.state.viewToggler=='overview' && <Overview project={this.state.project} skills={this.state.skills} projectCons={this.state.projectsCons}/> }
+                        {this.state.viewToggler=='tasks' && <TaskBoard/> }
+                        {this.state.viewToggler=='repo' && <div id="repo"></div> }
+                        {/* {this.state.viewToggler=='white' && <Whiteboard/> } */}
                 </main>
 
                 <aside>
@@ -100,8 +127,7 @@ class ProjectView extends Component {
                     <div>Chat message</div>
                 </aside>
             </ProjectViewer>
+        </div>
         );
     }
 }
-
-export default ProjectView

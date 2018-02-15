@@ -128,7 +128,7 @@ app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cpro
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
 app.get(`${projAPIurl}/skills/:id`, proj.getSkillStack); //uses params
 app.get(`/indevr/contributors`, proj.getProjCons); //uses query?
-// app.post(projAPIurl, proj.create);
+app.post(projAPIurl, proj.create); //uses body
 // app.put(projAPIurl, proj.update);
 // app.delete(projAPIurl, proj.delete);
 
