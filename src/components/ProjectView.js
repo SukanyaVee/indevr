@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link, Switch, Route} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 // import {login} from '../ducks/reducer';
 import glam from 'glamorous';
 

@@ -13,7 +13,8 @@ const express = require('express'),
     proj = require('./controller/project_controller');
     auth_ctrl = require('./controller/auth0_controller');
     taskboard_ctrl = require('./controller/taskboard_controller');
-
+    news_feed_ctrl = require('./controller/news_feed_controller');
+    search = require('./controller/search_controller');
 
 //App Setup
 const app = express();
@@ -96,6 +97,7 @@ massive(process.env.CONNECTION_STRING)
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
+app.get(`${userAPIurl}/:userID`, user.get)
 // app.put(`${userAPIurl}/:id`, user.update);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
@@ -105,17 +107,21 @@ const contactAPIurl = '/indevr/contacts'
 // app.post(`${contactAPIurl}/create`, contact.add);
 // app.put(`${contactAPIurl}/:id`, contact.update);
 // app.delete(`${contactAPIurl}/logout`, contact.unfriend);
+app.get(`${contactAPIurl}/connect`, contact.get);
 app.get(`${contactAPIurl}`, contact.get);
+//
+//
 
 //-------------PUBLIC POST FEED--------------
-const newsAPIurl = '/indevr/posts'
-app.get(newsAPIurl, posts.get) 
-app.post(newsAPIurl, posts.create) //uses req.body
+const postAPIurl = '/indevr/posts'
+app.get(postAPIurl, posts.get)
+app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
+// app.post(newsAPIurl, posts.create)
 // app.put(newsAPIurl, posts.update)
 app.delete(`${newsAPIurl}/:id`, posts.delete) //uses params to delete record
 
 //-----------PROJECTS----------------
-const projAPIurl = '/indevr/projects'
+const projAPIurl = '/indevr/projects';
 
 app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
 app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
@@ -135,6 +141,22 @@ const goalsAPIurl = '/indevr/goals'
 // app.delete(goalsAPIurl, goals.delete);
 
 
+//-------------PROJECT TASKBOARD-----------
+const taskboardAPIurl = '/indevr/taskboard';
+
+app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
+app.put(taskboardAPIurl, taskboard_ctrl.put);
+
+
+
+
+//-------------------Search------------------
+app.get('/search/:term', search.getUsers);
+app.get('/search/projects/:term', search.getProjects);
+app.get('/search/posts/:term', search.getPosts);
+
+
+// //----------------AUTH0----------------
 // const userUrl = '/'
 // //Auth0
 // app.post(`${userUrl}/login`, (req, res) => {

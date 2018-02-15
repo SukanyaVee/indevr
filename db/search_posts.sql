@@ -1,0 +1,1 @@
+SELECT * FROM posts WHERE LOWER(content) LIKE '%' || LOWER($1) || '%';
