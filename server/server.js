@@ -14,7 +14,7 @@ const express = require('express'),
     auth_ctrl = require('./controller/auth0_controller');
     taskboard_ctrl = require('./controller/taskboard_controller');
     news_feed_ctrl = require('./controller/news_feed_controller');
-
+    search = require('./controller/search_controller');
 
 //App Setup
 const app = express();
@@ -136,6 +136,14 @@ const goalsAPIurl = '/indevr/goals'
 // app.delete(goalsAPIurl, goals.delete);
 
 
+
+//-------------------Search------------------
+app.get('/search/:term', search.getUsers);
+app.get('/search/projects/:term', search.getProjects);
+app.get('/search/posts/:term', search.getPosts);
+
+
+// //----------------AUTH0----------------
 // const userUrl = '/'
 // //Auth0
 // app.post(`${userUrl}/login`, (req, res) => {
