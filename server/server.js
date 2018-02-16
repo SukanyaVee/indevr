@@ -118,7 +118,7 @@ app.get(postAPIurl, posts.get)
 app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 // app.post(newsAPIurl, posts.create)
 // app.put(newsAPIurl, posts.update)
-app.delete(`${newsAPIurl}/:id`, posts.delete) //uses params to delete record
+app.delete(`${postAPIurl}/:id`, posts.delete) //uses params to delete record
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects';
@@ -126,19 +126,18 @@ const projAPIurl = '/indevr/projects';
 app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
 app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
-app.get(`${projAPIurl}/skills/:id`, proj.getSkillStack); //uses params
 app.get(`/indevr/contributors`, proj.getProjCons); //uses query?
 app.post(projAPIurl, proj.create); //uses body
 // app.put(projAPIurl, proj.update);
 // app.delete(projAPIurl, proj.delete);
 
 //----------PROJECT DERIVATIVES--------
-const goalsAPIurl = '/indevr/goals'
+const skillsAPIurl = '/indevr/skills'
 
-// app.get(goalsAPIurl, goals.get);
-// app.post(goalsAPIurl, goals.post);
-// app.put(goalsAPIurl, goals.put);
-// app.delete(goalsAPIurl, goals.delete);
+app.get(`${skillsAPIurl}/:id`, proj.getSkillStack); //uses params
+app.post(skillsAPIurl, proj.createSkill); // uses body
+// app.put(skillsAPIurl, skills.put);
+// app.delete(skillsAPIurl, skills.delete);
 
 
 //-------------PROJECT TASKBOARD-----------

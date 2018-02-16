@@ -7,6 +7,7 @@ import TaskBoard from './components/TaskBoard';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import SearchPage from './components/SearchPage';
+import ExplorePage from './components/ExplorePage';
 
 
 export default (
@@ -18,5 +19,6 @@ export default (
         <Route path="/tasks" component={TaskBoard} />
         <Route path="/profile" component={Profile} />
         <Route path='/search' component={SearchPage} />
+        <Route path="/explore" component={ExplorePage}/>
     </Switch>
 )

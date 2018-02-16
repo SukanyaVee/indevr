@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom';
 import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import glam from 'glamorous';
 // import profpic from '../assets/prof-pic.png';
-import logo from '../assets/in_DEV_r.png';
-import glam, { ClipPath, Aside } from 'glamorous';
-import Header from './Header'
+// import logo from '../assets/in_DEV_r.png';
 import CreateProject from './CreateProject'
+import Explorer from './Explorer'
 
 
 class Dashboard extends Component {
@@ -33,15 +33,15 @@ class Dashboard extends Component {
             // axios.get('/indevr/users').then(res=>{
             //     this.props.login(res.data)
             // }).catch(error=>console.log(error))
-        axios.get('/indevr/contacts?user_id=1').then(res=>{
+        axios.get('/indevr/contacts?user_id=1').then(res=>{ //HARDCODED
             this.setState({contacts: res.data})
             console.log('connections', this.state.contacts)
         }).catch(error=>console.log(error))
-        axios.get('/indevr/projects?user_id=1').then(res=>{
+        axios.get('/indevr/projects?user_id=1').then(res=>{//HARDCODED
             res.data[0] ? this.setState({projects: res.data}) : this.setState({projectView: 'others'})
             console.log('my projects', this.state.projects)
         }).catch(error=>console.log(error))
-        axios.get('/indevr/public?user_id=1').then(res=>{
+        axios.get('/indevr/public?user_id=1').then(res=>{//HARDCODED
             this.setState({publicProj: res.data})
             console.log('public projects', this.state.projects)
         }).catch(error=>console.log(error))
@@ -61,7 +61,7 @@ class Dashboard extends Component {
     }
     
     submitPost(content, userId) {
-        axios.post('/indevr/posts', {user_Id: 1, content:content}).then(resp=>{
+        axios.post('/indevr/posts', {user_Id: 1, content:content}).then(resp=>{//HARDCODED
             console.log('this is the response', resp.data)
             this.setState(prevState=>{
                 return {posts: [...prevState.posts, resp.data[0]]}
@@ -77,20 +77,14 @@ class Dashboard extends Component {
     }
 
     render() {
-        // var p = {
-        //     '
-        // }
-
         return (
             <Dashboard1>
-                <Header/>
 
                 <Greeting>
                     <Hi>Hello, Friendly Developer! </Hi>
                     <Contacts>
                         <div onClick={e=>this.showConn()}>My Connections +</div>
-                        {this.state.showConnections && <div>{this.state.contacts.map(contact => <ContactItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ContactItem>)}</div>}
-                        
+                        {this.state.showConnections && <div>{this.state.contacts.map(contact => <ContactItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture} alt="contact"/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ContactItem>)}</div>}
                     </Contacts>
                 </Greeting>
 
@@ -104,11 +98,10 @@ class Dashboard extends Component {
                         </Nav>
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
-                            {this.state.projectView=='mine' &&  
+                            {this.state.projectView==='mine' &&  
                                 this.state.projects.map(proj => <ProjectItem key={`mine${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
-                            {this.state.projectView=='create' && <CreateProject user_id="1"/>}
-                            {this.state.projectView=='others' && 
-                            this.state.publicProj.map(proj => <ProjectItem key={`others${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem> )}
+                            {this.state.projectView==='create' && <CreateProject user_id="1"/>}
+                            {this.state.projectView==='others' && <Explorer/>}
                         </ProjectList>
                     </Projects>
                 <Side>
@@ -127,7 +120,7 @@ class Dashboard extends Component {
                                 <div>
                                 <small><small>{item.created_at}</small></small> 
                                  
-                                <div><img src={item.picture}/> {item.first_name} {item.last_name}</div>
+                                <div><img src={item.picture} alt="profile"/> {item.first_name} {item.last_name}</div>
                                 </div>
                             </PostItem>)}
                     </PostFeed>
@@ -142,13 +135,14 @@ class Dashboard extends Component {
 
 
 const Dashboard1 = glam.div ({
-    padding: 50
+    // padding: 50
 })
 
 
 
 const Greeting = glam.div ({
     display: 'flex',
+    padding: 20,
     justifyContent: 'space-between',
     alignItems: 'flex-start'
 })
@@ -185,6 +179,7 @@ const Main = glam.div ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    padding: 20
 })
 
 const Projects = glam.div ({
@@ -223,7 +218,9 @@ const ProjectList = glam.div ({
 
 
 const Side = glam.div ({
-    maxWidth: 300
+    maxWidth: 300,
+    background: '#eeeeee',
+    padding: 20
 })
 
 const Newpost = glam.div ({
@@ -256,7 +253,7 @@ const PostItem = glam.div({
 
 const PostTitle = glam.div ({
     display: 'flex',
-    background: '#faffdd',
+    background: '#d4c631',
     borderRadius: 10,
     padding:5,
     justifyContent: 'space-between',

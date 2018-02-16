@@ -19,6 +19,10 @@ module.exports = {
         // console.log(req.params.id)
         db.get_skillstack([req.params.id]).then(skillstack=> res.status(200).send(skillstack)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
+    createSkill: (req, res, next) => {
+        const db = req.app.get('db') 
+        db.create_skill([req.body.project_id, req.body.skill, req.body.level]).then(()=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
     getProjCons: (req, res) => {
         const db = req.app.get('db') 
         console.log(req.query.projectId)
@@ -26,7 +30,6 @@ module.exports = {
     },
     create: (req, res, next) => {
         const db = req.app.get('db') 
-        db.create_project([req.body.user_id, req.body.project_name, req.body.description, req.body.public, req.body.repo]).then(()=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
-  
+        db.create_project([req.body.user_id, req.body.project_name, req.body.description, req.body.public, req.body.repo]).then((resp)=> res.status(200).send(resp)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
 }

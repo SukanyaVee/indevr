@@ -1,5 +1,4 @@
-import React, {Component}  from 'react';
-import axios from 'axios';
+import React  from 'react';
 import {Link} from 'react-router-dom';
 import glam from 'glamorous';
 
@@ -15,11 +14,11 @@ function Overview(props) {
                 </ProjectDescription>
                 <ProjectCollaborators>
                     <h4>Contributors</h4>
-                    {props.projectCons.map(contributor => <div key={contributor.id}><Link to={`/project/${contributor.id}`}> <img src={contributor.picture}/> {contributor.first_name} {contributor.last_name}</Link></div>)}
+                    {props.projectCons.map(contributor => <div key={contributor.id}><Link to={`/project/${contributor.id}`}> <img src={contributor.picture} alt="contributor"/> {contributor.first_name} {contributor.last_name}</Link></div>)}
                     </ProjectCollaborators>
                 <ProjectSkills>
                     <h4>Skill Stack</h4>
-                    {props.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level==1?'Worthy Warrior':skill.level==2?'Noble Ninja':'Supreme Samurai'}</div>)}
+                    {props.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level===1?'Worthy Warrior':skill.level===2?'Noble Ninja':'Supreme Samurai'}</div>)}
                 </ProjectSkills>
             </ProjectOverview>
         );
