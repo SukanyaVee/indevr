@@ -3,7 +3,11 @@ module.exports = {
         const {userID} = req.params;
         const db = req.app.get('db');
         db.get_user([userID]).then(users => {
-            res.status(200).send(users[0]);
+            //Get Skills for user
+            db.get_skills([userID]).then(skills => {
+                users[0].skills = skills
+                res.status(200).send(users[0]);
+            })
         }).catch( err => {
             console.log(err);
             res.status(500).send('Oops, something went wrong!')

@@ -22,12 +22,14 @@ class Profile extends Component {
             posts: [],
             network: [],
             projects: [],
-            links: {}
+            links: {},
+            skills: []
         }
     }
 
     componentDidMount(){
         this.getInfo();
+
     }
 
     componentWillReceiveProps(nextProps){
@@ -45,7 +47,8 @@ class Profile extends Component {
             posts: [],
             network: [],
             projects: [],
-            links: {}
+            links: {},
+            skills: []
         })
         document.querySelector('.active').classList.remove('active');
         document.getElementById('posts').classList.add('active');
@@ -53,8 +56,8 @@ class Profile extends Component {
         //Get User information
         const userID = this.props.history.location.pathname.slice(5);
         axios.get(`/indevr/users/${userID}`).then(res => {
-            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} = res.data;
-            this.setState({ user: first_name + ' ' + last_name, picture, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} })
+            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, skills} = res.data;
+            this.setState({ user: first_name + ' ' + last_name, picture, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter}, skills })
         }).catch( err => console.log(err))
 
         //Get Posts
@@ -118,6 +121,11 @@ class Profile extends Component {
                                     {this.state.links.twitter &&
                                         <li><a href={`https://twitter.com/${this.state.links.twitter}`}><i className="fab fa-twitter"></i> &nbsp; @{this.state.links.twitter}</a></li>}
                                 </div>
+                                <Skills>
+                                    {this.state.skills.map((skill,i) => {
+                                        return <div key={i}>{skill.skill} - {skill.level}</div>
+                                    })}
+                                </Skills>
                             </UserDetails>
                         </Sidebar>
                         <Body>
@@ -337,4 +345,17 @@ const NetworkWrapper = glam.div({
     gridGap: 20,
     gridTemplateColumns: 'repeat(auto-fill, 170px)',
     justifyContent: 'center'
+})
+
+const Skills = glam.div({
+    marginTop: 10,
+    display: 'flex',
+    flexWrap: 'wrap',
+    '> div':{
+        margin: 5,
+        color: '#fff',
+        backgroundColor: 'var(--main-purple)',
+        padding: '3px 5px',
+        borderRadius: 5,
+    }
 })

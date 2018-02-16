@@ -7,6 +7,7 @@ import TaskBoard from './components/TaskBoard';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import SearchPage from './components/SearchPage';
+import EditProfile from './components/EditProfile';
 
 
 export default (
@@ -17,6 +18,7 @@ export default (
         <Route path="/chat" component={Chat} />
         <Route path="/tasks" component={TaskBoard} />
         <Route path="/dev/:userID" component={Profile} />
+        <Route path="/edit" component={EditProfile} />
         <Route path='/search' component={SearchPage} />
     </Switch>
 )
