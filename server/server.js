@@ -102,13 +102,15 @@ app.put(`${userAPIurl}/:id`, user.update);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
 // ---------------CONTACTS-------------------
-const contactAPIurl = '/indevr/contacts'
+const contactAPIurl = '/indevr/contacts';
 
 // app.post(`${contactAPIurl}/create`, contact.add);
 // app.put(`${contactAPIurl}/:id`, contact.update);
 // app.delete(`${contactAPIurl}/logout`, contact.unfriend);
 app.get(`${contactAPIurl}/connect`, contact.get);
+app.post(`${contactAPIurl}/connect`, contact.connect); //Connects users
 app.get(`${contactAPIurl}`, contact.get);
+app.get(`${contactAPIurl}/check`, contact.check); //Check for exisitng connection
 //
 //
 

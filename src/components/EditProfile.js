@@ -3,6 +3,7 @@ import glam from 'glamorous';
 import DropZone from './DropZone';
 import axios from 'axios';
 import request  from 'superagent';
+import {connect} from 'react-redux';
 
 
 class EditProfile extends Component {
@@ -26,7 +27,7 @@ class EditProfile extends Component {
     }
 
     componentDidMount(){
-        const userID = 1;
+        const userID = this.props.user.id;
         axios.get(`/indevr/users/${userID}`).then(res => {
             const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, location_public, email_public,github_public,gitlab_public,bitbucket_public, portfolio_public, website_public,codepen_public,twitter_public} = res.data;
             this.setState({
@@ -59,7 +60,7 @@ class EditProfile extends Component {
 
     saveChanges(e){
         e.preventDefault()
-        const userID = 1;
+        const userID = this.props.user.id;
         axios.put(`/indevr/users/${userID}`, this.state).then(res => {
             console.log(res.data);
         }).catch(err => console.log(err))
@@ -317,11 +318,17 @@ class EditProfile extends Component {
     }
 }
 
-export default EditProfile;
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+};
+
+export default connect(mapStateToProps)(EditProfile);
 
 const Main = glam.div({
     backgroundColor: 'var(--main-purple)',
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 100px)',
     color: '#fff',
     padding: 20,
     '> .container':{

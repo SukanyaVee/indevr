@@ -4,7 +4,7 @@ import { logout } from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import router from './router';
-import Header from './components/Header';
+import AltHeader from './components/AltHeader';
 
 
 class App extends Component {
@@ -28,7 +28,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Header />
+                <AltHeader />
                 {router}
             </div>
         );

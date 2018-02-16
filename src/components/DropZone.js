@@ -1,12 +1,14 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import request  from 'superagent';
 import glam from 'glamorous';
 
 
 const DropZone = (props) => {
 
-    // -------This is the function that uploads the image and returns the URL from AWS.  Place it in the component where DropZone is used, and pass it as the onDrop prop.-------
+    // --------------
+    // This is the function that uploads the image and returns the URL from AWS.
+    // Place it in the component where DropZone is used, and pass it as the onDrop prop.
+    // You will need to import request  from 'superagent';
     // --------------
     // const onDrop = (files) => {
     //     request.post('/api/upload')
@@ -18,7 +20,9 @@ const DropZone = (props) => {
     //     })
     // }
 
-    //-------You can override the default styling by passing a style object with the style prop-------
+    // --------------
+    // You can override the default styling by passing a style object with the style prop
+    // --------------
     const style= {
         height: 200,
         width: 200,

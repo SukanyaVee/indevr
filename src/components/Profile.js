@@ -8,6 +8,8 @@ import PostTile from './PostTile';
 import UserTile from './UserTile';
 import ProjectTile from './ProjectTile';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+
 
 
 class Profile extends Component {
@@ -39,6 +41,7 @@ class Profile extends Component {
     getInfo(){
         //Reset back to initial
         this.setState({
+            connected: false,
             showPosts: true,
             showNetwork: false,
             showProjects: false,
@@ -58,6 +61,11 @@ class Profile extends Component {
         axios.get(`/indevr/users/${userID}`).then(res => {
             const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, skills} = res.data;
             this.setState({ user: first_name + ' ' + last_name, picture, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter}, skills })
+        }).catch( err => console.log(err))
+
+        //Check for connection
+        axios.get(`/indevr/contacts/check?userID=${this.props.user.id}&friendID=${userID}`).then( res => {
+            this.setState({connected:res.data})
         }).catch( err => console.log(err))
 
         //Get Posts
@@ -87,6 +95,21 @@ class Profile extends Component {
         })
     }
 
+    connectWithUser(){
+        console.log('click');
+        if(!this.state.connected){
+            console.log('not connected');
+            const newConnection = {
+                userID: this.props.user.id,
+                connectWith: this.props.history.location.pathname.slice(5)
+            }
+            axios.post('/indevr/contacts/connect', newConnection).then(res => {
+                console.log(res.data);
+                this.setState({ connected: true})
+            }).catch( err => console.log(err))
+        }
+    }
+
 
 
     render(){
@@ -97,7 +120,7 @@ class Profile extends Component {
                         <Sidebar>
                             <ProfileImg src={this.state.picture} alt="profile picture" />
                             <h3>{this.state.user}</h3>
-                            <ConnectButton />
+                            <ConnectButton onClick={() => this.connectWithUser()} connected={this.state.connected}/>
                             <UserDetails>
                                 <p>{this.state.bio}</p>
                                 <div>
@@ -183,9 +206,8 @@ class Profile extends Component {
                                 <ToggleDisplay show={this.state.showProjects}>
                                     {this.state.projects.map((project,i) => {
                                         return (
-                                            <Link to={`/project/${project.id}`}>
+                                            <Link to={`/project/${project.id}`} key={i}>
                                                 <ProjectTile
-                                                key={i}
                                                 id={project.id}
                                                 title={project.project_name}
                                                 desc={project.description}
@@ -203,11 +225,18 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+};
+
+export default connect(mapStateToProps)(Profile);
+
 
 const Main = glam.div({
     backgroundColor: 'var(--main-purple)',
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 100px)',
     paddingTop: 50,
     '> .container':{
         display: 'flex',

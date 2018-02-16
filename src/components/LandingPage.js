@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
-import SearchBar from "../components/SearchBar";
-import logo from "../assets/LogoMain.png";
-import logo2 from '../assets/LogoMini.png';
+// import SearchBar from "../components/SearchBar";
+// import logo from "../assets/LogoMain.png";
+// import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 
 const options = {
@@ -63,11 +63,11 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        <Header>
+        {/* <Header>
           <img src={logo} alt="" />
           <img src={logo2} alt='' />
           <SearchBar />
-        </Header>
+        </Header> */}
         <Initial>
           <Main>
             <Heading >
@@ -97,7 +97,7 @@ class LandingPage extends Component {
                 <Field placeholder='Your Password'/>
                 First Name:
                 <Field placeholder='First Name'/>
-                Last Name: 
+                Last Name:
                 <Field placeholder='Last Name'/>
                 <button style={btnlogin}>Sign Up</button>
                 </Signup>
@@ -125,20 +125,20 @@ const Desc = glam.p({
   }
 });
 
-const Header = glam.header({
-  height: "100",
-  width: "100vw",
-  backgroundColor: 'var(--main-black)',
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginTop: "0",
-  '> img':{
-    width: 150,
-    height: 65,
-  }
-});
+// const Header = glam.header({
+//   height: "100",
+//   width: "100vw",
+//   backgroundColor: 'var(--main-black)',
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "space-between",
+//   alignItems: "center",
+//   marginTop: "0",
+//   '> img':{
+//     width: 150,
+//     height: 65,
+//   }
+// });
 
 const Heading = glam.h1({
   fontSize: "2.5em",
@@ -157,7 +157,7 @@ const Heading = glam.h1({
       display: 'hidden',
     }
 }
-  
+
 });
 
 const Main = glam.div({
