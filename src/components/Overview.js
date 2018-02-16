@@ -7,10 +7,10 @@ function Overview(props) {
         return (
             <ProjectOverview>
                 <ProjectTitle>
-                    {props.project.project_name} 
+                    {props.project.project_name}
                 </ProjectTitle>
                 <ProjectDescription>
-                    {props.project.description} 
+                    {props.project.description}
                 </ProjectDescription>
                 <ProjectCollaborators>
                     <h4>Contributors</h4>

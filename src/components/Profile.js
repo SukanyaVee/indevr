@@ -7,6 +7,9 @@ import axios from 'axios';
 import PostTile from './PostTile';
 import UserTile from './UserTile';
 import ProjectTile from './ProjectTile';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+
 
 
 class Profile extends Component {
@@ -16,20 +19,53 @@ class Profile extends Component {
             showPosts: true,
             showNetwork: false,
             showProjects: false,
+            user: '',
+            picture: '',
             posts: [],
             network: [],
             projects: [],
-            links: {}
+            links: {},
+            skills: []
         }
     }
 
     componentDidMount(){
-        const userID = 1
+        this.getInfo();
+
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.getInfo();
+    }
+
+    getInfo(){
+        //Reset back to initial
+        this.setState({
+            connected: false,
+            showPosts: true,
+            showNetwork: false,
+            showProjects: false,
+            user: '',
+            picture: '',
+            posts: [],
+            network: [],
+            projects: [],
+            links: {},
+            skills: []
+        })
+        document.querySelector('.active').classList.remove('active');
+        document.getElementById('posts').classList.add('active');
 
         //Get User information
+        const userID = this.props.history.location.pathname.slice(5);
         axios.get(`/indevr/users/${userID}`).then(res => {
-            const {first_name, last_name, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} = res.data;
-            this.setState({ user: first_name + ' ' + last_name, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter} })
+            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, skills} = res.data;
+            this.setState({ user: first_name + ' ' + last_name, picture, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter}, skills })
+        }).catch( err => console.log(err))
+
+        //Check for connection
+        axios.get(`/indevr/contacts/check?userID=${this.props.user.id}&friendID=${userID}`).then( res => {
+            this.setState({connected:res.data})
         }).catch( err => console.log(err))
 
         //Get Posts
@@ -59,16 +95,32 @@ class Profile extends Component {
         })
     }
 
+    connectWithUser(){
+        console.log('click');
+        if(!this.state.connected){
+            console.log('not connected');
+            const newConnection = {
+                userID: this.props.user.id,
+                connectWith: this.props.history.location.pathname.slice(5)
+            }
+            axios.post('/indevr/contacts/connect', newConnection).then(res => {
+                console.log(res.data);
+                this.setState({ connected: true})
+            }).catch( err => console.log(err))
+        }
+    }
+
+
+
     render(){
         return (
             <div>
-                <Header></Header>
                 <Main>
                     <div className="container">
                         <Sidebar>
-                            <ProfileImg src="http://i.pravatar.cc/300" alt="profile picture" />
+                            <ProfileImg src={this.state.picture} alt="profile picture" />
                             <h3>{this.state.user}</h3>
-                            <ConnectButton />
+                            <ConnectButton onClick={() => this.connectWithUser()} connected={this.state.connected}/>
                             <UserDetails>
                                 <p>{this.state.bio}</p>
                                 <div>
@@ -91,6 +143,11 @@ class Profile extends Component {
                                     {this.state.links.twitter &&
                                         <li><a href={`https://twitter.com/${this.state.links.twitter}`}><i className="fab fa-twitter"></i> &nbsp; @{this.state.links.twitter}</a></li>}
                                 </div>
+                                <Skills>
+                                    {this.state.skills.map((skill,i) => {
+                                        return <div key={i}>{skill.skill} - {skill.level}</div>
+                                    })}
+                                </Skills>
                             </UserDetails>
                         </Sidebar>
                         <Body>
@@ -133,13 +190,14 @@ class Profile extends Component {
                                 </ToggleDisplay>
 
                                 <ToggleDisplay show={this.state.showNetwork}>
-                                    Network
                                     <NetworkWrapper>
                                         {this.state.network.map((user,i) => {
                                             return (
-                                                    <UserTile key={i}
+                                                <Link to={`/dev/${user.id}`} key={i}>
+                                                    <UserTile
                                                     name={user.first_name + ' ' + user.last_name}
-                                                    img={user.img}/>
+                                                    img={user.picture}/>
+                                                </Link>
                                             )
                                         })}
                                     </NetworkWrapper>
@@ -148,12 +206,13 @@ class Profile extends Component {
                                 <ToggleDisplay show={this.state.showProjects}>
                                     {this.state.projects.map((project,i) => {
                                         return (
-                                            <ProjectTile
-                                            key={i}
-                                            id={project.id}
-                                            title={project.project_name}
-                                            desc={project.description}
-                                            public={project.public}/>
+                                            <Link to={`/project/${project.id}`} key={i}>
+                                                <ProjectTile
+                                                id={project.id}
+                                                title={project.project_name}
+                                                desc={project.description}
+                                                public={project.public}/>
+                                            </Link>
                                         );
                                     })}
                                 </ToggleDisplay>
@@ -166,24 +225,29 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+};
+
+export default connect(mapStateToProps)(Profile);
+
 
 const Main = glam.div({
     backgroundColor: 'var(--main-purple)',
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 100px)',
     paddingTop: 50,
     '> .container':{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'stretch',
         flexWrap: 'wrap',
-    }
-})
-
-const Header = glam.div({
-    height: 100,
-    backgroundColor: 'var(--main-black)',
-    width: '100vw',
+    },
+    '& a':{
+        color: 'inherit',
+        textDecoration: 'none',
+    },
 })
 
 const Sidebar = glam.div({
@@ -199,10 +263,6 @@ const Sidebar = glam.div({
     },
     '> div':{
         width: '100%'
-    },
-    '& a':{
-        color: 'inherit',
-        textDecoration: 'none',
     },
     '@media (max-width: 729px)':{
         width: '100%',
@@ -309,4 +369,17 @@ const NetworkWrapper = glam.div({
     gridGap: 20,
     gridTemplateColumns: 'repeat(auto-fill, 170px)',
     justifyContent: 'center'
+})
+
+const Skills = glam.div({
+    marginTop: 10,
+    display: 'flex',
+    flexWrap: 'wrap',
+    '> div':{
+        margin: 5,
+        color: '#fff',
+        backgroundColor: 'var(--main-purple)',
+        padding: '3px 5px',
+        borderRadius: 5,
+    }
 })

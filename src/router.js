@@ -8,6 +8,7 @@ import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import SearchPage from './components/SearchPage';
 import ExplorePage from './components/ExplorePage';
+import EditProfile from './components/EditProfile';
 
 
 export default (
@@ -17,7 +18,8 @@ export default (
         <Route path="/project/:id" component={ProjectView}/>
         <Route path="/chat" component={Chat} />
         <Route path="/tasks" component={TaskBoard} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/dev/:userID" component={Profile} />
+        <Route path="/edit" component={EditProfile} />
         <Route path='/search' component={SearchPage} />
         <Route path="/explore" component={ExplorePage}/>
     </Switch>

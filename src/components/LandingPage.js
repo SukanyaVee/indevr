@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
-import SearchBar from "../components/SearchBar";
-import logo from "../assets/in_DEV_rwhite.png";
+// import SearchBar from "../components/SearchBar";
+// import logo from "../assets/LogoMain.png";
+// import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 
 const options = {
@@ -62,10 +63,11 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        <Header>
+        {/* <Header>
           <img src={logo} alt="" />
+          <img src={logo2} alt='' />
           <SearchBar />
-        </Header>
+        </Header> */}
         <Initial>
           <Main>
             <Heading >
@@ -95,7 +97,7 @@ class LandingPage extends Component {
                 <Field placeholder='Your Password'/>
                 First Name:
                 <Field placeholder='First Name'/>
-                Last Name: 
+                Last Name:
                 <Field placeholder='Last Name'/>
                 <button style={btnlogin}>Sign Up</button>
                 </Signup>
@@ -117,31 +119,45 @@ const Initial = glam.section({
 
 const Desc = glam.p({
   margin: 20,
-  width: "75%",
+  width: "90%",
   "hover & .text": {
     color: 'black'
   }
 });
 
-const Header = glam.header({
-  height: "100",
-  width: "100vw",
-  backgroundColor: 'var(--main-black)',
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
-  marginTop: "0"
-});
+// const Header = glam.header({
+//   height: "100",
+//   width: "100vw",
+//   backgroundColor: 'var(--main-black)',
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "space-between",
+//   alignItems: "center",
+//   marginTop: "0",
+//   '> img':{
+//     width: 150,
+//     height: 65,
+//   }
+// });
 
 const Heading = glam.h1({
   fontSize: "2.5em",
-  margin: 20,
+  // margin: 20,
+  marginright: 100,
   // textAlign: 'center',
-  width: "75%",
+  width: "65%",
   padding: 10,
   // boxShadow: '0 0 0 4px white',
-  
+  // border: 'solid white 2px',
+  '@media (max-width: 729px)':{
+    width: '100vw',
+    minHeight: '100%',
+    fontSize: '12pt',
+    '> img': {
+      display: 'hidden',
+    }
+}
+
 });
 
 const Main = glam.div({
@@ -187,7 +203,6 @@ const btnlogin = {
   fontSize: "16pt",
   height: 100,
   width: 200,
-  marginRight: 100
 };
 
 const mapDispatchToProps = {

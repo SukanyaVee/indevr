@@ -3,7 +3,11 @@ module.exports = {
         const {userID} = req.params;
         const db = req.app.get('db');
         db.get_user([userID]).then(users => {
-            res.status(200).send(users[0]);
+            //Get Skills for user
+            db.get_skills([userID]).then(skills => {
+                users[0].skills = skills
+                res.status(200).send(users[0]);
+            })
         }).catch( err => {
             console.log(err);
             res.status(500).send('Oops, something went wrong!')
@@ -11,11 +15,16 @@ module.exports = {
     },
 
     update: (req, res, next) => {
+        const {id} = req.params;
+        const {first_name, last_name, bio, email, location, portfolio, website, github, bitbucket, gitlab, codepen, twitter} = req.body;
         const dbInstance = req.app.get('db')
-        console.log(req.body)
-            dbInstance.edit_user([req.params.id,req.body.firstName,req.body.lastName,req.body.email,req.body.pic]).then(user=> {
-                res.status(200).json(user)
-            }).catch(error=>{console.error(error);res.status(500).send(error)})
+            dbInstance.edit_user([id, first_name, last_name, bio, email.value, location.value, portfolio.value, website.value, github.value, bitbucket.value, gitlab.value, codepen.value, twitter.value, email.public, location.public, portfolio.public, website.public, github.public, bitbucket.public, gitlab.public, codepen.public, twitter.public])
+            .then( ()=> {
+                res.status(200).send('Updated')
+            }).catch( err => {
+                console.log(err);
+                res.status(500).send('Oops, something went wrong!')
+            })
     },
     delete: (req, res, next) => {
         console.log('connect country')

@@ -40,7 +40,7 @@ const ProjectViewer = glam.div ({
         height: '100vh',
         '& div': {
             cursor: 'pointer'
-        } 
+        }
     },
     '& aside': {
         border: '2px solid yellow',
@@ -62,7 +62,7 @@ export default class ProjectView extends Component {
             // user: {},
             project: {},
             skills: [],
-            projectsCons: [] ,           
+            projectsCons: [] ,
             viewToggler: 'overview'
         }
         this.openRepo = this.openRepo.bind(this)
@@ -77,16 +77,16 @@ export default class ProjectView extends Component {
         axios.get(`/indevr/skills/${this.state.projectId}`).then(res=>{
             this.setState({skills: res.data})
             // console.log('skill stack', this.state.skills)
-        }).catch(error=>console.log(error))        
+        }).catch(error=>console.log(error))
         axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
             this.setState({projectCons: res.data})
             // console.log('contributors', this.state.projectCons)
-        }).catch(error=>console.log(error))       
+        }).catch(error=>console.log(error))
     }
 
     openRepo () {
-        var output = document.getElementById("repo");
-        output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
+        // var output = document.getElementById("repo");
+        // output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
     }
 
     toggleView(view) {

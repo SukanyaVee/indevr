@@ -59,7 +59,7 @@ class Dashboard extends Component {
         console.log(view)
         this.setState({projectView: view})
     }
-    
+
     submitPost(content, userId) {
         axios.post('/indevr/posts', {user_Id: 1, content:content}).then(resp=>{//HARDCODED
             console.log('this is the response', resp.data)
@@ -111,8 +111,8 @@ class Dashboard extends Component {
                         </Newpost>
                     <PostFeed>
                         THE LATEST NEWS
-                        {this.state.posts.map(item => 
-                            <PostItem key={item.post_id}> 
+                        {this.state.posts.map(item =>
+                            <PostItem key={item.post_id}>
                                 <PostTitle>
                                     {item.content}
                                     <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
@@ -243,7 +243,7 @@ const PostFeed = glam.div ({
         borderRadius: '50%',
         marginRight: 10
     },
-    
+
 })
 
 const PostItem = glam.div({

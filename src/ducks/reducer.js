@@ -3,9 +3,10 @@ const LOGOUT = 'LOGOUT';
 const SEARCHUSERS = 'SEARCHUSERS';
 const SEARCHPROJ = 'SEARCHPROJ';
 const SEARCHPOSTS = 'SEARCHPOSTS';
+const SEARCHING = 'SEARCHING';
 
 const initialState = {
-    user: {},
+    user: {id: 1, picture: 'http://i.pravatar.cc/50x50'},
     results: [],
     projects: [],
     posts: [],
@@ -54,9 +55,16 @@ export function searchPosts(results){
     }
 }
 
+export function searching(term){
+    return {
+        type: SEARCHING,
+        payload: term,
+    }
+}
+
 export default function reducer(state = initialState, action){
     switch(action.type){
-        case LOGGED_IN: 
+        case LOGGED_IN:
         console.log('Action Received:', action)
             return {...state, user: action.payload};
         case LOGOUT:
@@ -66,8 +74,10 @@ export default function reducer(state = initialState, action){
         case SEARCHPROJ:
             return {...state, projects: action.payload};
         case SEARCHPOSTS:
-            return {...state, posts: action.payload}
-        default: 
+            return {...state, posts: action.payload};
+        case SEARCHING:
+            return {...state, term: action.payload};
+        default:
             return state;
     }
 }
