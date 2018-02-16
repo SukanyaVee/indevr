@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import {Link, Switch, Route} from 'react-router-dom';
+// import {Link, Switch, Route} from 'react-router-dom';
 import axios from 'axios';
-import logo from '../assets/in_DEV_r.png';
+// import logo from '../assets/in_DEV_r.png';
 import glam from 'glamorous';
 import Header from './Header'
 import Overview from './Overview';
 // import Repo from './Repo';
-import Chat from './Chat';
+// import Chat from './Chat';
 import TaskBoard from './TaskBoard';
 // import Whiteboard from './Whiteboard';
 
 
-const Nav = glam.div ({
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    padding: 20,
-    '& div': {
-        padding: 10,
-        marginRight: 10,
-        color: 'black',
-        borderBottom: '3px solid #593c8f',
-        cursor: 'pointer'
-    }
-})
+// const Nav = glam.div ({
+//     display: 'flex',
+//     justifyContent: 'flex-end',
+//     alignItems: 'center',
+//     padding: 20,
+//     '& div': {
+//         padding: 10,
+//         marginRight: 10,
+//         color: 'black',
+//         borderBottom: '3px solid #593c8f',
+//         cursor: 'pointer'
+//     }
+// })
 
 const ProjectViewer = glam.div ({
     display: 'flex',
@@ -42,7 +42,7 @@ const ProjectViewer = glam.div ({
         height: '100vh',
         '& div': {
             cursor: 'pointer'
-        } 
+        }
     },
     '& aside': {
         border: '2px solid yellow',
@@ -64,7 +64,7 @@ export default class ProjectView extends Component {
             // user: {},
             project: {},
             skills: [],
-            projectsCons: [] ,           
+            projectsCons: [] ,
             viewToggler: 'overview'
         }
         this.openRepo = this.openRepo.bind(this)
@@ -75,25 +75,25 @@ export default class ProjectView extends Component {
         axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
             this.setState({project: res.data[0]})
             // console.log('single project', res.data[0])
-        }).catch(error=>console.log(error))        
+        }).catch(error=>console.log(error))
         axios.get(`/indevr/projects/skills/${this.state.projectId}`).then(res=>{
             this.setState({skills: res.data})
             // console.log('skill stack', this.state.skills)
-        }).catch(error=>console.log(error))        
+        }).catch(error=>console.log(error))
         axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
             this.setState({projectCons: res.data})
             // console.log('contributors', this.state.projectCons)
-        }).catch(error=>console.log(error))       
+        }).catch(error=>console.log(error))
     }
 
     openRepo () {
-        var output = document.getElementById("repo");
-        output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
+        // var output = document.getElementById("repo");
+        // output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
     }
 
     toggleView(view) {
         console.log('what to show', view)
-        this.state.viewToggler=view
+        // this.state.viewToggler=view
     }
 
     render() {
@@ -110,9 +110,9 @@ export default class ProjectView extends Component {
                     {/* <div onClick={e=>this.toggleView('white')}>Whiteboard</div> */}
                 </nav>
                 <main>
-                        {this.state.viewToggler=='overview' && <Overview project={this.state.project} skills={this.state.skills} projectCons={this.state.projectsCons}/> }
-                        {this.state.viewToggler=='tasks' && <TaskBoard/> }
-                        {this.state.viewToggler=='repo' && <div id="repo"></div> }
+                        {this.state.viewToggler==='overview' && <Overview project={this.state.project} skills={this.state.skills} projectCons={this.state.projectsCons}/> }
+                        {this.state.viewToggler==='tasks' && <TaskBoard/> }
+                        {this.state.viewToggler==='repo' && <div id="repo"></div> }
                         {/* {this.state.viewToggler=='white' && <Whiteboard/> } */}
                 </main>
 

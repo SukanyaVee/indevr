@@ -92,7 +92,6 @@ class Profile extends Component {
     render(){
         return (
             <div>
-                <Header></Header>
                 <Main>
                     <div className="container">
                         <Sidebar>
@@ -184,12 +183,14 @@ class Profile extends Component {
                                 <ToggleDisplay show={this.state.showProjects}>
                                     {this.state.projects.map((project,i) => {
                                         return (
-                                            <ProjectTile
-                                            key={i}
-                                            id={project.id}
-                                            title={project.project_name}
-                                            desc={project.description}
-                                            public={project.public}/>
+                                            <Link to={`/project/${project.id}`}>
+                                                <ProjectTile
+                                                key={i}
+                                                id={project.id}
+                                                title={project.project_name}
+                                                desc={project.description}
+                                                public={project.public}/>
+                                            </Link>
                                         );
                                     })}
                                 </ToggleDisplay>
@@ -213,13 +214,11 @@ const Main = glam.div({
         justifyContent: 'center',
         alignItems: 'stretch',
         flexWrap: 'wrap',
-    }
-})
-
-const Header = glam.div({
-    height: 100,
-    backgroundColor: 'var(--main-black)',
-    width: '100vw',
+    },
+    '& a':{
+        color: 'inherit',
+        textDecoration: 'none',
+    },
 })
 
 const Sidebar = glam.div({
@@ -235,10 +234,6 @@ const Sidebar = glam.div({
     },
     '> div':{
         width: '100%'
-    },
-    '& a':{
-        color: 'inherit',
-        textDecoration: 'none',
     },
     '@media (max-width: 729px)':{
         width: '100%',

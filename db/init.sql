@@ -5,15 +5,23 @@ CREATE TABLE IF NOT EXISTS users (
     last_name TEXT,
     email TEXT,
     picture TEXT,
+    bio TEXT,
     location TEXT,
+    location_public BOOLEAN,
     github TEXT,
+    github_public BOOLEAN,
     bitbucket TEXT,
+    bitbucket_public BOOLEAN,
     gitlab TEXT,
+    gitlab_public BOOLEAN,
     portfolio TEXT,
+    portfolio_public BOOLEAN,
     website TEXT,
+    website_public BOOLEAN,
     codepen TEXT,
+    codepen_public BOOLEAN,
     twitter TEXT,
-    bio TEXT
+    twitter_public BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS contacts (
@@ -80,7 +88,7 @@ VALUES
 (1, 'Test 4','description 4',true, 'random4'),
 (1, 'Test 5','description 5',false, 'random5');
 
-INSERT INTO projects 
+INSERT INTO projects
 (user_id, project_name, description, public, repo)
 VALUES
 (2, 'AAAA', 'xaaaaaaaaaaaaaaaaaaaaaaaaaa',true, 'aaaa'),
@@ -110,9 +118,9 @@ VALUES
 (5, 'HTML', 1),
 (5, 'CSS', 1);
 
-INSERT INTO project_stacks 
+INSERT INTO project_stacks
 (project_id, skill, level)
-VALUES 
+VALUES
 (15, 'react', 3),
 (16, 'react', 2),
 (16, 'angular', 2),
@@ -127,7 +135,7 @@ VALUES
 (21, 'angular',1),
 (22, 'vue',1);
 
-INSERT INTO posts 
+INSERT INTO posts
 (user_id, content)
 VALUES
 (1, 'Found a great tutorial for React https://reactjs.org/'),

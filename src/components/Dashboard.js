@@ -4,8 +4,9 @@ import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
 // import profpic from '../assets/prof-pic.png';
-import logo from '../assets/in_DEV_r.png';
-import glam, { ClipPath, Aside } from 'glamorous';
+// import logo from '../assets/in_DEV_r.png';
+// import glam, { ClipPath, Aside } from 'glamorous';
+import glam from 'glamorous';
 import Header from './Header'
 import CreateProject from './CreateProject'
 
@@ -59,7 +60,7 @@ class Dashboard extends Component {
         console.log(view)
         this.setState({projectView: view})
     }
-    
+
     submitPost(content, userId) {
         axios.post('/indevr/posts', {user_Id: 1, content:content}).then(resp=>{
             console.log('this is the response', resp.data)
@@ -89,8 +90,8 @@ class Dashboard extends Component {
                     <Hi>Hello, Friendly Developer! </Hi>
                     <Contacts>
                         <div onClick={e=>this.showConn()}>My Connections +</div>
-                        {this.state.showConnections && <div>{this.state.contacts.map(contact => <ContactItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture}/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ContactItem>)}</div>}
-                        
+                        {this.state.showConnections && <div>{this.state.contacts.map(contact => <ContactItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture} alt=""/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ContactItem>)}</div>}
+
                     </Contacts>
                 </Greeting>
 
@@ -104,10 +105,10 @@ class Dashboard extends Component {
                         </Nav>
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
-                            {this.state.projectView=='mine' &&  
+                            {this.state.projectView==='mine' &&
                                 this.state.projects.map(proj => <ProjectItem key={`mine${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
-                            {this.state.projectView=='create' && <CreateProject user_id="1"/>}
-                            {this.state.projectView=='others' && 
+                            {this.state.projectView==='create' && <CreateProject user_id="1"/>}
+                            {this.state.projectView==='others' &&
                             this.state.publicProj.map(proj => <ProjectItem key={`others${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem> )}
                         </ProjectList>
                     </Projects>
@@ -118,16 +119,16 @@ class Dashboard extends Component {
                         </Newpost>
                     <PostFeed>
                         THE LATEST NEWS
-                        {this.state.posts.map(item => 
-                            <PostItem key={item.post_id}> 
+                        {this.state.posts.map(item =>
+                            <PostItem key={item.post_id}>
                                 <PostTitle>
                                     {item.content}
                                     <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
                                 </PostTitle>
                                 <div>
-                                <small><small>{item.created_at}</small></small> 
-                                 
-                                <div><img src={item.picture}/> {item.first_name} {item.last_name}</div>
+                                <small><small>{item.created_at}</small></small>
+
+                                <div><img src={item.picture} alt=""/> {item.first_name} {item.last_name}</div>
                                 </div>
                             </PostItem>)}
                     </PostFeed>
@@ -246,7 +247,7 @@ const PostFeed = glam.div ({
         borderRadius: '50%',
         marginRight: 10
     },
-    
+
 })
 
 const PostItem = glam.div({

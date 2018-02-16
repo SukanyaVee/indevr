@@ -98,7 +98,7 @@ massive(process.env.CONNECTION_STRING)
 const userAPIurl = '/indevr/users'
 
 app.get(`${userAPIurl}/:userID`, user.get)
-// app.put(`${userAPIurl}/:id`, user.update);
+app.put(`${userAPIurl}/:id`, user.update);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
 // ---------------CONTACTS-------------------
@@ -118,7 +118,7 @@ app.get(postAPIurl, posts.get)
 app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 // app.post(newsAPIurl, posts.create)
 // app.put(newsAPIurl, posts.update)
-app.delete(`${newsAPIurl}/:id`, posts.delete) //uses params to delete record
+app.delete(`${postAPIurl}/:id`, posts.delete) //uses params to delete record
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects';
