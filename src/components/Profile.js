@@ -24,7 +24,17 @@ class Profile extends Component {
             posts: [],
             network: [],
             projects: [],
-            links: {},
+            links: {
+                email: {value: '', public: false},
+                location: {value: '', public: false},
+                portfolio: {value: '', public: false},
+                website: {value: '', public: false},
+                github:  {value: '', public: false},
+                bitbucket:  {value: '', public: false},
+                gitlab: {value: '', public: false},
+                codepen: {value: '', public: false},
+                twitter: {value: '', public: false},
+            },
             skills: []
         }
     }
@@ -50,7 +60,17 @@ class Profile extends Component {
             posts: [],
             network: [],
             projects: [],
-            links: {},
+            links: {
+                email: {value: '', public: false},
+                location: {value: '', public: false},
+                portfolio: {value: '', public: false},
+                website: {value: '', public: false},
+                github:  {value: '', public: false},
+                bitbucket:  {value: '', public: false},
+                gitlab: {value: '', public: false},
+                codepen: {value: '', public: false},
+                twitter: {value: '', public: false},
+            },
             skills: []
         })
         document.querySelector('.active').classList.remove('active');
@@ -59,8 +79,24 @@ class Profile extends Component {
         //Get User information
         const userID = this.props.history.location.pathname.slice(5);
         axios.get(`/indevr/users/${userID}`).then(res => {
-            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, skills} = res.data;
-            this.setState({ user: first_name + ' ' + last_name, picture, bio, links: {location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter}, skills })
+            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, skills,location_public,email_public,github_public,bitbucket_public,gitlab_public,portfolio_public,website_public,codepen_public,twitter_public } = res.data;
+            this.setState({
+                user: first_name + ' ' + last_name,
+                picture,
+                bio,
+                skills,
+                links: {
+                    location: {value: location, public: location_public},
+                    email: {value: email, public: email_public},
+                    github: {value: github, public: github_public},
+                    bitbucket: {value: bitbucket, public: bitbucket_public},
+                    gitlab: {value: gitlab, public: gitlab_public},
+                    portfolio: {value: portfolio, public: portfolio_public},
+                    website: {value: website, public: website_public},
+                    codepen: {value: codepen, public: codepen_public},
+                    twitter:  {value: twitter, public: twitter_public},
+                }
+            })
         }).catch( err => console.log(err))
 
         //Check for connection
@@ -124,24 +160,24 @@ class Profile extends Component {
                             <UserDetails>
                                 <p>{this.state.bio}</p>
                                 <div>
-                                    {this.state.links.location &&
-                                        <li><i className="fas fa-map-pin"></i> &nbsp; {this.state.links.location}</li>}
-                                    {this.state.links.email &&
-                                        <li><a href={`mailto:${this.state.links.email}`}><i className="far fa-envelope"></i> &nbsp; {this.state.links.email}</a></li>}
-                                    {this.state.links.website &&
-                                        <li><a href={`${this.state.links.website}`}><i className="far fa-globe"></i> &nbsp; {this.state.links.website}</a></li>}
-                                    {this.state.links.github &&
-                                        <li><a href={`https://github.com/${this.state.links.github}`}><i className="fab fa-github"></i> &nbsp; Github</a></li>}
-                                    {this.state.links.bitbucket &&
-                                        <li><a href={`https://bitbucket.org/${this.state.links.bitbucket}`}><i className="fab fa-bitbucket"></i> &nbsp; Bitbucket</a></li>}
-                                    {this.state.links.gitlab &&
-                                        <li><a href={`https://gitlab.com/${this.state.links.gitlab}`}><i className="fab fa-gitlab"></i> &nbsp; {this.state.links.gitlab}</a></li>}
-                                    {this.state.links.portfolio &&
-                                        <li><a href={`${this.state.links.portfolio}`}><i className="far fa-briefcase"></i> &nbsp; Portfolio</a></li>}
-                                    {this.state.links.codepen &&
-                                        <li><a href={`https://codepen.io/${this.state.links.codepen}`}><i className="fab fa-codepen"></i> &nbsp; {this.state.links.codepen}</a></li>}
-                                    {this.state.links.twitter &&
-                                        <li><a href={`https://twitter.com/${this.state.links.twitter}`}><i className="fab fa-twitter"></i> &nbsp; @{this.state.links.twitter}</a></li>}
+                                    {this.state.links.location.public &&
+                                        <li><i className="fas fa-map-pin"></i> &nbsp; {this.state.links.location.value}</li>}
+                                    {this.state.links.email.public &&
+                                        <li><a href={`mailto:${this.state.links.email.value}`}><i className="far fa-envelope"></i> &nbsp; {this.state.links.email.value}</a></li>}
+                                    {this.state.links.website.public &&
+                                        <li><a href={`${this.state.links.website.value}`}><i className="far fa-globe"></i> &nbsp; {this.state.links.website.value}</a></li>}
+                                    {this.state.links.github.public &&
+                                        <li><a href={`https://github.com/${this.state.links.github.value}`}><i className="fab fa-github"></i> &nbsp; Github</a></li>}
+                                    {this.state.links.bitbucket.public &&
+                                        <li><a href={`https://bitbucket.org/${this.state.links.bitbucket.value}`}><i className="fab fa-bitbucket"></i> &nbsp; Bitbucket</a></li>}
+                                    {this.state.links.gitlab.public &&
+                                        <li><a href={`https://gitlab.com/${this.state.links.gitlab.value}`}><i className="fab fa-gitlab"></i> &nbsp; GitLab</a></li>}
+                                    {this.state.links.portfolio.public &&
+                                        <li><a href={`${this.state.links.portfolio.value}`}><i className="far fa-briefcase"></i> &nbsp; Portfolio</a></li>}
+                                    {this.state.links.codepen.public &&
+                                        <li><a href={`https://codepen.io/${this.state.links.codepen.value}`}><i className="fab fa-codepen"></i> &nbsp; Codepen</a></li>}
+                                    {this.state.links.twitter.public &&
+                                        <li><a href={`https://twitter.com/${this.state.links.twitter.value}`}><i className="fab fa-twitter"></i> &nbsp; @{this.state.links.twitter.value}</a></li>}
                                 </div>
                                 <Skills>
                                     {this.state.skills.map((skill,i) => {
@@ -175,7 +211,9 @@ class Profile extends Component {
                             </Nav>
                             <Content>
                                 <ToggleDisplay show={this.state.showPosts}>
+                                    {!this.state.posts.length && <h1 className="text-center">{this.state.user} hasn't posted yet :(</h1>}
                                     <PostsWrapper>
+
                                         {this.state.posts.map((post,i) => {
                                             return (
                                                     <PostTile key={i}
@@ -191,6 +229,7 @@ class Profile extends Component {
 
                                 <ToggleDisplay show={this.state.showNetwork}>
                                     <NetworkWrapper>
+                                        {!this.state.network.length && <h1>{this.state.user} hasn't made any connections yet :(</h1>}
                                         {this.state.network.map((user,i) => {
                                             return (
                                                 <Link to={`/dev/${user.id}`} key={i}>
@@ -204,6 +243,7 @@ class Profile extends Component {
                                 </ToggleDisplay>
 
                                 <ToggleDisplay show={this.state.showProjects}>
+                                    {!this.state.projects.length && <h1>{this.state.user} hasn't joined any projects on inDevr yet :(</h1>}
                                     {this.state.projects.map((project,i) => {
                                         return (
                                             <Link to={`/project/${project.id}`} key={i}>

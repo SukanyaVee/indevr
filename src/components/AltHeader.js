@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import glam from 'glamorous';
 import logo from '../assets/in_DEV_r.png';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 
 class Header extends Component {
@@ -17,7 +18,7 @@ class Header extends Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href=""><img src={logo} alt="logo" className="img-responsive"/></a>
+                        <Link to={this.props.user.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -36,10 +37,10 @@ class Header extends Component {
                                 </a>
                                 <ul className="dropdown-menu">
                                     <li>
-                                        <a href="">View Profile</a>
+                                        <Link to={`/dev/${this.props.user.id}`}>View Profile</Link>
                                     </li>
                                     <li>
-                                        <a href="">Edit Profile</a>
+                                        <Link to="/edit">Edit Profile</Link>
                                     </li>
                                     <li role="separator" className="divider"></li>
                                     <li>
@@ -90,6 +91,9 @@ const Nav = glam.nav({
     },
     '& .navbar-header':{
         height: 100,
+    },
+    ' .dropdown-toggle > img':{
+        height: 50
     }
 })
 
