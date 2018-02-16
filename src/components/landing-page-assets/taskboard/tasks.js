@@ -53,6 +53,9 @@ const Desc = glam.span({
     marginTop: 100,
     '& .p': {
         padding: 10,
+    },
+    '@media (max-width: 729px)':{
+        fontSize: '12pt',
     }
 })
 const Desc2 = glam.span({
@@ -62,6 +65,9 @@ const Desc2 = glam.span({
     marginTop: 100,
     '& .p': {
         padding: 10,
+    },
+    '@media (max-width: 729px)':{
+        fontSize: '12pt',
     }
 })
 
@@ -71,6 +77,10 @@ const Image = glam.img({
     float: 'right',
     marginRight: 10,
     border: '3px solid black',
+    '@media (max-width: 729px)':{
+        width: '50%',
+        minHeight: '45%'
+    }
 })
 const Image2 = glam.img({
     // width: '5%',
@@ -78,6 +88,10 @@ const Image2 = glam.img({
     float: 'left',
     margin: '5px 10px',
     border: '3px solid black',
+    '@media (max-width: 729px)':{
+        width: '45%',
+        minHeight: '50%'
+    }
 })
 
 

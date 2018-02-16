@@ -2,10 +2,8 @@
 
 import React, { Component } from 'react'
 import glam from 'glamorous'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { searching } from '../ducks/reducer'
-// import { searchUsers, searchProj, searchPosts } from '../ducks/reducer'
 import { connect } from 'react-redux'
 
 class SearchBar extends Component {
@@ -25,21 +23,6 @@ class SearchBar extends Component {
         console.log(this.state.searchTerm)
     };
 
-    // search(){
-    //     // e.preventDefault();
-    //     const {searchTerm} = this.state
-    //     axios.get(`/search/${searchTerm}`).then(response => {
-    //             this.props.searchUsers(response)
-    //     });
-    //     axios.get(`/search/projects/${searchTerm}`).then(response => {
-    //         this.props.searchProj(response)
-    //     });
-    //     axios.get(`/search/posts/${searchTerm}`).then(response => {
-    //         this.props.searchPosts(response)
-    //     })
-    //     console.log('Bar props', this.props)
-    //     // this.state.searchResults ? this.props.history.push(`/search`) : null
-    // }
     search(){
         this.props.searching(this.state.searchTerm);
     }
@@ -86,6 +69,14 @@ const Btn = glam.button({
     border: 'solid white 2px',
     color: 'white',
     textAlign: 'center',
+    '@media (max-width: 729px)':{
+        width: '30%',
+        minHeight: '50%',
+        fontSize: '12pt',
+        '> i': {
+            fontSize: '4pt',
+        }
+    }
 })
 
 const mapDispatchToProps = {
