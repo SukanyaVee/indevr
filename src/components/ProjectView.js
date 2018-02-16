@@ -26,6 +26,7 @@ import TaskBoard from './TaskBoard';
 const ProjectViewer = glam.div ({
     display: 'flex',
     justifyContent: 'space-between',
+    border: '2px red solid',
     alignItems: 'flex-start',
     flex: 1,
     // padding: 50,
