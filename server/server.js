@@ -91,6 +91,9 @@ massive(process.env.CONNECTION_STRING)
 
 //API Endpoints
 
+
+//API Endpoints
+
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
@@ -115,16 +118,17 @@ app.get(postAPIurl, posts.get)
 app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
 // app.post(newsAPIurl, posts.create)
 // app.put(newsAPIurl, posts.update)
-// app.delete(newsAPIurl, posts.delete)
+app.delete(`${newsAPIurl}/:id`, posts.delete) //uses params to delete record
 
 //-----------PROJECTS----------------
 const projAPIurl = '/indevr/projects';
 
-app.get(projAPIurl, proj.getUserProj); //uses query
+app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
+app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
 app.get(`${projAPIurl}/skills/:id`, proj.getSkillStack); //uses params
 app.get(`/indevr/contributors`, proj.getProjCons); //uses query?
-// app.post(projAPIurl, proj.create);
+app.post(projAPIurl, proj.create); //uses body
 // app.put(projAPIurl, proj.update);
 // app.delete(projAPIurl, proj.delete);
 
@@ -162,27 +166,6 @@ app.get('/search/posts/:term', search.getPosts);
 // })
 
 // app.get("/checkSession", auth_ctrl.sessionCheck);
-
-
-
-
-const userUrl = '/'
-//Auth0
-app.post(`${userUrl}/login`, (req, res) => {
-    const {userId} = req.body;
-    const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
-    axios.get(auth0Url)
-})
-
-app.get("/checkSession", auth_ctrl.sessionCheck);
-app.get(userAPIurl, auth_ctrl.sessionCheck);
-app.post(`/login`, auth_ctrl.user);
-// app.post(`${userAPIurl}/create`, auth_ctrl.create);
-// app.put(`${userAPIurl}/:id`, user.update);
-app.post(`${userAPIurl}/logout`, auth_ctrl.logout);
-// app.get(`${userAPIurl}/connect`, user.connect);
-
-app.get(`${userAPIurl}/search/:term`, auth_ctrl.search);
 
 
 

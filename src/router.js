@@ -14,7 +14,7 @@ export default (
     <Switch>
         <Route exact path='/' component={LandingPage} />
         <Route exact path="/dashboard" component={Dashboard}/>
-        <Route path="/project/overview" component={ProjectView}/>
+        <Route path="/project/:id" component={ProjectView}/>
         <Route path="/chat" component={Chat} />
         <Route path="/tasks" component={TaskBoard} />
         <Route path="/dev/:userID" component={Profile} />

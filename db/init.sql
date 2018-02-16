@@ -80,6 +80,18 @@ VALUES
 (1, 'Test 4','description 4',true, 'random4'),
 (1, 'Test 5','description 5',false, 'random5');
 
+INSERT INTO projects 
+(user_id, project_name, description, public, repo)
+VALUES
+(2, 'AAAA', 'xaaaaaaaaaaaaaaaaaaaaaaaaaa',true, 'aaaa'),
+(3, 'BBBB', 'xbbbbbbbbbbbbbbbbbbbbbbbbbb', false, 'bbbb'),
+(3, 'CCCC', 'xcccccccccccccccccccccccccc', true, 'cccc'),
+(3, 'DDDD', 'xdddddddddddddddddddddddddd', true, 'dddd'),
+(2, 'EEEE', 'xeeeeeeeeeeeeeeeeeeeeeeeeee', false, 'eeee'),
+(2, 'FFFF', 'xffffffffffffffffffffffffff', FALSE, 'ffff'),
+(2, 'BBBB', 'xblahblahblahblahblahblah', true, 'bbbb'),
+(2, 'GGGG', 'xgggggggggggggggggggggggggg', true, 'gggg');
+
 INSERT INTO project_stacks
 (project_id, skill, level)
 VALUES
@@ -98,7 +110,24 @@ VALUES
 (5, 'HTML', 1),
 (5, 'CSS', 1);
 
-INSERT INTO posts
+INSERT INTO project_stacks 
+(project_id, skill, level)
+VALUES 
+(15, 'react', 3),
+(16, 'react', 2),
+(16, 'angular', 2),
+(17, 'react', 2),
+(18, 'php', 3),
+(18, 'ajax', 3),
+(18, 'sql', 3),
+(18, 'mongo', 3),
+(19, 'html', 1),
+(19, 'css', 1),
+(20, 'react', 1),
+(21, 'angular',1),
+(22, 'vue',1);
+
+INSERT INTO posts 
 (user_id, content)
 VALUES
 (1, 'Found a great tutorial for React https://reactjs.org/'),

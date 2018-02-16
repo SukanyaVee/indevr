@@ -1,7 +1,13 @@
 module.exports = {
     getUserProj: (req, res) => {
         const db = req.app.get('db') 
+        console.log('get all user rojects', req.query.user_id)
         db.get_projects([req.query.user_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
+    getPublicProj: (req, res) => {
+        const db = req.app.get('db') 
+        console.log('get all public project for user', req.query.user_id)
+        db.get_public_projects([req.query.user_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
     getSingle: (req, res) => {
         const db = req.app.get('db') 
@@ -20,7 +26,7 @@ module.exports = {
     },
     create: (req, res, next) => {
         const db = req.app.get('db') 
-        db.create_projects([req.body.user_id,req.body.content]).then(()=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
+        db.create_project([req.body.user_id, req.body.project_name, req.body.description, req.body.public, req.body.repo]).then(()=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
   
     },
 }
