@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import glam from 'glamorous'
+import { Link } from 'react-router-dom'
+import logo from '../assets/in_DEV_r.png'
+
 
 class Footer extends Component {
     constructor(props) {
@@ -10,7 +14,11 @@ class Footer extends Component {
     render() {
         return (
             <div>
-                <h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h1>
+
+
+                <Image src={logo} alt='' />
+
+
             </div>
         )
     }

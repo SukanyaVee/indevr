@@ -3,6 +3,7 @@ const LOGOUT = 'LOGOUT';
 const SEARCHUSERS = 'SEARCHUSERS';
 const SEARCHPROJ = 'SEARCHPROJ';
 const SEARCHPOSTS = 'SEARCHPOSTS';
+const SEARCHING = 'SEARCHING';
 
 const initialState = {
     user: {},
@@ -54,6 +55,13 @@ export function searchPosts(results){
     }
 }
 
+export function searching(term){
+    return {
+        type: SEARCHING,
+        payload: term, 
+    }
+}
+
 export default function reducer(state = initialState, action){
     switch(action.type){
         case LOGGED_IN: 
@@ -66,7 +74,9 @@ export default function reducer(state = initialState, action){
         case SEARCHPROJ:
             return {...state, projects: action.payload};
         case SEARCHPOSTS:
-            return {...state, posts: action.payload}
+            return {...state, posts: action.payload};
+        case SEARCHING: 
+            return {...state, term: action.payload};
         default: 
             return state;
     }
