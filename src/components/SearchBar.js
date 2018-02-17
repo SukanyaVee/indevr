@@ -58,17 +58,18 @@ const Bar = glam.div({
 
 const Search = glam.input({
     border: 'black solid 2pt',
-    width: '100%',
-    height: 40,
+    width: 250,
+    height: 43,
 })
 
 const Btn = glam.button({
     height: 35,
     width: 100,
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     border: 'solid white 2px',
-    color: 'white',
+    color: 'var(--main-purple)',
     textAlign: 'center',
+    marginRight: '30px',
     '@media (max-width: 729px)':{
         width: '30%',
         minHeight: '50%',

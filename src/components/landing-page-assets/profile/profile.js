@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import one from './task1.png'
+import one from './Screen Shot 2018-02-16 at 10.41.49 AM.png'
 import glam from 'glamorous'
 
-class tasks extends Component {
+class profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,16 +13,16 @@ class tasks extends Component {
         return (
             <Main>
                 <h3 className='heading'><strong>Task Management</strong></h3>
-                <h1 className='heading'><i>Improve the way you focus</i></h1>
+                <h1 className='heading'><i>Grow your network</i></h1>
                 <Topic>
-                <Desc><div className='p'><strong>Delegate and Celebrate,</strong>{' '}
-                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc>
+                <Desc><div className='p'><strong>Connect and follow</strong>{' '}
+                fellow devs with the social tools that inDevr offers. With the ability to provide links to the vast majority of development tools across the internet, show the world your work and rejoice in the benefits. These connections can lead to lasting friendships and future business endeavors.</div></Desc>
                 <Image src={one} />
                 </Topic>
                 <Topic>
                 <Image2 src={one}/>
                 <Desc2>
-                    <div className='p'>Blabbity duh blah blah. I was walking around and forgot where I was going. I then said something but can't remember that either. <strong>Please send help!</strong></div>
+                    <div className='p'>Customize and personalize your profile page with information to grow your brand, influence the industry and display your skills. <strong>With a multitude of partnering sites,</strong> inDevr can help you take the next step in your development career.</div>
                 </Desc2>
                 </Topic>
             </Main>
@@ -32,7 +32,7 @@ class tasks extends Component {
 
 const Main = glam.div({
     height: '100vh',
-    // display: 'flex',
+    marginBottom: 10,
     '& .heading': {
         textAlign: 'center',
     }
@@ -80,8 +80,8 @@ const Desc2 = glam.span({
 })
 
 const Image = glam.img({
+    // width: '5%',
     height: '100%',
-    width: '60%',
     float: 'right',
     marginRight: 10,
     border: '3px solid black',
@@ -92,8 +92,8 @@ const Image = glam.img({
     }
 })
 const Image2 = glam.img({
+    // width: '5%',
     height: '100%',
-    width: '60%',
     float: 'left',
     margin: '5px 10px',
     border: '3px solid black',
@@ -104,5 +104,4 @@ const Image2 = glam.img({
     }
 })
 
-
-export default tasks
+export default profile;

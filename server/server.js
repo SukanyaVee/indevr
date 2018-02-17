@@ -156,6 +156,7 @@ app.put(taskboardAPIurl, taskboard_ctrl.put);
 app.get('/search/:term', search.getUsers);
 app.get('/search/projects/:term', search.getProjects);
 app.get('/search/posts/:term', search.getPosts);
+app.get('/search/skills/:term', search.getSkills);
 
 
 // //----------------AUTH0----------------

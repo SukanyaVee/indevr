@@ -8,6 +8,8 @@ import glam from "glamorous";
 // import logo from "../assets/LogoMain.png";
 // import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
+import Profile from './landing-page-assets/profile/profile';
+import MidBar from './landing-page-assets/MidBar';
 
 const options = {
   theme: {
@@ -63,9 +65,9 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        {/* <Header>
-          <img src={logo} alt="" />
-          <img src={logo2} alt='' />
+        <Header>
+          <Logo className='big' src={logo} alt="" />
+          <LogoSmall className='small' src={logo2} alt='' />
           <SearchBar />
         </Header> */}
         <Initial>
@@ -74,6 +76,7 @@ class LandingPage extends Component {
               <strong>
                 Made By Developers - <i>For Developers</i>
               </strong>
+              <br />
               <br />
               <Desc className='text'>
                 <strong>
@@ -85,9 +88,9 @@ class LandingPage extends Component {
                 welcome to your one-stop-shop developer platform.
               </Desc>
             </Heading>
-            <button style={btnlogin} onClick={this.login}>
-              Login/Register
-            </button>
+            <Btnlogin onClick={this.login}>
+              <b>Login/Register</b>
+            </Btnlogin>
           </Main>
           {/* <Aside>
                 <Signup>
@@ -103,6 +106,9 @@ class LandingPage extends Component {
                 </Signup>
             </Aside> */}
         </Initial>
+        <MidBar />
+        <Profile />
+        <MidBar />
         <Tasks />
       </div>
     );
@@ -118,27 +124,39 @@ const Initial = glam.section({
 });
 
 const Desc = glam.p({
-  margin: 20,
+  // margin: 20,
   width: "90%",
   "hover & .text": {
     color: 'black'
   }
 });
 
-// const Header = glam.header({
-//   height: "100",
-//   width: "100vw",
-//   backgroundColor: 'var(--main-black)',
-//   display: "flex",
-//   flexDirection: "row",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-//   marginTop: "0",
-//   '> img':{
-//     width: 150,
-//     height: 65,
-//   }
-// });
+const Logo = glam.img({
+  height: '100%',
+  width: '50%',
+  '@media (max-width: 729px)': {
+    visibility: 'collapse',
+  }
+})
+
+const LogoSmall = glam.img({
+  visibility: 'hidden',
+  '@media (max-width: 729px)': {
+    visibility: 'visible',
+    marginLeft: 5,
+  }
+})
+
+const Header = glam.header({
+  height: "150",
+  width: "100vw",
+  backgroundColor: 'var(--main-black)',
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginTop: "0",
+  })
 
 const Heading = glam.h1({
   fontSize: "2.5em",
@@ -153,9 +171,7 @@ const Heading = glam.h1({
     width: '100vw',
     minHeight: '100%',
     fontSize: '12pt',
-    '> img': {
-      display: 'hidden',
-    }
+    
 }
 
 });
@@ -166,7 +182,7 @@ const Main = glam.div({
   justifyContent: "center",
   alignItems: "center",
   width: "100vw",
-  height: "90vh"
+  height: "85vh"
 });
 
 // const Aside = glam.aside({
@@ -197,13 +213,18 @@ const Main = glam.div({
 //     marginBottom: 10,
 // })
 
-const btnlogin = {
-  color: "white",
+const Btnlogin = glam.button({
+  // color: "white",
   backgroundColor: "transparent",
-  fontSize: "16pt",
+  fontSize: "18pt",
   height: 100,
   width: 200,
-};
+  '@media (max-width: 729px)': {
+    fontSize: '12pt',
+    height: 75,
+    width: 100,
+  }
+});
 
 const mapDispatchToProps = {
   login
