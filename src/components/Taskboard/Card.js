@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import glam from 'glamorous';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
+import axios from 'axios';
 
 const style = {
 	// border: '1px solid gray',
@@ -21,7 +21,7 @@ class Card extends Component {
 
 		return connectDragSource(connectDropTarget(
 			<div style={{ ...style, opacity }}>
-				{card.text}
+                {card.title}
 			</div>
 		));
 	}
@@ -40,9 +40,16 @@ const cardSource = {
 	endDrag(props, monitor) {
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
+        console.log(dropResult);
 
+        //If card is moved to another list
 		if ( dropResult && dropResult.listId !== item.listId ) {
-			props.removeCard(item.index);
+            //Delete card from old list
+            props.removeCard(item.index);
+            //Update database
+            axios.put('/indevr/taskboard', {card: props.card, user_id: dropResult.listId}).then(res =>{
+                console.log(res.data);
+            }).catch(err => console.log(err))
 		}
 	}
 };

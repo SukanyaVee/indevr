@@ -3,7 +3,7 @@ module.exports = {
         const { term } = req.params;
         req.app.get('db').search_users(term).then(response => {
             res.send(response)
-        })
+        }).catch(err => console.log(err))
     },
     getProjects: (req, res) => {
         const { term } = req.params;
@@ -24,7 +24,7 @@ module.exports = {
         const { term } = req.params;
         req.app.get('db').search_posts(term).then(response => {
             res.send(response)
-        })
+        }).catch(err => console.log(err))
     },
     getSkills: (req, res) => {
         const { term } = req.params;

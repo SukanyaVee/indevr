@@ -24,11 +24,13 @@ module.exports = {
     },
 
     put(req,res) {
-        let {id, title, description, status, due, user_id} = req.body;
+        let {id, title, description, status, due} = req.body.card;
+        user_id = req.body.user_id ? req.body.user_id : null;
+        console.log(req.body);
         due = due ? due : null;
         const db = req.app.get('db');
-        db.update_taskboard([title, description, status, due, user_id, id]).then( () => {
-            res.status(200).send('Task updated');
+        db.update_taskboard([title, description, status, due, user_id, id]).then( (card) => {
+            res.status(200).send({body: req.body.card, card: card});
         }).catch(err => {
             console.log('Error updating task:', err);
             res.status(500).send('Oops, something went wrong!');
