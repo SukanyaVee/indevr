@@ -101,7 +101,7 @@ class SearchPage extends Component {
         {/* <SearchNav>
           <a href='#projects'>Projects</a>
         </SearchNav> */}
-        
+
           {this.state.data && (
             <Main>
           {this.state.results.length ?
@@ -152,7 +152,7 @@ class SearchPage extends Component {
                     })
                   : null}
               </ProjWrap>
-              {this.state.posts.length ? 
+              {this.state.posts.length ?
               <Span>
                 <Title>Posts</Title>
               </Span> : null}
@@ -175,7 +175,7 @@ class SearchPage extends Component {
                       return <div> No project results available </div>;
                     }}
               </PostsWrapper>
-              {this.state.skills.length ? 
+              {this.state.skills.length ?
               <Span>
                 <Title>Skills</Title>
               </Span> : null}
@@ -212,11 +212,11 @@ const Header = glam.header({
   marginTop: "0"
 });
 
-const SearchNav = glam.div({
-  height: 50,
-  width: '100%',
-  backgroundColor: 'var(--main-grey)',
-})
+// const SearchNav = glam.div({
+//   height: 50,
+//   width: '100%',
+//   backgroundColor: 'var(--main-grey)',
+// })
 
 const UserWrap = glam.div({
   display: "flex",
@@ -231,7 +231,7 @@ const UserWrap = glam.div({
 
 const Skill = glam.span({
   display: 'flex',
-  flexDirection: 'row', 
+  flexDirection: 'row',
 
 })
 

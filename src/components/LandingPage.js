@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
-// import SearchBar from "../components/SearchBar";
-// import logo from "../assets/LogoMain.png";
-// import logo2 from '../assets/LogoMini.png';
+import SearchBar from "../components/SearchBar";
+import logo from "../assets/LogoMain.png";
+import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import MidBar from './landing-page-assets/MidBar';
@@ -69,7 +69,7 @@ class LandingPage extends Component {
           <Logo className='big' src={logo} alt="" />
           <LogoSmall className='small' src={logo2} alt='' />
           <SearchBar />
-        </Header> */}
+        </Header> 
         <Initial>
           <Main>
             <Heading >
@@ -171,7 +171,7 @@ const Heading = glam.h1({
     width: '100vw',
     minHeight: '100%',
     fontSize: '12pt',
-    
+
 }
 
 });

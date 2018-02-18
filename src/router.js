@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import ProjectView from './components/ProjectView';
 import Chat from './components/Chat';
-import TaskBoard from './components/TaskBoard';
+import TaskBoard from './components/Taskboard/Taskboard';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import SearchPage from './components/SearchPage';
