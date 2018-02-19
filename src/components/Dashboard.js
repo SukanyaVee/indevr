@@ -24,15 +24,13 @@ class Dashboard extends Component {
             postContent: ''
         };
         this.showConn = this.showConn.bind(this)
-        this.submitPost = this.deletePost.bind(this)
+        this.submitPost = this.submitPost.bind(this)
         this.deletePost = this.deletePost.bind(this)
         this.switchProjectView = this.switchProjectView.bind(this)
     }
 
     componentDidMount(){
-            // axios.get('/indevr/users').then(res=>{
-            //     this.props.login(res.data)
-            // }).catch(error=>console.log(error))
+        // session check get user detaisl from req.session
         axios.get('/indevr/contacts?user_id=1').then(res=>{ //HARDCODED
             this.setState({contacts: res.data})
             console.log('connections', this.state.contacts)
@@ -52,16 +50,17 @@ class Dashboard extends Component {
     }
 
     showConn() {
-        this.state.showConnections ? this.setState({showConnections: false}) : this.setState({showConnections: true})
+        this.setState({showConnections: !this.state.showConnections})
     }
 
     switchProjectView (view) {
-        console.log(view)
+        // console.log(view)
         this.setState({projectView: view})
     }
 
-    submitPost(content, userId) {
-        axios.post('/indevr/posts', {user_Id: 1, content:content}).then(resp=>{//HARDCODED
+    submitPost(content) {
+        console.log('post cpntent', content)
+        axios.post('/indevr/posts', {user_Id: 2, content:content}).then(resp=>{//HARDCODED
             console.log('this is the response', resp.data)
             this.setState(prevState=>{
                 return {posts: [...prevState.posts, resp.data[0]]}
@@ -69,11 +68,12 @@ class Dashboard extends Component {
             console.log('this is the state after setting response to it', this.state.posts)
         }).catch(error=>console.log(error))
     }
+
     deletePost(postId){
         console.log(postId)
         axios.delete(`/indevr/posts/${postId}`).then(resp=>{
-            this.setState({posts: resp.data})
-        })
+            // this.setState({posts: resp.data})
+        }).catch(error=>console.log(error))
     }
 
     render() {
@@ -83,8 +83,19 @@ class Dashboard extends Component {
                 <Greeting>
                     <Hi>Hello, Friendly Developer! </Hi>
                     <Contacts>
-                        <div onClick={e=>this.showConn()}>My Connections +</div>
-                        {this.state.showConnections && <div>{this.state.contacts.map(contact => <ContactItem key={contact.id} contact={contact}><Link to={`/user/${contact.id}`}> <img src={contact.picture} alt="contact"/> <div>{contact.first_name} {contact.last_name}</div> </Link><br/></ContactItem>)}</div>}
+                        <h4 onClick={e=>this.showConn()}>My Connections +</h4><br/>
+                        {this.state.showConnections && 
+                            <span>
+                                {this.state.contacts.map(contact => 
+                                    <ContactItem key={contact.id} contact={contact}>
+                                        <Link to={`/dev/${contact.id}`}> 
+                                            <img src={contact.picture} alt="contact"/> 
+                                            <div>{contact.first_name} {contact.last_name}</div>
+                                        </Link>
+                                    </ContactItem>)
+                                }
+                            </span>
+                        }
                     </Contacts>
                 </Greeting>
 
@@ -99,8 +110,15 @@ class Dashboard extends Component {
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
                             {this.state.projectView==='mine' &&  
-                                this.state.projects.map(proj => <ProjectItem key={`mine${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem>)}
-                            {this.state.projectView==='create' && <CreateProject user_id="1"/>}
+                                this.state.projects.map(proj => 
+                                    <ProjectItem key={`mine${proj.id}`}>
+                                        <Link to={`/project/${proj.project_id}`}> 
+                                            <h2>{proj.project_name}</h2> 
+                                        </Link>
+                                        <div>{proj.description}</div>
+                                    </ProjectItem>)}
+                                {/* HARDCODED */}
+                            {this.state.projectView==='create' && <CreateProject user_id="1"/>} 
                             {this.state.projectView==='others' && <Explorer/>}
                         </ProjectList>
                     </Projects>
@@ -141,34 +159,39 @@ const Dashboard1 = glam.div ({
 
 
 const Greeting = glam.div ({
-    display: 'flex',
-    padding: 20,
-    justifyContent: 'space-between',
-    alignItems: 'flex-start'
+    // display: 'flex',
+    // justifyContent: 'space-between',
+    // alignItems: 'flex-start',
+    width: '100%'
 })
 
 const Hi= glam.div ({
+    padding: 20,
+    color: 'white',
+    background: 'var(--main-purple)',
     fontSize: 24
 })
 
 const Contacts = glam.div ({
     fontSize: 14,
-    maxWidth: 300,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    marginBottom: 20,
+    padding: 20,
+    marginBottom: 10,
     '& img': {
-        width: 30,
-        height: 30,
+        width: 40,
+        height: 40,
         borderRadius: '50%'
+    },
+    '& span': {
+        width: 500,
+        display: 'flex'
     },
     cursor: 'Pointer'
 })
 
 const ContactItem = glam.div ({
     cursor: 'pointer',
+    display: 'flex',
+    width:200,
     margin: 2,
     '& a': {
         textDecoration: 'none'
@@ -195,7 +218,9 @@ const Nav = glam.div ({
         padding: 10,
         marginRight: 10,
         color: 'black',
+        background: 'var(--main-grey)',
         borderBottom: '3px solid #593c8f',
+        borderRadius: '8px 8px 0 0',
         cursor: 'pointer'
     }
 })
@@ -253,7 +278,7 @@ const PostItem = glam.div({
 
 const PostTitle = glam.div ({
     display: 'flex',
-    background: '#d4c631',
+    background: 'white',
     borderRadius: 10,
     padding:5,
     justifyContent: 'space-between',

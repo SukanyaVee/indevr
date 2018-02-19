@@ -156,3 +156,6 @@ CREATE TABLE IF NOT EXISTS taskboard_items (
     status TEXT,
     due DATE
 );
+
+
+ ALTER TABLE project_users ADD COLUMN owner boolean;

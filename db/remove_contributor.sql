@@ -1,0 +1,1 @@
+DELETE FROM project_users WHERE id=$1;

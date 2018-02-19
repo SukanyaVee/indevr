@@ -9,7 +9,7 @@ class CreateProject extends Component {
         super(props)
         this.state = {
             user_id: 1, //this.props.user_id, //HARDCODED
-            proj_id: 0,
+            proj_id: 0, 
             project_name: '',
             description: '',
             pub: true,
@@ -30,6 +30,8 @@ class CreateProject extends Component {
         axios.post('/indevr/projects', newProj).then(resp=>{
             console.log(resp.data)
             this.setState({proj_id: resp.data[0].id})
+            axios.post('indevr/contributors', {project_id: resp.data[0].id, user_id: 1, owner: true}).then(resp=>{ //HARDCODED
+            })
         }).catch(error=>console.log(error))
         this.setState({showSkillsForm: true})
     }
@@ -81,8 +83,8 @@ class CreateProject extends Component {
                             <option value="2">Noble Ninja (intermediate)</option>
                             <option value="3">Supreme Samurai (advanced)</option>
                         </select> <br/>
-                        <button onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel)}}>Create and add another skill</button>
-                        <button onClick={e=>{this.completed(this.state.newSkill, this.state.newLevel)}}>Create and complete</button>
+                        <button onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel)}}>Submit and add another skill</button>
+                        <button onClick={e=>{this.completed(this.state.newSkill, this.state.newLevel)}}>Submit and complete</button>
                     </div>}
             </Forrrm>
         )

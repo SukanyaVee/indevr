@@ -31,4 +31,19 @@ module.exports = {
         const db = req.app.get('db') 
         db.create_project([req.body.user_id, req.body.project_name, req.body.description, req.body.public, req.body.repo]).then((resp)=> res.status(200).send(resp)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
+    addContr: (req, res, next) => {
+        const db = req.app.get('db') 
+        console.log('add contributor', req.body)
+        db.add_contributor([req.body.project_id, req.body.user_id, req.body.owner]).then((resp)=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
+    removeContr: (req, res, next) => {
+        const db = req.app.get('db') 
+        console.log('add contributor', req.params)
+        db.remove_contributor([req.params.contributorId]).then((resp)=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
+    updateProj: (req, res) => {
+        const db = req.app.get('db')
+        console.log(req.body)
+        db.update_project([req.body.id, req.body.project_name, req.body.description]).then(proj=> res.status(200).send(proj)).catch(error=>{console.error(error);res.status(500).send(err)})
+    }
 }

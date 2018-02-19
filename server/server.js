@@ -70,26 +70,6 @@ massive(process.env.CONNECTION_STRING)
 .then(db => app.set('db', db))
 .catch(err => console.error(err));
 
-// SOCKETS FOR WHITEBOARD
-// var io = socketIo.listen(server);
-// var line_history = [];
-
-// event-handler for new incoming connections
-// io.on('connection', function (socket) {
-
-// for (var i in line_history) {
-//       socket.emit('draw_line', { line: line_history[i] } );
-//    }
-
-//    socket.on('draw_line', function (data) {
-//       line_history.push(data.line);
-//       io.emit('draw_line', { line: data.line });
-//    });
-// });
-
-
-
-//API Endpoints
 
 
 //API Endpoints
@@ -97,7 +77,7 @@ massive(process.env.CONNECTION_STRING)
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
-app.get(`${userAPIurl}/:userID`, user.get)
+app.get(`${userAPIurl}/:userID`, user.get) //defined to get users + skills
 app.put(`${userAPIurl}/:id`, user.update);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
@@ -110,7 +90,7 @@ const contactAPIurl = '/indevr/contacts';
 app.get(`${contactAPIurl}/connect`, contact.get);
 app.post(`${contactAPIurl}/connect`, contact.connect); //Connects users
 app.get(`${contactAPIurl}`, contact.get);
-app.get(`${contactAPIurl}/check`, contact.check); //Check for exisitng connection
+app.get(`${contactAPIurl}/check`, contact.check); //Check for existing connection
 //
 //
 
@@ -118,19 +98,18 @@ app.get(`${contactAPIurl}/check`, contact.check); //Check for exisitng connectio
 const postAPIurl = '/indevr/posts'
 app.get(postAPIurl, posts.get)
 app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
-// app.post(newsAPIurl, posts.create)
-// app.put(newsAPIurl, posts.update)
+app.post(postAPIurl, posts.create)
+// app.put(postAPIurl, posts.update)
 app.delete(`${postAPIurl}/:id`, posts.delete) //uses params to delete record
 
-//-----------PROJECTS----------------
+//-----------------PROJECTS------------------
 const projAPIurl = '/indevr/projects';
 
 app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
 app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
-app.get(`/indevr/contributors`, proj.getProjCons); //uses query?
 app.post(projAPIurl, proj.create); //uses body
-// app.put(projAPIurl, proj.update);
+app.put(projAPIurl, proj.updateProj); //uses body
 // app.delete(projAPIurl, proj.delete);
 
 //----------PROJECT DERIVATIVES--------
@@ -141,6 +120,11 @@ app.post(skillsAPIurl, proj.createSkill); // uses body
 // app.put(skillsAPIurl, skills.put);
 // app.delete(skillsAPIurl, skills.delete);
 
+const projContributors = '/indevr/contributors'
+
+app.get(projContributors, proj.getProjCons); //uses query?
+app.post(projContributors, proj.addContr) //uses body
+app.delete(`${projContributors}/:id`, proj.removeContr) //uses body
 
 //-------------PROJECT TASKBOARD-----------
 const taskboardAPIurl = '/indevr/taskboard';

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import glam from 'glamorous';
 import logo from '../assets/in_DEV_r.png';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 
 class Header extends Component {
@@ -27,7 +28,7 @@ class Header extends Component {
                                 <a href="">About</a>
                             </li>
                             <li>
-                                <a href="">Explore Projects</a>
+                                <Link to="/explore">Explore Projects</Link>
                             </li>
                             <li className="dropdown">
                                 <a href="" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
