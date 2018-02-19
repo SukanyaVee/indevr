@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
+// import SearchBar from "../components/SearchBar";
+// import logo from "../assets/LogoMain.png";
+// import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import MidBar from './landing-page-assets/MidBar';
@@ -62,6 +65,12 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
+        {/* <Header>
+          <Logo className='big' src={logo} alt="" />
+          <LogoSmall className='small' src={logo2} alt='' />
+          <SearchBar />
+        </Header>  */}
+        <Initial>
         {/* <Initial> */}
           <Main>
             <Heading >
@@ -118,6 +127,37 @@ class LandingPage extends Component {
 const Desc = glam.p({
   // margin: 20,
   width: "90%",
+  "hover & .text": {
+    color: 'black'
+  }
+});
+
+// const Logo = glam.img({
+//   height: '100%',
+//   width: '50%',
+//   '@media (max-width: 729px)': {
+//     visibility: 'collapse',
+//   }
+// })
+
+// const LogoSmall = glam.img({
+//   visibility: 'hidden',
+//   '@media (max-width: 729px)': {
+//     visibility: 'visible',
+//     marginLeft: 5,
+//   }
+// })
+
+// const Header = glam.header({
+//   height: "150",
+//   width: "100vw",
+//   backgroundColor: 'var(--main-black)',
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "space-between",
+//   alignItems: "center",
+//   marginTop: "0",
+//   })
   '@media (max-width: 729px)': {
     textAlign: 'center',
     width: '100%',
