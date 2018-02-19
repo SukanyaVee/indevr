@@ -111,7 +111,7 @@ export default class ProjectView extends Component {
                 </nav>
                 <main>
                         {this.state.viewToggler==='overview' && <Overview project={this.state.project} skills={this.state.skills} projectCons={this.state.projectsCons}/> }
-                        {this.state.viewToggler==='tasks' && <TaskBoard/> }
+                        {this.state.viewToggler==='tasks' && <TaskBoard project={this.state.projectId}/> }
                         {this.state.viewToggler==='repo' && <div id="repo"></div> }
                         {/* {this.state.viewToggler=='white' && <Whiteboard/> } */}
                 </main>

@@ -30,6 +30,18 @@ module.exports = {
         console.log('connect country')
         const dbInstance = req.app.get('db')
         dbInstance.delete_user([req.params.id]).then(entry=> {res.status(200).send(entry)}).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
+
+    addSkill: (req,res,next) => {
+        const {user_id, skill, level} = req.body;
+        const db = req.app.get('db');
+        db.add_user_skill([user_id, skill, level]).then( skills => {
+            console.log("skill added");
+            res.status(200).send(skills[0]);
+        }).catch(err => {
+            console.log('Error adding skill:', err);
+            res.status(500).send('Oops, something went wrong');
+        })
     }
 
 }

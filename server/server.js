@@ -97,8 +97,9 @@ massive(process.env.CONNECTION_STRING)
 // ---------------USER-------------------
 const userAPIurl = '/indevr/users'
 
-app.get(`${userAPIurl}/:userID`, user.get)
+app.get(`${userAPIurl}/:userID`, user.get);
 app.put(`${userAPIurl}/:id`, user.update);
+app.post(`${userAPIurl}/skills`, user.addSkill);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
 // ---------------CONTACTS-------------------

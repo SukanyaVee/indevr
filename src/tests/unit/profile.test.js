@@ -12,3 +12,14 @@ describe ('Existing Data', function(){
         expect( profile.hasData(noData) ).toEqual(false);
     })
 })
+
+
+describe('Skill form validation', function(){
+    test('Check that both skill and level are entered before adding', function(){
+        expect( profile.checkInput('React', 3)).toEqual(true);
+        expect( profile.checkInput('React', '3')).toEqual(true);
+        expect( profile.checkInput('', 3)).toEqual(false);
+        expect( profile.checkInput('React')).toEqual(false);
+        expect( profile.checkInput('React', NaN)).toEqual(false);
+    })
+})

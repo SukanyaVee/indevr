@@ -4,6 +4,7 @@ import DropZone from './DropZone';
 import axios from 'axios';
 import request  from 'superagent';
 import {connect} from 'react-redux';
+import AddSkills from './AddSkills/AddSkills';
 
 
 class EditProfile extends Component {
@@ -23,13 +24,14 @@ class EditProfile extends Component {
             gitlab: {value: '', public: false},
             codepen: {value: '', public: false},
             twitter: {value: '', public: false},
+            skills: []
         }
     }
 
     componentDidMount(){
         const userID = this.props.user.id;
         axios.get(`/indevr/users/${userID}`).then(res => {
-            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, location_public, email_public,github_public,gitlab_public,bitbucket_public, portfolio_public, website_public,codepen_public,twitter_public} = res.data;
+            const {first_name, last_name, picture, bio, location, email, github,bitbucket,gitlab,portfolio,website,codepen,twitter, location_public, email_public,github_public,gitlab_public,bitbucket_public, portfolio_public, website_public,codepen_public,twitter_public, skills} = res.data;
             this.setState({
                 first_name,
                 last_name,
@@ -44,6 +46,7 @@ class EditProfile extends Component {
                 website: {value: website, public: website_public},
                 codepen: {value: codepen, public: codepen_public},
                 twitter:  {value: twitter, public: twitter_public},
+                skills: skills
             })
         }).catch( err => console.log(err))
     }
@@ -78,11 +81,11 @@ class EditProfile extends Component {
                                 <img src={this.state.picture} alt="" />
                                 <DropZone className="dropzone" onDrop={this.onDrop}/>
                             </div>
-                            <div>
+                            {/* <div>
                                 <p>
                                     The contact information you provide here will help others find and connect with you.  You can choose what is displayed publically using the switches next to each field.
                                 </p>
-                            </div>
+                            </div> */}
 
                             <Form>
                                 <div className="row">
@@ -110,6 +113,7 @@ class EditProfile extends Component {
                                     </div>
                                 </div>
                             </Form>
+                            <AddSkills skills={this.state.skills} user={this.props.user.id}/>
                         </Left>
                         <div>
                             <Form>
@@ -129,6 +133,7 @@ class EditProfile extends Component {
                                     <div className="form-group col-xs-9">
                                         <label>Email</label>
                                         <input className="form-control"
+                                            type="email"
                                             value={this.state.email.value || ''}
                                             onChange={ e => this.setState({ email: {value: e.target.value, public: this.state.email.public} })} />
                                     </div>

@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import SearchBar from './SearchBar';
 
-
 class Header extends Component {
     render() {
         return (
@@ -53,10 +52,6 @@ class Header extends Component {
                         </ul>
                         <NavForm className="navbar-form navbar-right">
                             <SearchBar />
-                            {/* <div className="form-group">
-                                <input type="text" className="form-control" placeholder="Search" />
-                            </div>
-                            <button type="submit" className="btn btn-default"><i className="fas fa-search"></i></button> */}
                         </NavForm>
                     </div>
                 </div>
@@ -80,8 +75,11 @@ const Nav = glam.nav({
     marginBottom: 0,
     fontSize: 18,
     '& img':{
-        maxHeight: 50,
+        maxHeight: 70,
         borderRadius: '50%',
+    },
+    '& .dropdown img':{
+        height: 50
     },
     '& .navbar-nav':{
         padding: 10,
