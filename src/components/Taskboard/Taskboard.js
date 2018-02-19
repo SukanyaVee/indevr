@@ -10,13 +10,13 @@ class Taskboard extends Component {
     constructor(){
         super();
         this.state = {
+            project_id: 2,
             lists: []
         }
     }
 
     componentDidMount(){
-        const projectID = 2;
-        axios.get(`/indevr/taskboard/${projectID}`).then(res => {
+        axios.get(`/indevr/taskboard/${this.state.project_id}`).then(res => {
             let {lists, tasks} = res.data;
             let data = [];
 
@@ -50,6 +50,7 @@ class Taskboard extends Component {
             <Main>
                 {this.state.lists.map( (list,i) => {
                     return <List
+                        project_id={this.state.project_id}
                         id={list.id}
                         title={list.title}
                         list={list.cards}
@@ -65,6 +66,7 @@ export default DragDropContext(HTML5Backend)(Taskboard);
 const Main = glam.div({
     display: 'flex',
     justifyContent: 'center',
+    flexWrap: 'wrap',
     paddingTop: 20,
     backgroundColor: 'var(--main-purple)',
     minHeight: '100vh',

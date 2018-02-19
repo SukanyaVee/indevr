@@ -147,7 +147,8 @@ const goalsAPIurl = '/indevr/goals'
 const taskboardAPIurl = '/indevr/taskboard';
 
 app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
-app.put(taskboardAPIurl, taskboard_ctrl.put);
+app.put(taskboardAPIurl, taskboard_ctrl.updateCard);
+app.post(taskboardAPIurl, taskboard_ctrl.newCard);
 
 
 
