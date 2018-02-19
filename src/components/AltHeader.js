@@ -72,7 +72,7 @@ export default connect(mapStateToProps)(Header);
 
 const Nav = glam.nav({
     borderRadius: '0 !important',
-    height: 100,
+    height: 105,
     marginBottom: 0,
     fontSize: 18,
     '& img':{
@@ -90,7 +90,7 @@ const Nav = glam.nav({
     },
     '& .navbar-header':{
         height: 100,
-    }
+    },
 })
 
 const NavForm = glam.div({
@@ -100,6 +100,9 @@ const NavForm = glam.div({
     marginTop: 30,
     '> button':{
         marginLeft: 5,
+    },
+    '@media (max-width: 867px)':{
+        display: 'none'
 
     }
 })
