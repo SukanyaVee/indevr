@@ -20,4 +20,4 @@ import reducer from './ducks/reducer';
 // export default createAppStore;
 
 
-export default createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSTION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+export default createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

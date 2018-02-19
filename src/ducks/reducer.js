@@ -6,7 +6,7 @@ const SEARCHPOSTS = 'SEARCHPOSTS';
 const SEARCHING = 'SEARCHING';
 
 const initialState = {
-    user: {id: 1, picture: 'http://i.pravatar.cc/50x50'},
+    user: {id: 1, picture: 'https://i.pinimg.com/originals/ec/89/33/ec89338e7860728bcb2c3ece84a5e715.jpg'},
     results: [],
     projects: [],
     posts: [],

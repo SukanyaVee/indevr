@@ -8,6 +8,8 @@ import glam from "glamorous";
 // import logo from "../assets/LogoMain.png";
 // import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
+import Profile from './landing-page-assets/profile/profile';
+import MidBar from './landing-page-assets/MidBar';
 
 const options = {
   theme: {
@@ -64,16 +66,17 @@ class LandingPage extends Component {
     return (
       <div>
         {/* <Header>
-          <img src={logo} alt="" />
-          <img src={logo2} alt='' />
+          <Logo className='big' src={logo} alt="" />
+          <LogoSmall className='small' src={logo2} alt='' />
           <SearchBar />
-        </Header> */}
-        <Initial>
+        </Header>  */}
+        {/* <Initial> */}
           <Main>
             <Heading >
               <strong>
                 Made By Developers - <i>For Developers</i>
               </strong>
+              <br />
               <br />
               <Desc className='text'>
                 <strong>
@@ -85,9 +88,9 @@ class LandingPage extends Component {
                 welcome to your one-stop-shop developer platform.
               </Desc>
             </Heading>
-            <button style={btnlogin} onClick={this.login}>
-              Login/Register
-            </button>
+            <Btnlogin onClick={this.login}>
+              <b>Login/Register</b>
+            </Btnlogin>
           </Main>
           {/* <Aside>
                 <Signup>
@@ -102,31 +105,54 @@ class LandingPage extends Component {
                 <button style={btnlogin}>Sign Up</button>
                 </Signup>
             </Aside> */}
-        </Initial>
+        {/* </Initial> */}
+        <MidBar />
+        <Profile />
+        <MidBar />
         <Tasks />
       </div>
     );
   }
 }
 
-const Initial = glam.section({
-  display: "flex",
-  flexDirection: "row",
-  backgroundColor: "#593c8f",
-  backgroundBlendMode: 10,
-  color: "white"
-});
+// const Initial = glam.section({
+//   display: "flex",
+//   flexDirection: "row",
+//   backgroundColor: "#593c8f",
+//   backgroundBlendMode: 10,
+//   color: "white"
+// });
 
 const Desc = glam.p({
-  margin: 20,
+  // margin: 20,
   width: "90%",
   "hover & .text": {
     color: 'black'
+},
+  '@media (max-width: 729px)': {
+    textAlign: 'center',
+    width: '100%',
   }
 });
 
+// const Logo = glam.img({
+//   height: '100%',
+//   width: '50%',
+//   '@media (max-width: 729px)': {
+//     visibility: 'collapse',
+//   }
+// })
+
+// const LogoSmall = glam.img({
+//   visibility: 'hidden',
+//   '@media (max-width: 729px)': {
+//     visibility: 'visible',
+//     marginLeft: 5,
+//   }
+// })
+
 // const Header = glam.header({
-//   height: "100",
+//   height: "150",
 //   width: "100vw",
 //   backgroundColor: 'var(--main-black)',
 //   display: "flex",
@@ -134,16 +160,14 @@ const Desc = glam.p({
 //   justifyContent: "space-between",
 //   alignItems: "center",
 //   marginTop: "0",
-//   '> img':{
-//     width: 150,
-//     height: 65,
-//   }
+//   })
+
 // });
 
 const Heading = glam.h1({
   fontSize: "2.5em",
   // margin: 20,
-  marginright: 100,
+  // marginright: 100,
   // textAlign: 'center',
   width: "65%",
   padding: 10,
@@ -151,11 +175,9 @@ const Heading = glam.h1({
   // border: 'solid white 2px',
   '@media (max-width: 729px)':{
     width: '100vw',
-    minHeight: '100%',
+    minHeight: '50%',
     fontSize: '12pt',
-    '> img': {
-      display: 'hidden',
-    }
+    textAlign: 'center',
 }
 
 });
@@ -166,7 +188,11 @@ const Main = glam.div({
   justifyContent: "center",
   alignItems: "center",
   width: "100vw",
-  height: "90vh"
+  height: "90vh",
+  color: 'var(--main-purple)',
+  '@media (max-width: 729px)': {
+      flexDirection: 'column',
+  }
 });
 
 // const Aside = glam.aside({
@@ -197,13 +223,19 @@ const Main = glam.div({
 //     marginBottom: 10,
 // })
 
-const btnlogin = {
-  color: "white",
-  backgroundColor: "transparent",
-  fontSize: "16pt",
+const Btnlogin = glam.button({
+  // color: "white",
+  backgroundColor: "var(--main-grey)",
+  borderRadius: 5,
+  fontSize: "18pt",
   height: 100,
   width: 200,
-};
+  '@media (max-width: 729px)': {
+    fontSize: '14pt',
+    height: 75,
+    width: 150,
+  }
+});
 
 const mapDispatchToProps = {
   login

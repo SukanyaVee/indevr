@@ -130,7 +130,8 @@ app.delete(`${projContributors}/:id`, proj.removeContr) //uses body
 const taskboardAPIurl = '/indevr/taskboard';
 
 app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
-app.put(taskboardAPIurl, taskboard_ctrl.put);
+app.put(taskboardAPIurl, taskboard_ctrl.updateCard);
+app.post(taskboardAPIurl, taskboard_ctrl.newCard);
 
 
 
@@ -139,6 +140,7 @@ app.put(taskboardAPIurl, taskboard_ctrl.put);
 app.get('/search/:term', search.getUsers);
 app.get('/search/projects/:term', search.getProjects);
 app.get('/search/posts/:term', search.getPosts);
+app.get('/search/skills/:term', search.getSkills);
 
 
 // //----------------AUTH0----------------

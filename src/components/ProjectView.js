@@ -5,7 +5,7 @@ import glam from 'glamorous';
 import Overview from './Overview';
 // import Repo from './Repo';
 // import Chat from './Chat';
-import TaskBoard from './TaskBoard';
+import TaskBoard from './Taskboard/Taskboard';
 // import Whiteboard from './Whiteboard';
 
 

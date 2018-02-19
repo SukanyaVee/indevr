@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SearchBar from "./SearchBar";
-import logo from "../assets/in_DEV_rwhite.png";
+import logo from "../assets/LogoMain.png";
 import glam from "glamorous";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -17,7 +17,9 @@ class SearchPage extends Component {
       data: false,
       results: [],
       projects: [],
-      posts: []
+      posts: [],
+      skills: [],
+      stacks: [],
     };
     this.getSearch = this.getSearch.bind(this);
   }
@@ -55,13 +57,24 @@ class SearchPage extends Component {
       });
       console.log(this.state);
     });
-    axios.get(`/search/projects/${term}`).then(response => {
-      let pro = response.data.filter(elem => {
+    axios.get(`/search/projects/${term}`).then(res => {
+        let { proj, skills } = res.data;
+        console.log(proj , skills)
+
+        let pro = proj.filter(elem => {
         if (elem.public === true) {
-          return elem;
+          return elem
         }
         return null;
       });
+      pro.forEach(project => {
+        console.log(project)
+        skills[0].forEach(skill => {
+          if(skill.project_id === project.project_id){
+            project.skills.push(skill.skill)
+          }
+        })
+      })
       this.setState({
         projects: pro
       });
@@ -71,6 +84,11 @@ class SearchPage extends Component {
         posts: response.data
       });
     });
+    axios.get(`/search/skills/${term}`).then(response => {
+      this.setState({
+        skills: response.data
+      })
+    })
   }
 
   render() {
@@ -80,13 +98,16 @@ class SearchPage extends Component {
           <img src={logo} alt="" />
           <SearchBar />
         </Header>
+        {/* <SearchNav>
+          <a href='#projects'>Projects</a>
+        </SearchNav> */}
 
-        <Content>
           {this.state.data && (
             <Main>
+          {this.state.results.length ?
               <Span>
                 <Title>Users</Title>
-              </Span>
+              </Span> : null}
               <UserWrap>
                 {this.state.results
                   ? this.state.results.map(user => {
@@ -95,7 +116,6 @@ class SearchPage extends Component {
                           <UserTile
                             key={user.id}
                             name={user.first_name + " " + user.last_name}
-                            // name={user.username}
                             img={user.picture}
                           >
                             <div>
@@ -109,35 +129,33 @@ class SearchPage extends Component {
                       return <div> No user results available </div>;
                     }}
               </UserWrap>
-
+{this.state.projects.length ?
               <Span>
-                <Title>Projects</Title>
-              </Span>
+                <Title id='projects'>Projects</Title>
+              </Span> : null}
 
               <ProjWrap>
                 {this.state.projects
                   ? this.state.projects.map(project => {
                       return (
-                        <Projects key={project.id}>
+                        <Projects key={project.project_id}>
                           <div>{project.project_name}</div>
                           <div>{project.description}</div>
-                          {/* <ProjectTile
-                        key={project.id}
-                        title={project.project_name}
-                        desc={project.description}
-                        >
-                        </ProjectTile> */}
+                          <Skill>
+                         { project.skills.map((elem, i) => {
+                          return <Ill key={i}>{elem}</Ill>
+                          })}
+                          </Skill>
+                          <div><Link to={`/project/${project.id}`}>Project Page</Link></div>
                         </Projects>
                       );
                     })
-                  : () => {
-                      return <div> No project results available :(</div>;
-                    }}
+                  : null}
               </ProjWrap>
-
+              {this.state.posts.length ?
               <Span>
                 <Title>Posts</Title>
-              </Span>
+              </Span> : null}
 
               <PostsWrapper>
                 {this.state.posts
@@ -154,12 +172,30 @@ class SearchPage extends Component {
                       );
                     })
                   : () => {
-                      return <div> No project results available :(</div>;
+                      return <div> No project results available </div>;
                     }}
               </PostsWrapper>
+              {this.state.skills.length ?
+              <Span>
+                <Title>Skills</Title>
+              </Span> : null}
+
+              <SkillsWrap>
+                {this.state.skills
+                  ? this.state.skills.map((skill, i) => {
+                    return (
+                      <SkillTile
+                        key={i}>
+                        <h1>{skill.skill}</h1>
+                      </SkillTile>
+                    )
+                  })
+                : () => {
+                  return <div> No project results available </div>
+                }}
+              </SkillsWrap>
             </Main>
           )}
-        </Content>
       </div>
     );
   }
@@ -176,44 +212,32 @@ const Header = glam.header({
   marginTop: "0"
 });
 
-const Content = glam.div({
-  display: "flex",
-  flexDirection: "row",
-  alignItems: "center",
-  height: "100%",
-  backgroundColor: "var(--main-grey)"
-});
+// const SearchNav = glam.div({
+//   height: 50,
+//   width: '100%',
+//   backgroundColor: 'var(--main-grey)',
+// })
 
-// const Div = glam.div({
-//   hieght: "100%",
-//   width: "100%",
-//   // border: 'solid black 2pt',
-//   display: "flex",
-//   flexDirection: "row",
-//   alignItems: "flex-end",
-//   margin: 0
-// });
-
-// const Column = glam.div({
-//   display: "flex",
-//   flexDirection: "Column",
-//   alignItems: "flex-end",
-//   height: 200,
-//   width: "100%",
-//   marginTop: 10
-// });
 const UserWrap = glam.div({
   display: "flex",
-  // gridGap: 20,
-  // gridTemplateColumns: 'repeat(auto-fill, 170px)',
   flexDirection: "row",
   justifyContent: "center",
   flexWrap: "wrap",
   marginBottom: 20,
   "> div": {
-    margin: 50
+    marginLeft: 20
   }
 });
+
+const Skill = glam.span({
+  display: 'flex',
+  flexDirection: 'row',
+
+})
+
+const Ill = glam.div({
+  marginLeft: 10,
+})
 
 const ProjWrap = glam.div({
   width: "75%",
@@ -222,12 +246,9 @@ const ProjWrap = glam.div({
   justifyContent: "space-around",
   flexWrap: "wrap",
   marginBottom: 20,
-  // paddingTop: 15,
-  // paddingBottom: 65,
   borderRadius: 5,
-  // backgroundColor: "var(--main-grey)",
   "> div": {
-    marginLeft: 20
+    marginRight: 20
   }
 });
 
@@ -236,11 +257,24 @@ const PostsWrapper = glam.div({
   flexDirection: "row",
   flexWrap: "wrap",
   justifyContent: "center",
-  // margin: 50,
   "> div": {
     margin: 20
   }
 });
+
+const SkillsWrap = glam.div({
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  "> div": {
+    margin: 20
+  }
+});
+
+const SkillTile = glam.div({
+  color: 'white',
+})
 
 const Title = glam.h1({
   margin: 5
@@ -253,59 +287,25 @@ const Main = glam.section({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  marginTop: 100,
+  // marginTop: 100,
   backgroundColor: "var(--main-purple)",
   overflow: 'contain',
 });
 
-// const Image = glam.img({
-//   marginTop: 0,
-//   marginLeft: 0,
-//   height: 200,
-//   width: "20%",
-//   border: "solid black 2pt"
-// });
-
-// const Aside = glam.aside({
-//     backgroundColor: 'var(--main-grey)',
-//     border: 'solid black 2px',
-//     width: '20%',
-//     height: '100%',
-//     display: 'flex',
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-// })
-
-// const Links = glam.span({
-//     color: 'var(--main-purple)',
-//     margin: 20,
-// })
-
-// const User = glam.div({
-//   width: "75%",
-//   height: 200,
-//   border: "solid black 2px",
-//   display: "flex",
-//   flexDirection: "row",
-//   justifyContent: "space-between",
-//   //   alignItems: "center",
-//   backgroundColor: "white"
-// });
-
 const Projects = glam.div({
-  width: "40%",
+  width: "45%",
   height: '100%',
   marginTop: 20,
   border: "solid black 2px",
   borderRadius: 3,
-  // display: "flex",
-  // flexDirection: "column",
-  // flexWrap: "wrap",
-  // justifyContent: "space-around",
-  // alignItems: "center",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
   fontSize: "16pt",
   backgroundColor: "white",
+  '> div': {
+    marginLeft: 10,
+  },
   '> div:first-of-type': {
     fontSize: '24pt',
   }
@@ -316,11 +316,8 @@ const Span = glam.span({
   backgroundColor: "white",
   position: "relative",
   height: "5%",
-  // width: '10%',
   textAlign: "center",
   margin: 20,
-  // top: 0,
-  // right: 0,
   border: "solid var(--main-grey) 2pt",
   borderRadius: 3
 });
