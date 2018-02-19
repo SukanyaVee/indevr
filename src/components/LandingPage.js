@@ -70,7 +70,6 @@ class LandingPage extends Component {
           <LogoSmall className='small' src={logo2} alt='' />
           <SearchBar />
         </Header>  */}
-        <Initial>
         {/* <Initial> */}
           <Main>
             <Heading >
@@ -129,6 +128,10 @@ const Desc = glam.p({
   width: "90%",
   "hover & .text": {
     color: 'black'
+},
+  '@media (max-width: 729px)': {
+    textAlign: 'center',
+    width: '100%',
   }
 });
 
@@ -158,11 +161,8 @@ const Desc = glam.p({
 //   alignItems: "center",
 //   marginTop: "0",
 //   })
-  '@media (max-width: 729px)': {
-    textAlign: 'center',
-    width: '100%',
-  }
-});
+
+// });
 
 const Heading = glam.h1({
   fontSize: "2.5em",

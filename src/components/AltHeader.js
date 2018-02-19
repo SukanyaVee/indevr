@@ -80,7 +80,7 @@ const Nav = glam.nav({
     marginBottom: 0,
     fontSize: 18,
     '& img':{
-        maxHeight: 70,
+        maxHeight: 50,
         borderRadius: '50%',
     },
     '& .navbar-nav':{
