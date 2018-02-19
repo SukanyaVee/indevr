@@ -2,7 +2,7 @@ module.exports = {
     getUsers: (req, res) => {
         const { term } = req.params;
         req.app.get('db').search_users(term).then(response => {
-            res.send(response)
+            res.status(200).send(response)
         })
     },
     getProjects: (req, res) => {

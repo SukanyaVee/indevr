@@ -1,0 +1,128 @@
+{
+	"info": {
+		"name": "Indevr",
+		"_postman_id": "ef0ff7a9-6d66-510f-ac42-9250a059000b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Project and Skills search functionality",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b773a20e-e1fa-458e-b6da-a032d4c6fb2c",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"// console.log(response.skills[0][0])",
+							"",
+							"pm.test('Project response is Array', () => {",
+							"    pm.expect(response.proj).to.be.an('array');",
+							"    pm.expect(response.proj[0].project_name).to.eql('Test 1');",
+							"});",
+							"",
+							"pm.test('Response also bring skills', () => {",
+							"    pm.expect(response).to.have.property('skills');",
+							"    pm.expect(response.skills[0][0].skill).to.eql('React');",
+							"});",
+							"",
+							"pm.test('Project and Skills bring multiple responses', () => {",
+							"    pm.expect(response.proj).to.have.lengthOf(5);",
+							"    pm.expect(response.skills.length).to.be.above(0);",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer  eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlF6bEROalEwUlRSQ05UVTBPVVF6UkRVelFqVTBRek13UXpZeFF6Y3hRMFEwTWpZd09VSkZRdyJ9.eyJpc3MiOiJodHRwczovL2luZGV2ci1ncm91cC5hdXRoMC5jb20vIiwic3ViIjoiaklQWHBhUmRVejVKbkJBVkI4SHUyQmdweFBYTTk1T2RAY2xpZW50cyIsImF1ZCI6Im1hbmFnZW1lbnQiLCJpYXQiOjE1MTg0NTkyMDgsImV4cCI6MTUxODU0OTIwOCwiYXpwIjoiaklQWHBhUmRVejVKbkJBVkI4SHUyQmdweFBYTTk1T2QiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.Nt8ZO-ypGTiLHK8CTyarTrE0rHZqfsp5yf71un9Vk1HBDRYsnXgrCmeDyIsbPhoFYiOuS5GD-8A1z2V_Zz_sGRr-1l_Xev5hj9hOjdJh8sMm0xT7aOQeFyWBOALzdH_AksSHGMMtnVWG6GQqnh10zbLa6C6VNF-1aBUjachQryeIRWeBZWDpr3kQK3bwiuCJfM8XnfjlzcI4aeKZQ4C_DpEzU62bzUfc8JrJBiG173wv-SU-uudaVdZ6IYCyc-wcYS5h82o9jTn7FUncgkIy02rleNKsmYQifClw_XFfdpj-3rsQok_sy9qN0US6DBzMcGzu87d_98IUqv6gxev-ig"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\": \"github|30614957\" \n}"
+				},
+				"url": {
+					"raw": "http://localhost:3483/search/projects/te",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3483",
+					"path": [
+						"search",
+						"projects",
+						"te"
+					]
+				},
+				"description": "Project and Skills search functionality."
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db89f16d-f81d-448a-8f5a-c455035cb91a",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.test('Status of 200', () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test('Get back User', () => {",
+							"    pm.expect(response).to.be.an('array').that.has.lengthOf(1);",
+							"});",
+							"",
+							"pm.test('Includes correct user info', () => {",
+							"    pm.expect(response[0].id).to.eql(1);",
+							"    pm.expect(response[0].username).to.eql('apple_barrel');",
+							"    pm.expect(response[0].first_name).to.eql('Apple');",
+							"    pm.expect(response[0].location).to.eql('Phoenix');",
+							"    pm.expect(response[0].github).to.eql('apple');",
+							"    pm.expect(response[0].website).to.eql(null);",
+							"    pm.expect(response[0].bio).to.eql('I am developer.  I do the thing!');",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3483//search/app",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3483",
+					"path": [
+						"",
+						"search",
+						"app"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

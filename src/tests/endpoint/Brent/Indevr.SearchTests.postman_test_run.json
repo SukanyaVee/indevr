@@ -1,0 +1,264 @@
+{
+	"id": "b3082c96-e49a-444a-beba-49ee96d81233",
+	"name": "Indevr",
+	"allTests": [],
+	"timestamp": "2018-02-19T18:16:36.186Z",
+	"collection_id": "ef0ff7a9-6d66-510f-ac42-9250a059000b",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "no-environment",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "ef0ff7a9-6d66-510f-ac42-9250a059000b",
+		"name": "Indevr",
+		"description": "",
+		"order": [
+			"596d3526-d004-5cd5-8a66-f4a7e2961b7c",
+			"505c9162-8077-9a00-e8db-813210ca815c"
+		],
+		"folders": [],
+		"folders_order": [],
+		"timestamp": 1519061104497,
+		"synced": false,
+		"remote_id": 0,
+		"owner": "3305528",
+		"sharedWithTeam": false,
+		"subscribed": false,
+		"remoteLink": "",
+		"remoteLinkUpdatedAt": null,
+		"public": false,
+		"createdAt": 1519061104497,
+		"updatedAt": 1519064180238,
+		"write": true,
+		"published": false,
+		"favorite": false,
+		"permissions": {},
+		"syncedPermissions": {},
+		"events": [],
+		"variables": [],
+		"auth": null
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"enabled": true,
+			"key": "data_length",
+			"type": "text",
+			"value": "3"
+		},
+		{
+			"enabled": true,
+			"key": "productID_0",
+			"type": "text",
+			"value": "4"
+		},
+		{
+			"enabled": true,
+			"key": "productID_1",
+			"type": "text",
+			"value": "5"
+		},
+		{
+			"enabled": true,
+			"key": "productID_2",
+			"type": "text",
+			"value": "6"
+		},
+		{
+			"enabled": true,
+			"key": "username",
+			"type": "text",
+			"value": "user 0"
+		},
+		{
+			"enabled": true,
+			"key": "total",
+			"type": "text",
+			"value": "0"
+		},
+		{
+			"enabled": true,
+			"key": "item0",
+			"type": "text",
+			"value": "{\"id\":1,\"title\":\"Snapback ( red )\",\"category\":\"hats\",\"price\":10}"
+		},
+		{
+			"enabled": true,
+			"key": "item1",
+			"type": "text",
+			"value": "{\"id\":2,\"title\":\"Snapback ( blue )\",\"category\":\"hats\",\"price\":10}"
+		},
+		{
+			"enabled": true,
+			"key": "users",
+			"type": "text",
+			"value": "[{\"id\":1,\"name\":\"John Smith\",\"email\":\"John@Smith.com\"},{\"id\":2,\"name\":\"Dave Davis\",\"email\":\"Dave@Davis.com\"},{\"id\":3,\"name\":\"Jane Janis\",\"email\":\"Jane@Janis.com\"}]"
+		},
+		{
+			"enabled": true,
+			"key": "vehicles",
+			"type": "text",
+			"value": "[{\"id\":1,\"make\":\"Toyota\",\"model\":\"Camry\",\"year\":1991,\"owner_id\":1},{\"id\":2,\"make\":\"Honda\",\"model\":\"Civic\",\"year\":1995,\"owner_id\":1},{\"id\":3,\"make\":\"Ford\",\"model\":\"Focus\",\"year\":2005,\"owner_id\":1},{\"id\":4,\"make\":\"Ford\",\"model\":\"Taurus\",\"year\":2003,\"owner_id\":2},{\"id\":5,\"make\":\"VW\",\"model\":\"Bug\",\"year\":2010,\"owner_id\":2},{\"id\":6,\"make\":\"Mini\",\"model\":\"Cooper\",\"year\":2013,\"owner_id\":3}]"
+		}
+	],
+	"results": [
+		{
+			"name": "Project and Skills search functionality",
+			"id": "596d3526-d004-5cd5-8a66-f4a7e2961b7c",
+			"url": "http://localhost:3483/search/projects/te",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Project response is Array": true,
+				"Response also bring skills": true,
+				"Project and Skills bring multiple responses": true
+			},
+			"testPassFailCounts": {
+				"Project response is Array": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response also bring skills": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Project and Skills bring multiple responses": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"591"
+			],
+			"allTests": [
+				{
+					"Project response is Array": true,
+					"Response also bring skills": true,
+					"Project and Skills bring multiple responses": true
+				}
+			],
+			"time": "591",
+			"totalRequestTime": "591",
+			"iterationResults": {}
+		},
+		{
+			"name": "Get User Information",
+			"id": "505c9162-8077-9a00-e8db-813210ca815c",
+			"url": "http://localhost:3483/search/app",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"Status of 200": true,
+				"Get back User": true,
+				"Includes correct user info": true
+			},
+			"testPassFailCounts": {
+				"Status of 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Get back User": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Includes correct user info": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"113"
+			],
+			"allTests": [
+				{
+					"Status of 200": true,
+					"Get back User": true,
+					"Includes correct user info": true
+				}
+			],
+			"time": "113",
+			"totalRequestTime": "113",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 6,
+	"totalFail": 0,
+	"totalTime": 704,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "Project and Skills search functionality",
+			"id": "596d3526-d004-5cd5-8a66-f4a7e2961b7c",
+			"url": "http://localhost:3483/search/projects/te",
+			"time": "2018-02-19T18:16:36.186Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Project response is Array": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response also bring skills": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Project and Skills bring multiple responses": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "Get User Information",
+			"id": "505c9162-8077-9a00-e8db-813210ca815c",
+			"url": "http://localhost:3483/search/app",
+			"time": "2018-02-19T18:16:36.186Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Status of 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Get back User": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Includes correct user info": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}

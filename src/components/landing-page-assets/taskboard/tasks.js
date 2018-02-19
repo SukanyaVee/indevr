@@ -19,12 +19,13 @@ class tasks extends Component {
                 with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc>
                 <Image src={one} />
                 </Topic>
-                <Topic>
-                <Image2 src={one}/>
+                <Topic2>
+                
                 <Desc2>
                     <div className='p'>Blabbity duh blah blah. I was walking around and forgot where I was going. I then said something but can't remember that either. <strong>Please send help!</strong></div>
                 </Desc2>
-                </Topic>
+                <Image2 src={one}/>
+                </Topic2>
             </Main>
         )
     }
@@ -46,7 +47,22 @@ const Topic = glam.section({
     justifyContent: 'center',
     '@media (max-width: 729px)':{
         height: '35%',
-        maginTop: 0,
+        marginTop: 0,
+        flexDirection: 'column',
+        
+    }
+})
+const Topic2 = glam.section({
+    height: '45%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    justifyContent: 'center',
+    '@media (max-width: 729px)':{
+        height: '35%',
+        marginTop: 0,
+        flexDirection: 'column',
+        
     }
 })
 
@@ -60,7 +76,9 @@ const Desc = glam.span({
     },
     '@media (max-width: 729px)':{
         fontSize: '12pt',
-        marginTop: 0,
+        width: '100vw',
+        marginTop: 10,
+        textAlign: 'center'
     }
 })
 const Desc2 = glam.span({
@@ -74,7 +92,9 @@ const Desc2 = glam.span({
     '@media (max-width: 729px)':{
       '& .p': {  
         fontSize: '12pt',
-        maginTop: 0,
+        maginTop: 50,
+        width: '100vw',
+        textAlign: 'center'
       }
     }
 })
@@ -83,24 +103,24 @@ const Image = glam.img({
     height: '100%',
     width: '60%',
     float: 'right',
-    marginRight: 10,
+    margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
-        width: '50%',
+        width: '75%',
         maxHeight: '60%',
-        marginTop: 20,
+        margin: 'auto',
+        marginBottom: 20,
     }
 })
 const Image2 = glam.img({
     height: '100%',
     width: '60%',
-    float: 'left',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
-        width: '50%',
+        width: '75%',
         maxHeight: '60%',
-        marginTop: 20,
+        margin: 'auto',
     }
 })
 

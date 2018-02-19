@@ -212,11 +212,11 @@ const Header = glam.header({
   marginTop: "0"
 });
 
-const SearchNav = glam.div({
-  height: 50,
-  width: '100%',
-  backgroundColor: 'var(--main-grey)',
-})
+// const SearchNav = glam.div({
+//   height: 50,
+//   width: '100%',
+//   backgroundColor: 'var(--main-grey)',
+// })
 
 const UserWrap = glam.div({
   display: "flex",
