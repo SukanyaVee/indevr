@@ -42,6 +42,17 @@ module.exports = {
             console.log('Error adding skill:', err);
             res.status(500).send('Oops, something went wrong');
         })
-    }
+    },
+
+    deleteSkill: (req,res,next) => {
+        const {id} = req.params;
+        const db = req.app.get('db');
+        db.delete_user_skill([id]).then( () => {
+            res.status(200).send('Skill Removed');
+        }).catch(err => {
+            console.log('Error removing skill:', err);
+            res.status(500).send('Oops, something went wrong');
+        })
+    },
 
 }

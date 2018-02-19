@@ -31,6 +31,16 @@ class AddSkills extends Component {
 
     }
 
+    removeSkill(index){
+        console.log('index')
+        const id = this.state.skills[index].id;
+        const newSkills = [...this.state.skills];
+        newSkills.splice(index, 1);
+        axios.delete(`indevr/users/skills/${id}`).then(res => {
+            this.setState({skills: newSkills})
+        }).catch(err => console.log(err))
+    }
+
     render(){
         return (
             <Main>
@@ -55,7 +65,12 @@ class AddSkills extends Component {
                 </Form>
                 <Display>
                     {this.state.skills.map( (skill,i) => {
-                        return <Tag key={i}>{skill.skill} - {skill.level} <i class="fas fa-minus-octagon"></i></Tag>
+                        return (
+                            <Tag key={i}>
+                                {skill.skill} - {skill.level}
+                                <div className="delete" onClick={() => this.removeSkill(i)}> &nbsp; <i className="fas fa-minus-circle"></i></div>
+                            </Tag>
+                        )
                     })}
 
                 </Display>
@@ -103,12 +118,12 @@ const Tag = glam.div({
     display: 'inline-block',
     padding: '3px 5px',
     margin: 3,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     position: 'relative',
-    '> .fa-minus-octagon':{
-        position: 'absolute',
-        top: -5,
-        right: -5,
+    '& .fa-minus-circle':{
         fontSize: '.8em',
-        color: 'red'
-    }
+        color: 'red',
+    },
 })
