@@ -64,6 +64,7 @@ class EditProfile extends Component {
         axios.put(`/indevr/users/${userID}`, this.state).then(res => {
             console.log(res.data);
         }).catch(err => console.log(err))
+        this.props.history.push(`/dev/${this.props.user.id}`)
     }
 
     render(){
