@@ -6,15 +6,16 @@ const express = require('express'),
     massive = require('massive'),
     multer =  require('multer'),
     AWS = require('aws-sdk'),
-    socket = require('socket.io');
-    user = require('./controller/user_controller');
-    posts = require('./controller/post_controller');
-    contact = require('./controller/contact_controller');
-    proj = require('./controller/project_controller');
-    auth_ctrl = require('./controller/auth0_controller');
-    taskboard_ctrl = require('./controller/taskboard_controller');
-    news_feed_ctrl = require('./controller/news_feed_controller');
-    search = require('./controller/search_controller');
+    socket = require('socket.io'),
+    user = require('./controller/user_controller'),
+    posts = require('./controller/post_controller'),
+    contact = require('./controller/contact_controller'),
+    proj = require('./controller/project_controller'),
+    auth_ctrl = require('./controller/auth0_controller'),
+    taskboard_ctrl = require('./controller/taskboard_controller'),
+    news_feed_ctrl = require('./controller/news_feed_controller'),
+    search = require('./controller/search_controller'),
+    nodemailer = require('nodemailer');
 
 //App Setup
 const app = express();
@@ -70,6 +71,35 @@ massive(process.env.CONNECTION_STRING)
 .then(db => app.set('db', db))
 .catch(err => console.error(err));
 
+
+//Nodemailer Setup 
+
+app.post('/indevr/send', (req, res) => {
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.USER_EMAIL,
+            pass: process.env.USER_PASSWORD
+        }
+    })
+
+    const mailOptions = {
+        from: process.env.USER_EMAIL,
+        to: process.env.USER_EMAIL,
+        subject: `New Message from inDevr member, ${req.body.name}`,
+        text: `${req.body.name}, ${req.body.email}`,
+        html: `<h3>From:</h3>${req.body.name}<br/><h3>Email:</h3>${req.body.address}<br/><h3>Comments:</h3>${req.body.email}`
+    };
+
+    transporter.sendMail(mailOptions, function(err, info){
+        if(err){
+            console.log(err)
+        } else {
+            console.log(info)
+        }
+    })
+})
 
 
 //API Endpoints
