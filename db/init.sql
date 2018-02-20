@@ -147,6 +147,8 @@ INSERT INTO contacts
 VALUES
 (1,2),
 (1,3);
+
+
 CREATE TABLE IF NOT EXISTS taskboard_items (
     id SERIAL PRIMARY KEY,
     project_id INTEGER REFERENCES projects (id) ON DELETE CASCADE,
@@ -159,3 +161,32 @@ CREATE TABLE IF NOT EXISTS taskboard_items (
 
 
  ALTER TABLE project_users ADD COLUMN owner boolean;
+ UPDATE project_users SET owner = false WHERE user_id<>1;
+
+ CREATE TABLE IF NOT EXISTS add_messages (
+    id SERIAL PRIMARY KEY,
+    project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    contributor_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+
+);
+
+INSERT INTO users 
+(Auth0_id, username, first_name, last_name, email, picture)
+VALUES
+('Auth0DummySecret5', 'first5_last5', 'first5', 'last5', 'first5@last5.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
+('Auth0DummySecret6', 'first6_last6', 'first6', 'last6', 'first6@last6.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
+('Auth0DummySecret7', 'first7_last7', 'first7', 'last7', 'first7@last7.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
+('Auth0DummySecret8', 'first8_last8', 'first8', 'last8', 'first8@last8.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
+('Auth0DummySecret9', 'first9_last9', 'first9', 'last9', 'first9@last9.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
+('Auth0DummySecret10', 'first10_last10', 'first10', 'last10', 'first10@last10.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg');
+
+INSERT INTO add_messages 
+(project_id, user_id, contributor_id)
+VALUES
+(1, 1, 7),
+(1, 1, 8),
+(1, 1, 9),
+(1, 1, 10),
+(1, 1, 11),
+(1, 1, 12);

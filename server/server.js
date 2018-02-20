@@ -128,6 +128,11 @@ app.get(projContributors, proj.getProjCons); //uses query?
 app.post(projContributors, proj.addContr) //uses body
 app.delete(`${projContributors}/:id`, proj.removeContr) //uses body
 
+const projMessages = '/indevr/messages'
+
+app.get(projMessages, proj.getMessages); //uses query
+app.delete(`${projMessages}/:id`, proj.deleteMessage) // uses params
+
 //-------------PROJECT TASKBOARD-----------
 const taskboardAPIurl = '/indevr/taskboard';
 

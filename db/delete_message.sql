@@ -1,0 +1,1 @@
+DELETE FROM add_messages WHERE id=$1;

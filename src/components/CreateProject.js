@@ -31,8 +31,8 @@ class CreateProject extends Component {
         axios.post('/indevr/projects', newProj).then(resp=>{
             console.log(resp.data)
             this.setState({proj_id: resp.data[0].id})
-            axios.post('indevr/contributors', {project_id: resp.data[0].id, user_id: 1, owner: true}).then(resp=>{ //HARDCODED
-            })
+            axios.post('/indevr/contributors', {project_id: resp.data[0].id, user_id: 1, owner: true}).then(resp=>{ //HARDCODED
+            }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
         this.setState({showSkillsForm: true})
     }
