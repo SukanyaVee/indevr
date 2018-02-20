@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import UserTile from "./UserTile";
 import ProjectTile from "./ProjectTile";
 import PostTile from "./PostTile";
-import ConnectButton from "./ConnectButton";
+import ToggleDisplay from 'react-toggle-display';
 
 class SearchPage extends Component {
   constructor(props) {
@@ -18,6 +18,10 @@ class SearchPage extends Component {
       posts: [],
       skills: [],
       stacks: [],
+      showPeople: true,
+      showProjects: false,
+      showPosts: false,
+      showSkills: false
     };
     this.getSearch = this.getSearch.bind(this);
   }
@@ -88,117 +92,95 @@ class SearchPage extends Component {
     })
   }
 
+  switchTab(tab){
+      document.querySelector('.active').classList.remove('active');
+      document.getElementById(tab).classList.add('active');
+
+      this.setState({
+          showPeople: tab === 'people' ? true : false,
+          showProjects: tab === 'projects' ? true : false,
+          showPosts: tab === 'posts' ? true : false,
+          showSkills: tab === 'skills' ? true : false,
+      })
+  }
+
   render() {
     return (
-      <div>
 
-          {this.state.data && (
-            <Main>
-          {this.state.results.length ?
-              <Span>
-                <Title>Users</Title>
-              </Span> : null}
-              <UserWrap>
-                {this.state.results
-                  ? this.state.results.map(user => {
-                      return (
-                        <Link to={`/dev/${user.id}`} key={user.id}>
-                          <UserTile
-                            key={user.id}
-                            name={user.first_name + " " + user.last_name}
-                            img={user.picture}
-                          >
-                            <div>
-                              <ConnectButton />
+        <Main>
+            <div className="container">
+                <Nav>
+                    <div id="people" className="active" onClick={() => this.switchTab('people')}>People</div>
+                    <div id="projects" onClick={() => this.switchTab('projects')}>Projects</div>
+                    <div id="posts" onClick={() => this.switchTab('posts')}>Posts</div>
+                    <div id="skills" onClick={() => this.switchTab('skills')}>Skills</div>
+                </Nav>
+
+                <ToggleDisplay show={this.state.showPeople}>
+                    <Users>
+                        {this.state.results.length ? this.state.results.map((user,i) => {
+                                return (
+                                    <Link to={`/dev/${user.id}`} key={i}>
+                                        <UserTile
+                                            name={user.first_name + " " + user.last_name}
+                                            img={user.picture}
+                                        />
+                                    </Link>
+                                );
+                            })
+                        : <div> No user results available </div>}
+                    </Users>
+                </ToggleDisplay>
+
+                <ToggleDisplay show={this.state.showProjects}>
+                    {this.state.projects.length ? this.state.projects.map((project,i) => {
+                        return (
+                            <div key={i}>
+                                <Link to={`/project/${project.project_id}`}>
+                                    <ProjectTile
+                                        title={project.project_name}
+                                        desc={project.description}
+                                        skills={project.skills}/>
+                                    </Link>
                             </div>
-                          </UserTile>
-                        </Link>
-                      );
-                    })
-                  : () => {
-                      return <div> No user results available </div>;
-                    }}
-              </UserWrap>
-{this.state.projects.length ?
-              <Span>
-                <Title id='projects'>Projects</Title>
-              </Span> : null}
+                        );
+                    }): <div> No project results available </div>}
+                </ToggleDisplay>
 
-              <ProjWrap className="container">
-                {this.state.projects ? this.state.projects.map((project,i) => {
-                    return (
-                        <div>
-                            <Link to={`/project/${project.project_id}`}>
-                                <ProjectTile
+                <ToggleDisplay show={this.state.showPosts}>
+                    <Posts>
+                        {this.state.posts.length ? this.state.posts.map((post, i) => {
+                            return (
+                                <PostTile
                                     key={i}
-                                    title={project.project_name}
-                                    desc={project.description}
-                                    skills={project.skills}/>
-                                </Link>
-                        </div>
-                      );
-                    })
-                : null}
-              </ProjWrap>
-              {this.state.posts.length ?
-              <Span>
-                <Title>Posts</Title>
-              </Span> : null}
+                                    id={post.id}
+                                    name={post.first_name + " " + post.last_name}
+                                    user_id={post.user_id}
+                                    content={post.content}
+                                    timestamp={post.created_at}
+                                />
+                            );
+                        }): <div> No post results available </div>}
+                    </Posts>
+                </ToggleDisplay>
 
-              <PostsWrapper>
-                {this.state.posts
-                  ? this.state.posts.map((post, i) => {
-                      return (
-                        <PostTile
-                          key={i}
-                          id={post.id}
-                          name={post.first_name + " " + post.last_name}
-                          user_id={post.user_id}
-                          content={post.content}
-                          timestamp={post.created_at}
-                        />
-                      );
-                    })
-                  : () => {
-                      return <div> No project results available </div>;
-                    }}
-              </PostsWrapper>
-              {this.state.skills.length ?
-              <Span>
-                <Title>Skills</Title>
-              </Span> : null}
+                <ToggleDisplay show={this.state.showSkills}>
+                    <Skills>
+                        {this.state.skills.length ? this.state.skills.map((skill, i) => {
+                            return (
+                                <SkillTile key={i}>
+                                    <h1>{skill.skill}</h1>
+                                </SkillTile>
+                            )
+                        }) : <div> No skill results available </div>}
+                    </Skills>
+                </ToggleDisplay>
 
-              <SkillsWrap>
-                {this.state.skills
-                  ? this.state.skills.map((skill, i) => {
-                    return (
-                      <SkillTile
-                        key={i}>
-                        <h1>{skill.skill}</h1>
-                      </SkillTile>
-                    )
-                  })
-                : () => {
-                  return <div> No project results available </div>
-                }}
-              </SkillsWrap>
-            </Main>
-          )}
-      </div>
+            </div>
+        </Main>
     );
   }
 }
-
-const UserWrap = glam.div({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  flexWrap: "wrap",
-  marginBottom: 20,
-  "> div": {
-    marginLeft: 20
-  }
-});
 
 const Skill = glam.span({
   display: 'flex',
@@ -235,74 +217,40 @@ const PostsWrapper = glam.div({
     }
 });
 
-const SkillsWrap = glam.div({
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  "> div": {
-    margin: 20
-  }
-});
-
 const SkillTile = glam.div({
   color: 'white',
+  backgroundColor: 'var(--main-purple)',
+  padding: '3px 8px',
+  borderRadius: 5,
+  margin: 10,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  '& h1':{
+      margin: 0
+  }
 })
 
-const Title = glam.h1({
-  margin: 5
-});
-
 const Main = glam.section({
-  minHeight: "100vh",
+  minHeight: "calc(100vh - 200px)",
   border: "solid black 2px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  // marginTop: 100,
   backgroundColor: "var(--main-purple)",
   overflow: 'contain',
   '& a':{
       textDecoration: 'none',
       color: 'inherit'
+  },
+  paddingTop: 20,
+  '> .container':{
+      backgroundColor: '#fff',
+      display: "flex",
+      flexDirection: 'column',
+      alignItems: "center",
+      borderRadius: 3,
+      minHeight: 'calc(100vh - 250px)'
   }
 });
 
-// const Projects = glam.div({
-//   width: "45%",
-//   overflow: 'auto',
-//   height: '100%',
-//   marginTop: 20,
-//   border: "solid black 2px",
-//   borderRadius: 3,
-//   display: "flex",
-//   flexDirection: "column",
-//   justifyContent: "space-between",
-//   fontSize: "16pt",
-//   backgroundColor: "white",
-//   '> div': {
-//     marginLeft: 10,
-//   },
-//   '> div:first-of-type': {
-//     fontSize: '24pt',
-//   }
-// });
-
-const Span = glam.span({
-  color: "var(--main-purple)",
-  backgroundColor: "white",
-  position: "relative",
-  height: "5%",
-  textAlign: "center",
-  margin: 20,
-  border: "solid var(--main-grey) 2pt",
-  borderRadius: 3
-});
-
-const NoSearch = glam.div({
-  fontSize: '18pt',
-  color: 'white',
-})
 
 function mapStateToProps(state) {
   const { term } = state;
@@ -310,5 +258,51 @@ function mapStateToProps(state) {
     term
   };
 }
+
+
+
+// ----------
+
+const Nav = glam.div({
+    padding: 20,
+    marginBottom: 30,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: 300,
+    fontSize: 18,
+    cursor: 'pointer',
+    '& .active':{
+        borderBottom: '3px solid var(--main-purple)',
+    },
+})
+
+const Users = glam.div({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '> a':{
+        margin: 10
+    }
+})
+
+const Posts = glam.div({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '> div':{
+        margin: 20
+    }
+})
+
+const Skills = glam.div({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+})
+
 
 export default connect(mapStateToProps)(SearchPage);
