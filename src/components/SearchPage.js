@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import SearchBar from "./SearchBar";
-import logo from "../assets/LogoMain.png";
+// import SearchBar from "./SearchBar";
+// import logo from "../assets/LogoMain.png";
 import glam from "glamorous";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -193,16 +193,16 @@ class SearchPage extends Component {
   }
 }
 
-const Header = glam.header({
-  height: "100",
-  width: "100vw",
-  backgroundColor: "black",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
-  marginTop: "0"
-});
+// const Header = glam.header({
+//   height: "100",
+//   width: "100vw",
+//   backgroundColor: "black",
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "space-around",
+//   alignItems: "center",
+//   marginTop: "0"
+// });
 
 // const SearchNav = glam.div({
 //   height: 50,

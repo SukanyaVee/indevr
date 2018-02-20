@@ -36,7 +36,7 @@ class Header extends Component {
                             {!this.props.user.id && <li className="mobile-show">
                                 <Link to={`/`}>Sign In</Link>
                             </li>}
-                            {this.props.user.id && <div className="dropdown mobile-hide">
+                            {this.props.user.id && <li className="dropdown mobile-hide" id="user-img">
                                 <a href="" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <img src={this.props.user.picture} alt="user"/>
                                     <span className="caret"></span>
@@ -53,7 +53,7 @@ class Header extends Component {
                                         <a href=""><i className="fas fa-sign-out"></i> &nbsp; Logout</a>
                                     </li>
                                 </ul>
-                            </div>}
+                            </li>}
                             {!this.props.user.id && <li className="mobile-hide">
                                 <Link to={`/`}>Sign In</Link>
                             </li>}
@@ -90,9 +90,8 @@ const Nav = glam.nav({
         maxHeight: 70,
         borderRadius: '50%',
     },
-    '& .dropdown img':{
-        height: 50,
-        paddingTop: 5
+    '& #user-img':{
+        paddingTop: 0
     },
     '& .navbar-nav':{
         padding: 10,
@@ -111,6 +110,10 @@ const Nav = glam.nav({
         '> li':{
             paddingTop: 10,
         }
+    },
+    '& .dropdown img':{
+        height: 50,
+
     },
     '& .navbar-header':{
         height: 100,

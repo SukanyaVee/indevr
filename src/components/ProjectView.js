@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import {Link, Switch, Route} from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import glam from 'glamorous';
 import Overview from './Overview';
 // import Repo from './Repo';
@@ -77,7 +77,7 @@ export default class ProjectView extends Component {
 
     componentDidMount(){
          // session check get user detaisl from req.session
-        
+
     }
 
     openRepo () {
@@ -91,7 +91,7 @@ export default class ProjectView extends Component {
     }
 
     render() {
-        
+
         return (
             <ProjectViewer>
                 <nav>
@@ -105,7 +105,7 @@ export default class ProjectView extends Component {
                 <main>
                         {this.state.viewToggler==='overview' && <Overview/> }
                         {this.state.viewToggler==='tasks' && <TaskBoard/> }
-                        {this.state.viewToggler==='repo' && 
+                        {this.state.viewToggler==='repo' &&
                             <div>
                                 <a href={this.state.project.repo} target="_blank"></a>
                                 <iframe title="repo" src="http://github.com" width="600px" height="400px">
