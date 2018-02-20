@@ -7,10 +7,10 @@ import axios from 'axios';
 
 class Taskboard extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            project_id: 2,
+            project_id: props.project,
             lists: []
         }
     }
@@ -45,7 +45,8 @@ class Taskboard extends Component {
         }).catch(err => console.log(err))
     }
 
-	render() {
+	render(){
+    console.log(this.props);
 		return (
             <Main>
                 {this.state.lists.map( (list,i) => {

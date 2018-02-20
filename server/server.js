@@ -79,6 +79,8 @@ const userAPIurl = '/indevr/users'
 
 app.get(`${userAPIurl}/:userID`, user.get) //defined to get users + skills
 app.put(`${userAPIurl}/:id`, user.update);
+app.post(`${userAPIurl}/skills`, user.addSkill);
+app.delete(`${userAPIurl}/skills/:id`, user.deleteSkill);
 // app.delete(`${userAPIurl}/:id`, user.delete);
 
 // ---------------CONTACTS-------------------
