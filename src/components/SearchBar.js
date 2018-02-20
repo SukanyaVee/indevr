@@ -42,10 +42,10 @@ class SearchBar extends Component {
     render() {
         if(this.state.redirect){
             this.setState({redirect: false})
-            return <Redirect to={`/search/${this.state.searchTerm}`} />
             this.setState({
                 searchTerm: ''
             })
+            return <Redirect to={`/search/${this.state.searchTerm}`} />
         }
         return (
             <Main>

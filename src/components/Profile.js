@@ -252,7 +252,8 @@ class Profile extends Component {
                                                 id={project.id}
                                                 title={project.project_name}
                                                 desc={project.description}
-                                                public={project.public}/>
+                                                public={project.public}
+                                                skills={project.skills}/>
                                             </Link>
                                         );
                                     })}
