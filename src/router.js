@@ -10,6 +10,7 @@ import SearchPage from './components/SearchPage';
 import ExplorePage from './components/ExplorePage';
 import EditProfile from './components/EditProfile';
 import About from './components/About';
+import Contact from './components/Contact';
 
 
 export default (
@@ -24,5 +25,6 @@ export default (
         <Route path='/search' component={SearchPage} />
         <Route path='/about/indevr' component={About} />
         <Route path="/explore" component={ExplorePage}/>
+        <Route path='/contact/indevr' component={Contact} />
     </Switch>
 )

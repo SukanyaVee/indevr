@@ -19,7 +19,7 @@ class Footer extends Component {
                 <Image src={logo} alt='' />
                 <Link to='/about/indevr' style={link}>About</Link>
                 <Link to='/explore' style={link}>Explore</Link>
-                <Link to='' style={link}>Contact</Link>
+                <Link to='/contact/indevr' style={link}>Contact</Link>
             </Foot>
         )
     }

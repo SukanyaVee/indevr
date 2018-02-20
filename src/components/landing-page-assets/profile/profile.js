@@ -79,7 +79,7 @@ const Desc = glam.span({
     '@media (max-width: 729px)':{
         fontSize: '10pt',
         width: '100vw',
-        marginTop: 20,
+        marginTop: 75,
         textAlign: 'center'
     }
 })
@@ -94,7 +94,7 @@ const Desc2 = glam.span({
     '@media (max-width: 729px)':{
       '& .p': {  
         fontSize: '10pt',
-        marginTop: 50,
+        marginTop: 185,
         width: '100vw',
         textAlign: 'center'
       }
@@ -109,21 +109,22 @@ const Image = glam.img({
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
-        maxHeight: '60%',
+        maxHeight: '100%',
         margin: '20px auto',
         // marginBottom: 20,
     }
 })
 const Image2 = glam.img({
     height: '98%',
-    width: '60%',
+    minWidth: '60%',
     margin: '5px 10px',
     marginBottom: '10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
-        maxHeight: '60%',
-        margin: '20px auto',
+        maxHeight: '100%',
+        marginTop: 100,
+        margin: 'auto',
     }
 })
 
