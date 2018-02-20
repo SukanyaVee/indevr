@@ -7,6 +7,7 @@ import TaskBoard from './components/Taskboard/Taskboard';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import SearchPage from './components/SearchPage';
+import ExplorePage from './components/ExplorePage';
 import EditProfile from './components/EditProfile';
 import About from './components/About';
 
@@ -22,5 +23,6 @@ export default (
         <Route path="/edit" component={EditProfile} />
         <Route path='/search' component={SearchPage} />
         <Route path='/about/indevr' component={About} />
+        <Route path="/explore" component={ExplorePage}/>
     </Switch>
 )

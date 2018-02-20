@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import logo from '../assets/in_DEV_r.png';
 import glam from 'glamorous';
+import {Link} from 'react-router-dom';
 
 
 class Header extends Component {
@@ -13,12 +14,12 @@ class Header extends Component {
     render() {
         return (
             <Hheader>
-                    <img src={logo} alt="" onClick={e=>{this.props.history.push('/dashboard')}}/>
-                    <div>
+                    <Link to="/dashboard"><img src={logo} alt="inDevr"/></Link>
+                    <Nav>
                         <div>About</div>
-                        <div>Explore</div>
-                        <div>USer stuff</div>
-                    </div>
+                        <div><Link to="/explore">Explore</Link></div>
+                        <div>Profile</div>
+                    </Nav>
             </Hheader>
         )
     }
@@ -33,10 +34,21 @@ const Hheader = glam.div ({
     padding: 20,
     '& img': {
         width: 200,
+    },
+    '& a':{
+        textDecoration: 'none'
     }
-
 })
 
-
+const Nav = glam.div ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:'center',
+    fontSize: 16,
+    '&>div': {
+        padding: 10,
+        cursor: 'pointer'
+    }
+})
 
 export default Header;

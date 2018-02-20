@@ -51,7 +51,7 @@ class Container extends Component {
 		}));
 	}
 
-    updateCard(){
+    addNewCard(){
 		console.log(this.props);
         axios.post(`/indevr/taskboard`, {card: this.state, project_id: this.props.project_id}).then(res => {
             console.log(res.data);
@@ -138,7 +138,7 @@ class Container extends Component {
                                 </form>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-default" data-dismiss="modal" onClick={() => this.updateCard()}>Add Card</button>
+                                <button type="button" className="btn btn-default" data-dismiss="modal" onClick={() => this.addNewCard()}>Add Card</button>
                             </div>
                         </div>
                     </div>

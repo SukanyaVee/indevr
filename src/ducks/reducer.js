@@ -41,6 +41,7 @@ export function searchProj(results){
         }
         return null
     })
+    
     console.log('Pro', pro)
     return {
         type: SEARCHPROJ,

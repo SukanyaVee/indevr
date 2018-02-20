@@ -32,56 +32,44 @@ class SearchBar extends Component {
     }
 
     render() {
-        // const {searchTerm} = this.state;
         return (
-            <Bar class="input-group">
-                <Search 
-                type="text" className="form-control"
-                placeholder='Search Indevr'
-                onChange={e => this.onInputChange(e.target.value)}
-                >
-                </Search>
-                <Link to={`/search/${this.state.searchTerm}`}>
-                <Btn 
-                onClick={this.search}
-                ><i className="fab fa-searchengin fa-2x"></i></Btn>
-                </Link>
-                <br/>
-            </Bar>
+            <Main>
+                <div className="input-group">
+                    <div className="form-group">
+                        <input type="text"
+                            className="form-control"
+                            placeholder="Search inDevr"
+                            onChange={e => this.onInputChange(e.target.value)}/>
+                            <Link to={`/search/${this.state.searchTerm}`}>
+                            <button type="submit" className="btn btn-default" onClick={this.search}><i className="fas fa-search"></i></button>
+                        </Link>
+                    </div>
+                </div>
+            </Main>
         )
     }
 }
 
-const Bar = glam.div({
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-})
-
-const Search = glam.input({
-    border: 'black solid 2pt',
-    width: 250,
-    height: 43,
-})
-
-const Btn = glam.button({
-    height: 35,
-    width: 100,
-    backgroundColor: 'white',
-    border: 'solid white 2px',
-    color: 'var(--main-purple)',
-    textAlign: 'center',
-    marginRight: '30px',
-    '@media (max-width: 729px)':{
-        width: '30%',
-        minHeight: '50%',
-        fontSize: '12pt',
-        '> i': {
-            fontSize: '4pt',
+const Main = glam.form({
+    '& .form-group':{
+        display: 'flex',
+    },
+    '& button':{
+        marginLeft: 3
+    },
+    '@media (max-width: 860px)':{
+        maxWidth: '100%',
+        '& input':{
+            width: '130px !important',
         }
-    }
+    },
+    '@media (max-width: 767px)':{
+        '& input':{
+            width: '100% !important',
+        }
+    },
+
+
 })
 
 const mapDispatchToProps = {

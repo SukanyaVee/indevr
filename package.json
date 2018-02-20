@@ -5,6 +5,7 @@
   "main": "server/server.js",
   "proxy": "http://localhost:3483",
   "dependencies": {
+    "append-field": "^1.0.0",
     "auth0-lock": "^11.2.3",
     "aws-sdk": "^2.192.0",
     "axios": "^0.17.1",
