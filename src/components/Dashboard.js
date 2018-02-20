@@ -4,8 +4,8 @@ import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import glam from 'glamorous';
-// import profpic from '../assets/prof-pic.png';
-// import logo from '../assets/in_DEV_r.png';
+import {withRouter} from 'react-router-dom';
+import profpic from '../assets/prof-pic.png';
 import CreateProject from './CreateProject'
 import Explorer from './Explorer'
 
@@ -89,7 +89,7 @@ class Dashboard extends Component {
                                 {this.state.contacts.map(contact => 
                                     <ContactItem key={contact.id} contact={contact}>
                                         <Link to={`/dev/${contact.id}`}> 
-                                            <img src={contact.picture} alt="contact"/> 
+                                            <img src={contact.picture||profpic} alt="contact"/> 
                                             <div>{contact.first_name} {contact.last_name}</div>
                                         </Link>
                                     </ContactItem>)
@@ -122,27 +122,27 @@ class Dashboard extends Component {
                             {this.state.projectView==='others' && <Explorer/>}
                         </ProjectList>
                     </Projects>
-                <Side>
+                    <Side>
                         <Newpost>
                             <textarea placeholder="what gem did you find?" cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea><br/>
                             <button onClick={e=>{this.submitPost(this.state.postContent)}}>Post</button>
                         </Newpost>
-                    <PostFeed>
-                        THE LATEST NEWS
-                        {this.state.posts.map(item =>
-                            <PostItem key={item.post_id}>
-                                <PostTitle>
-                                    {item.content}
-                                    <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
-                                </PostTitle>
-                                <div>
-                                <small><small>{item.created_at}</small></small> 
-                                 
-                                <div><img src={item.picture} alt="profile"/> {item.first_name} {item.last_name}</div>
-                                </div>
-                            </PostItem>)}
-                    </PostFeed>
-                </Side>
+                        <PostFeed>
+                            THE LATEST NEWS
+                            {this.state.posts.map(item =>
+                                <PostItem key={item.post_id}>
+                                    <PostTitle>
+                                        {item.content}
+                                        <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
+                                    </PostTitle>
+                                    <div>
+                                    <small><small>{item.created_at}</small></small> 
+                                    
+                                    <div><img src={item.picture} alt="profile"/> {item.first_name} {item.last_name}</div>
+                                    </div>
+                                </PostItem>)}
+                        </PostFeed>
+                    </Side>
                 </Main>
             </Dashboard1>
         );
@@ -176,6 +176,7 @@ const Contacts = glam.div ({
     fontSize: 14,
     padding: 20,
     marginBottom: 10,
+    cursor: 'Pointer',
     '& img': {
         width: 40,
         height: 40,
@@ -183,9 +184,19 @@ const Contacts = glam.div ({
     },
     '& span': {
         width: 500,
-        display: 'flex'
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexWrap: 'wrap'
     },
-    cursor: 'Pointer'
+    '@media (max-width: 500px)': {
+        marginBottom: 0,
+        border: '1px solid red',
+        padding: 10,
+        '& span': {
+            margin: 'auto',
+        }
+    }
 })
 
 const ContactItem = glam.div ({
@@ -202,7 +213,11 @@ const Main = glam.div ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    padding: 20
+    padding: 20,
+    '@media (max-width: 500px)':{
+        flexDirection: 'column',
+        padding: 10
+    }
 })
 
 const Projects = glam.div ({
@@ -212,7 +227,7 @@ const Projects = glam.div ({
 const Nav = glam.div ({
     display: 'flex',
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     padding: 20,
     '& div': {
         padding: 10,
@@ -245,7 +260,10 @@ const ProjectList = glam.div ({
 const Side = glam.div ({
     maxWidth: 300,
     background: '#eeeeee',
-    padding: 20
+    padding: 20,
+    '@media (max-width: 500px)': {
+        display: 'none'
+    }
 })
 
 const Newpost = glam.div ({
@@ -306,4 +324,4 @@ const mapStateToProps = state => {
     login: login
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

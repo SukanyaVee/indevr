@@ -13,8 +13,8 @@ const ProjectViewer = glam.div ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    width: '100%',
-    flex: 1,
+    // width: '100%',
+    // flex: 1,
     // padding: 50,
     '& main': {
         padding: 20
@@ -23,10 +23,11 @@ const ProjectViewer = glam.div ({
         background: 'var(--main-purple)',
         padding: 20,
         color: 'white',
-        width: 200,
+        minWidth: 200,
         height: '100vh',
         '& div': {
-            cursor: 'pointer'
+            cursor: 'pointer',
+            padding: 5
         }
     },
     '& aside': {
@@ -35,6 +36,25 @@ const ProjectViewer = glam.div ({
         padding: 20,
         height: '100vh',
         background: 'var(--main-grey)'
+    },
+    '@media (max-width: 500px)': {
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems:'center',
+        width: '100%',
+        '& nav': {
+            width: '100vw',
+            padding: 10,
+            height: 'auto',
+            fontSize: 16
+        },
+        '& aside': {
+            width: '100%',
+            height: 'auto'
+        },
+        '& main': {
+            width: '100%'
+        }
     }
 })
 
@@ -73,7 +93,6 @@ export default class ProjectView extends Component {
     render() {
         
         return (
-            <div>
             <ProjectViewer>
                 <nav>
                     PROJECT TOOLS
@@ -89,7 +108,7 @@ export default class ProjectView extends Component {
                         {this.state.viewToggler==='repo' && 
                             <div>
                                 <a href={this.state.project.repo} target="_blank"></a>
-                                <iframe src="http://github.com" width="600px" height="400px">
+                                <iframe title="repo" src="http://github.com" width="600px" height="400px">
                                     <p>Github Repo</p>
                                 </iframe>
                             </div>}
@@ -108,7 +127,6 @@ export default class ProjectView extends Component {
                     <div>Chat message</div>
                 </aside>
             </ProjectViewer>
-            </div>
         );
     }
 }

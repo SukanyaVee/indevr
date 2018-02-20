@@ -1,1 +1,1 @@
-UPDATE projects SET project_name=$2, description=$3 WHERE id=$1;
+UPDATE projects SET project_name=$2, description=$3, repo=$4 WHERE id=$1 RETURNING *;
