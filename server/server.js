@@ -149,11 +149,12 @@ app.get('/search/skills/:term', search.getSkills);
 app.post('/login', auth_ctrl.user);
 
 function checkLoggedIn(req, res, next) {
-    if (req.session.user) {
-      next();
-    } else {
-      res.status(403).json({ message: 'Unauthorized' });
+    if(!req.session.user){
+        req.session.user = {
+            user: null
+        }
     }
+    next();
 };
 app.get("/checkSession", checkLoggedIn, auth_ctrl.sessionCheck);
 app.post('/logout', auth_ctrl.logout);

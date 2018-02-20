@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import SearchBar from "./SearchBar";
-import logo from "../assets/LogoMain.png";
 import glam from "glamorous";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -92,7 +90,7 @@ class SearchPage extends Component {
 
   render() {
     return (
-      <div style={{ backgroundColor: "var(--main-grey)", height: "100vh" }}>
+      <div>
 
           {this.state.data && (
             <Main>
@@ -138,7 +136,7 @@ class SearchPage extends Component {
                           return <Ill key={i}>{elem}</Ill>
                           })}
                           </Skill>
-                          <div><Link to={`/project/${project.id}`}>Project Page</Link></div>
+                          <div><Link to={`/project/${project.project_id}`}>Project Page</Link></div>
                         </Projects>
                       );
                     })
@@ -192,23 +190,6 @@ class SearchPage extends Component {
     );
   }
 }
-
-const Header = glam.header({
-  height: "100",
-  width: "100vw",
-  backgroundColor: "black",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-around",
-  alignItems: "center",
-  marginTop: "0"
-});
-
-// const SearchNav = glam.div({
-//   height: 50,
-//   width: '100%',
-//   backgroundColor: 'var(--main-grey)',
-// })
 
 const UserWrap = glam.div({
   display: "flex",
@@ -286,6 +267,7 @@ const Main = glam.section({
 
 const Projects = glam.div({
   width: "45%",
+  overflow: 'auto',
   height: '100%',
   marginTop: 20,
   border: "solid black 2px",
@@ -313,6 +295,11 @@ const Span = glam.span({
   border: "solid var(--main-grey) 2pt",
   borderRadius: 3
 });
+
+const NoSearch = glam.div({
+  fontSize: '18pt',
+  color: 'white',
+})
 
 function mapStateToProps(state) {
   const { term } = state;
