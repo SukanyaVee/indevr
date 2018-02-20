@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
-import { logout } from './ducks/reducer';
+import { logout, login } from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import router from './router';
 import AltHeader from './components/AltHeader';
 import Footer from './components/Footer';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -16,13 +17,13 @@ class App extends Component {
     // }
 
     componentDidMount(){
-        // if(this.props.location.pathname === '/dashboard'){
-        //     axios.get('/indevr/users').then(response => {
-        //         if(!response.data.user){
-        //             this.props.logout();
-        //         }
-        //     })
-        // }
+       axios.get('/checkSession').then(response => {
+           const user = response.data;
+           this.props.login(user);
+       }).catch(err => {
+           console.log(err, 'user error')
+           this.props.history.push('/')
+       });
     }
 
 
@@ -38,6 +39,7 @@ class App extends Component {
 }
 
 const mapDispatchToProps = {
+    login,
     logout
 }
 

@@ -4,13 +4,9 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
-// import SearchBar from "../components/SearchBar";
-// import logo from "../assets/LogoMain.png";
-// import logo2 from '../assets/LogoMini.png';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import MidBar from './landing-page-assets/MidBar';
-import Footer from './Footer';
 
 const options = {
   theme: {

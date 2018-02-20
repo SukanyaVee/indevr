@@ -18,7 +18,7 @@ class Footer extends Component {
                 <SearchBar />
                 <Image src={logo} alt='' />
                 <Link to='/about/indevr' style={link}>About</Link>
-                <Link to='' style={link}>Explore</Link>
+                <Link to='/explore' style={link}>Explore</Link>
                 <Link to='' style={link}>Contact</Link>
             </Foot>
         )

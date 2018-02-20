@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import glam from 'glamorous'
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { searching } from '../ducks/reducer'
 import { connect } from 'react-redux'
 
@@ -11,6 +11,7 @@ class SearchBar extends Component {
         super(props)
         this.state = {
             searchTerm: '',
+            redirect: false,
         }
         this.onInputChange = this.onInputChange.bind(this);
         this.search = this.search.bind(this);
@@ -28,10 +29,17 @@ class SearchBar extends Component {
             alert('Need more information to complete search!')
         } else if (this.state.searchTerm.length > 1){
         this.props.searching(this.state.searchTerm);
+        this.setState({
+            redirect: true,
+        })
+        // this.props.history.push(`/search/${this.state.searchTerm}`);
         }
     }
 
     render() {
+        if(this.state.redirect){
+            return <Redirect to={`/search/${this.state.searchTerm}`} />
+        }
         return (
             <Main>
                 <div className="input-group">
@@ -40,9 +48,7 @@ class SearchBar extends Component {
                             className="form-control"
                             placeholder="Search inDevr"
                             onChange={e => this.onInputChange(e.target.value)}/>
-                            <Link to={`/search/${this.state.searchTerm}`}>
                             <button type="submit" className="btn btn-default" onClick={this.search}><i className="fas fa-search"></i></button>
-                        </Link>
                     </div>
                 </div>
             </Main>

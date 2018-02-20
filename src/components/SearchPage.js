@@ -93,13 +93,6 @@ class SearchPage extends Component {
   render() {
     return (
       <div style={{ backgroundColor: "var(--main-grey)", height: "100vh" }}>
-        <Header>
-          <img src={logo} alt="" />
-          <SearchBar />
-        </Header>
-        {/* <SearchNav>
-          <a href='#projects'>Projects</a>
-        </SearchNav> */}
 
           {this.state.data && (
             <Main>
@@ -281,7 +274,7 @@ const Title = glam.h1({
 
 const Main = glam.section({
   width: "100%",
-  minHeight: "100%",
+  minHeight: "100vh",
   border: "solid black 2px",
   display: "flex",
   flexDirection: "column",
