@@ -6,7 +6,7 @@ const SEARCHPOSTS = 'SEARCHPOSTS';
 const SEARCHING = 'SEARCHING';
 
 const initialState = {
-    user: {id: 1, picture: 'http://i.pravatar.cc/50x50'},
+    user: {},
     results: [],
     projects: [],
     posts: [],

@@ -37,6 +37,7 @@ const Main = glam.div({
     '& .heading': {
         textAlign: 'center',
         marginTop: 0,
+        paddingTop: 10,
     }
 })
 
@@ -101,7 +102,7 @@ const Desc2 = glam.span({
 })
 
 const Image = glam.img({
-    height: '100%',
+    height: '99%',
     width: '60%',
     float: 'right',
     margin: '5px 10px',
@@ -114,7 +115,7 @@ const Image = glam.img({
     }
 })
 const Image2 = glam.img({
-    height: '100%',
+    height: '98%',
     width: '60%',
     margin: '5px 10px',
     marginBottom: '10px',

@@ -103,7 +103,6 @@ class LandingPage extends Component {
         <Profile />
         <MidBar />
         <Tasks />
-        <Footer />
       </div>
     );
   }
