@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 import {logout} from '../ducks/reducer';
 
 class Header extends Component {
+
     render() {
         return (
             <Nav className="navbar navbar-inverse">
@@ -17,7 +18,7 @@ class Header extends Component {
                             <span className="sr-only">Toggle navigation</span>
                             <i className="far fa-chevron-square-down fa-2x" color="white"></i>
                         </button>
-                        <Link to={this.props.user.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
+                        <Link to={this.props.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="topNav">
@@ -29,10 +30,13 @@ class Header extends Component {
                             <li>
                                 <Link to="/explore">Explore</Link>
                             </li>
-                            <li className="mobile-show">
+                            {this.props.user.id && <li className="mobile-show">
                                 <Link to={`/dev/${this.props.user.id}`}>Profile</Link>
-                            </li>
-                            <li className="dropdown mobile-hide">
+                            </li>}
+                            {!this.props.user.id && <li className="mobile-show">
+                                <Link to={`/`}>Sign In</Link>
+                            </li>}
+                            {this.props.user.id && <div className="dropdown mobile-hide">
                                 <a href="" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <img src={this.props.user.picture} alt="user"/>
                                     <span className="caret"></span>
@@ -49,7 +53,10 @@ class Header extends Component {
                                         <a href=""><i className="fas fa-sign-out"></i> &nbsp; Logout</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </div>}
+                            {!this.props.user.id && <li className="mobile-hide">
+                                <Link to={`/`}>Sign In</Link>
+                            </li>}
                         </ul>
                         <NavForm className="navbar-form navbar-right">
                             <SearchBar />
@@ -84,7 +91,8 @@ const Nav = glam.nav({
         borderRadius: '50%',
     },
     '& .dropdown img':{
-        height: 50
+        height: 50,
+        paddingTop: 5
     },
     '& .navbar-nav':{
         padding: 10,
@@ -97,7 +105,12 @@ const Nav = glam.nav({
     },
     '& .navbar-collapse':{
         backgroundColor: '#222',
-        zIndex: 100
+        zIndex: 100,
+    },
+    '& .navbar-right':{
+        '> li':{
+            paddingTop: 10,
+        }
     },
     '& .navbar-header':{
         height: 100,
