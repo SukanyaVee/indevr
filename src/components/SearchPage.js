@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import UserTile from "./UserTile";
-// import ProjectTile from "./ProjectTile";
+import ProjectTile from "./ProjectTile";
 import PostTile from "./PostTile";
 import ConnectButton from "./ConnectButton";
 
@@ -124,23 +124,21 @@ class SearchPage extends Component {
                 <Title id='projects'>Projects</Title>
               </Span> : null}
 
-              <ProjWrap>
-                {this.state.projects
-                  ? this.state.projects.map(project => {
-                      return (
-                        <Projects key={project.project_id}>
-                          <div>{project.project_name}</div>
-                          <div>{project.description}</div>
-                          <Skill>
-                         { project.skills.map((elem, i) => {
-                          return <Ill key={i}>{elem}</Ill>
-                          })}
-                          </Skill>
-                          <div><Link to={`/project/${project.project_id}`}>Project Page</Link></div>
-                        </Projects>
+              <ProjWrap className="container">
+                {this.state.projects ? this.state.projects.map((project,i) => {
+                    return (
+                        <div>
+                            <Link to={`/project/${project.project_id}`}>
+                                <ProjectTile
+                                    key={i}
+                                    title={project.project_name}
+                                    desc={project.description}
+                                    skills={project.skills}/>
+                                </Link>
+                        </div>
                       );
                     })
-                  : null}
+                : null}
               </ProjWrap>
               {this.state.posts.length ?
               <Span>
@@ -213,26 +211,28 @@ const Ill = glam.div({
 })
 
 const ProjWrap = glam.div({
-  width: "75%",
   display: "flex",
   flexDirection: "row",
-  justifyContent: "space-around",
+  justifyContent: "center",
   flexWrap: "wrap",
   marginBottom: 20,
   borderRadius: 5,
   "> div": {
-    marginRight: 20
+      width: '80%',
+    minWidth: 300,
+    maxWidth: '95vw'
   }
 });
 
 const PostsWrapper = glam.div({
-  display: "flex",
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  "> div": {
-    margin: 20
-  }
+    width: '100%',
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    '> div':{
+        margin: 20
+    }
 });
 
 const SkillsWrap = glam.div({
@@ -254,7 +254,6 @@ const Title = glam.h1({
 });
 
 const Main = glam.section({
-  width: "100%",
   minHeight: "100vh",
   border: "solid black 2px",
   display: "flex",
@@ -263,27 +262,31 @@ const Main = glam.section({
   // marginTop: 100,
   backgroundColor: "var(--main-purple)",
   overflow: 'contain',
-});
-
-const Projects = glam.div({
-  width: "45%",
-  overflow: 'auto',
-  height: '100%',
-  marginTop: 20,
-  border: "solid black 2px",
-  borderRadius: 3,
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-  fontSize: "16pt",
-  backgroundColor: "white",
-  '> div': {
-    marginLeft: 10,
-  },
-  '> div:first-of-type': {
-    fontSize: '24pt',
+  '& a':{
+      textDecoration: 'none',
+      color: 'inherit'
   }
 });
+
+// const Projects = glam.div({
+//   width: "45%",
+//   overflow: 'auto',
+//   height: '100%',
+//   marginTop: 20,
+//   border: "solid black 2px",
+//   borderRadius: 3,
+//   display: "flex",
+//   flexDirection: "column",
+//   justifyContent: "space-between",
+//   fontSize: "16pt",
+//   backgroundColor: "white",
+//   '> div': {
+//     marginLeft: 10,
+//   },
+//   '> div:first-of-type': {
+//     fontSize: '24pt',
+//   }
+// });
 
 const Span = glam.span({
   color: "var(--main-purple)",
