@@ -2,9 +2,9 @@ import React from 'react';
 import glam from 'glamorous';
 
 const ProjectTile = props => {
-    const skills = props.skills.map((skill,i) =>{
+    const skills = props.skills ? props.skills.map((skill,i) =>{
         return <Tag key={i}>{skill}</Tag>
-    })
+    }) : '';
     return (
         <Main>
             <TitleRow>

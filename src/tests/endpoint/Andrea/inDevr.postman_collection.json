@@ -1,0 +1,112 @@
+{
+	"info": {
+		"name": "inDevr",
+		"_postman_id": "ee75a874-f072-c162-04dc-bf22b481ef74",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/indevr/users/1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2791e168-2273-4409-8217-596df492fd33",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Returns object with user data\", function(){",
+							"    pm.response.to.be.withBody;",
+							"})",
+							"",
+							"",
+							"pm.test(\"Returns skills data as array\", function(){",
+							"    pm.expect(response.skills).to.be.an.instanceOf(Array)",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/indevr/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"indevr",
+						"users",
+						"1"
+					]
+				},
+				"description": "User endpoint testing"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/indevr/taskboard/1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a2ab5fd-ed29-4ff4-a0dd-fb1c6b86191b",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Returns object with user data\", function(){",
+							"    pm.response.to.be.withBody;",
+							"})",
+							"",
+							"",
+							"pm.test(\"Returns skills data as array\", function(){",
+							"    pm.expect(response.lists).to.be.an.instanceOf(Array)",
+							"})",
+							"",
+							"pm.test(\"List data returns tasks as array\", function(){",
+							"    pm.expect(response.lists[0].tasks).to.be.an.instanceOf(Array)",
+							"})",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/indevr/taskboard/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"indevr",
+						"taskboard",
+						"1"
+					]
+				},
+				"description": "Taskboard endpoint testing"
+			},
+			"response": []
+		}
+	]
+}
