@@ -8,6 +8,16 @@ module.exports = {
         console.log('get all public project for user', req.query.user_id)
         db.get_public_projects([req.query.user_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
+    getMessages: (req, res) => {
+        const db = req.app.get('db')
+        console.log('get messages for user', req.query.user_id)
+        db.get_messages([req.query.user_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
+    deleteMessage: (req, res) => {
+        const db = req.app.get('db')
+        console.log('delete message ', req.params)
+        db.delete_message([req.params.id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
     getSingle: (req, res) => {
         const db = req.app.get('db')
         // console.log(req.params.id)

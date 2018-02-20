@@ -6,8 +6,10 @@ import axios from 'axios';
 import glam from 'glamorous';
 import {withRouter} from 'react-router-dom';
 import profpic from '../assets/prof-pic.png';
+import showtrue from '../assets/collapse.png';
+import showfalse from '../assets/show.png';
 import CreateProject from './CreateProject'
-import Explorer from './Explorer'
+import Explorer from './Explorer';
 
 
 class Dashboard extends Component {
@@ -19,7 +21,10 @@ class Dashboard extends Component {
             publicProj: [],
            posts: [],
             contacts: [],
+            messages: [],
+            messageCount: 0,
             showConnections: false,
+            showMessage: false,
             projectView: 'mine',
             postContent: ''
         };
@@ -30,7 +35,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount(){
-        // session check get user detaisl from req.session
+        // session check get user details from req.session and send to redux
         axios.get('/indevr/contacts?user_id=1').then(res=>{ //HARDCODED
             this.setState({contacts: res.data})
             console.log('connections', this.state.contacts)
@@ -47,10 +52,39 @@ class Dashboard extends Component {
             this.setState({posts: res.data})
         console.log('posts', this.state.posts)
         }).catch(error=>console.log(error))
+        axios.get('/indevr/messages?user_id=1').then(resp=> { //HARDCODED  
+            this.setState({messages: resp.data, messageCount: resp.data.length})
+            console.log('messages', resp.data)
+        }).catch(error=>console.log(error))
     }
 
     showConn() {
         this.setState({showConnections: !this.state.showConnections})
+    }
+
+    showMess() {
+        this.setState({showMessage: !this.state.showMessage})
+    }
+
+    acceptContributor(messageId, project_id, contributor_id){
+        console.log('input', messageId, project_id, contributor_id)
+        axios.post('/indevr/contributors', {project_id: project_id, user_id: contributor_id, owner: false}).then(resp=>{ 
+            axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
+                axios.get('/indevr/messages?user_id=1').then(resp=> { //HARDCODED  
+                    this.setState({messages: resp.data})
+                    console.log('messages', resp.data)
+                }).catch(error=>console.log(error))
+            }).catch(error=>console.log(error))
+        }).catch(error=>console.log(error))
+    }
+
+    declineContributor = (messageId) => {
+        axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
+            axios.get('/indevr/messages?user_id=1').then(resp=> { //HARDCODED  
+                this.setState({messages: resp.data})
+                console.log('messages', resp.data)
+            }).catch(error=>console.log(error))
+        }).catch(error=>console.log(error))
     }
 
     switchProjectView (view) {
@@ -59,7 +93,7 @@ class Dashboard extends Component {
     }
 
     submitPost(content) {
-        console.log('post cpntent', content)
+        console.log('post content', content)
         axios.post('/indevr/posts', {user_Id: 2, content:content}).then(resp=>{//HARDCODED
             console.log('this is the response', resp.data)
             this.setState(prevState=>{
@@ -83,20 +117,50 @@ class Dashboard extends Component {
                 <Greeting>
                     <Hi>Hello, Friendly Developer! </Hi>
                     <Contacts>
-                        <h4 onClick={e=>this.showConn()}>My Connections +</h4><br/>
+                        <h4 onClick={e=>this.showConn()}>
+                            My Connections
+                            <Collapse><img src={this.state.showConnections? showtrue:showfalse}/></Collapse>
+                        </h4>
+                        {/* HARDCODED */}
+                        {this.state.showConnections && <h6>To manage your connections, got to your <Link to="/dev/1">profile</Link></h6>} 
                         {this.state.showConnections && 
-                            <span>
+                            <div>
                                 {this.state.contacts.map(contact => 
-                                    <ContactItem key={contact.id} contact={contact}>
+                                    <ContactItem key={contact.id}>
                                         <Link to={`/dev/${contact.id}`}> 
                                             <img src={contact.picture||profpic} alt="contact"/> 
-                                            <div>{contact.first_name} {contact.last_name}</div>
+                                            <span>{contact.first_name} {contact.last_name}</span>
                                         </Link>
                                     </ContactItem>)
                                 }
-                            </span>
+                            </div>
                         }
                     </Contacts>
+                    <Messagesss>
+                        <h4 onClick={e=>this.showMess()}>
+                            My Messages
+                            <Count>{this.state.messageCount}</Count>
+                            <Collapse><img src={this.state.showMessage ? showtrue:showfalse}/></Collapse>
+                        </h4>
+                        {this.state.showMessage && 
+                            <div>
+                                {this.state.messages.map(message => 
+                                    <MessageItem key={message.id} >
+                                        <Link to={`/dev/${message.contributor_id}`}> 
+                                            <img src={message.picture||profpic} alt="message"/> 
+                                            <span>{message.first_name} {message.last_name}</span>
+                                        </Link>
+                                        &nbsp;wants to work on&nbsp;
+                                        <Link to={`/project/${message.project_id}`}>
+                                            <span>{message.project_name}</span>
+                                        </Link>
+                                        <button onClick={e=>{this.acceptContributor(message.id, message.project_id, message.contributor_id)}}>Accept</button>
+                                        <button onClick={e=>{this.declineContributor(message.id)}}>Decline</button>
+                                    </MessageItem>)
+                                }
+                            </div>
+                        }
+                    </Messagesss>
                 </Greeting>
 
 
@@ -174,7 +238,56 @@ const Hi= glam.div ({
 
 const Contacts = glam.div ({
     fontSize: 14,
-    padding: 20,
+    padding: '5px 5px 5px 20px',
+    marginBottom: 10,
+    cursor: 'Pointer',
+    '& img': {
+        width: 40,
+        height: 40,
+        borderRadius: '50%'
+    },
+    '& div': {
+        // width: 500,
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexWrap: 'wrap'
+    },
+    '@media (max-width: 500px)': {
+        marginBottom: 0,
+        padding: 10,
+        '& span': {
+            margin: 'auto',
+        }
+    },
+    '& h4': {
+        margin: 0,
+        padding: 10
+    },
+    '& h6': {
+        margin: 0,
+        padding: 10
+    }
+})
+
+const ContactItem = glam.div ({
+    cursor: 'pointer',
+    display: 'flex',
+    background: '#eeeeee',
+    borderRadius: 2,
+    padding: 2,
+    margin: '2px 10px 2px 2px',
+    '& a': {
+        textDecoration: 'none'
+    },
+    '& img': {
+        marginRight: 5
+    }
+})
+
+const Messagesss = glam.div ({
+    fontSize: 14,
+    padding: '5px 5px 5px 20px',
     marginBottom: 10,
     cursor: 'Pointer',
     '& img': {
@@ -183,29 +296,59 @@ const Contacts = glam.div ({
         borderRadius: '50%'
     },
     '& span': {
-        width: 500,
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexWrap: 'wrap'
+        
     },
     '@media (max-width: 500px)': {
         marginBottom: 0,
-        border: '1px solid red',
         padding: 10,
         '& span': {
             margin: 'auto',
         }
-    }
+    },
+    '& h4': {
+        margin: 0,
+        padding: 10
+    },
 })
 
-const ContactItem = glam.div ({
+
+const MessageItem = glam.div ({
     cursor: 'pointer',
-    display: 'flex',
-    width:200,
+    // padding:10,
+    background: '#eeeeee',
+    borderRadius: 2,
+    padding: 2,
+    // width:200,
     margin: 2,
     '& a': {
         textDecoration: 'none'
+    },
+    '& button': {
+        marginLeft: 10,
+        padding: 3,
+        borderRadius: 3,
+        background: 'var(--main-grey)'
+    },
+    '@media (max-width: 500px)': {
+        maxWidth: 350
+    },
+    '& img': {
+        marginRight: 5
+    }
+})
+
+const Count = glam.span({
+    margin: '0 0 0 5px',
+    background: 'red',
+    color: 'white'
+})
+
+const Collapse = glam.span({
+    padding: 0,
+    margin: '0 0 0 5px',
+    '& img': {
+        width: 15,
+        height:15
     }
 })
 
@@ -226,11 +369,11 @@ const Projects = glam.div ({
 
 const Nav = glam.div ({
     display: 'flex',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
     alignItems: 'flex-end',
-    padding: 20,
+    // padding: 20,
     '& div': {
-        padding: 10,
+        padding: '8px 15px 8px 15px',
         marginRight: 10,
         color: 'black',
         background: 'var(--main-grey)',
