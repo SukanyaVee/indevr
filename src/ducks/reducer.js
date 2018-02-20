@@ -26,35 +26,34 @@ export function logout(){
     }
 }
 
-export function searchUsers(results){
-    // console.log('Reducer', results.data)
-    return {
-        type: SEARCHUSERS,
-        payload: results.data
-    }
-}
-export function searchProj(results){
-    console.log('Reducer Proj', results.data)
-    let pro = results.data.filter(elem => {
-        if(elem.public === true){
-            return elem;
-        }
-        return null
-    })
-    
-    console.log('Pro', pro)
-    return {
-        type: SEARCHPROJ,
-        payload: pro
-    }
-}
-export function searchPosts(results){
-    console.log('Reducer Post', results.data)
-    return {
-        type: SEARCHPOSTS,
-        payload: results.data
-    }
-}
+// export function searchUsers(results){
+//     return {
+//         type: SEARCHUSERS,
+//         payload: results.data
+//     }
+// }
+// export function searchProj(results){
+//     console.log('Reducer Proj', results.data)
+//     let pro = results.data.filter(elem => {
+//         if(elem.public === true){
+//             return elem;
+//         }
+//         return null
+//     })
+
+//     console.log('Pro', pro)
+//     return {
+//         type: SEARCHPROJ,
+//         payload: pro
+//     }
+// }
+// export function searchPosts(results){
+//     console.log('Reducer Post', results.data)
+//     return {
+//         type: SEARCHPOSTS,
+//         payload: results.data
+//     }
+// }
 
 export function searching(term){
     return {

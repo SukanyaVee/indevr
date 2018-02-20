@@ -32,7 +32,6 @@ class AddSkills extends Component {
     }
 
     removeSkill(index){
-        console.log('index')
         const id = this.state.skills[index].id;
         const newSkills = [...this.state.skills];
         newSkills.splice(index, 1);
@@ -115,7 +114,6 @@ const Button = glam.button({
 const Tag = glam.div({
     backgroundColor: 'var(--main-purple)',
     borderRadius: 4,
-    display: 'inline-block',
     padding: '3px 5px',
     margin: 3,
     display: 'flex',

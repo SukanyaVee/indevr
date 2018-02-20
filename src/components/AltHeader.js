@@ -4,6 +4,7 @@ import logo from '../assets/in_DEV_r.png';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import SearchBar from './SearchBar';
+import {logout} from '../ducks/reducer';
 
 class Header extends Component {
     render() {
@@ -66,7 +67,11 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = {
+        logout
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 
 const Nav = glam.nav({
