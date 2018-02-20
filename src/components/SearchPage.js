@@ -43,7 +43,7 @@ class SearchPage extends Component {
   }
 
   getSearch(){
-    console.log(this.props);
+    // console.log(this.props);
     let { term } = this.props;
     if (term === undefined) {
       term = this.props.location.pathname.substr(
@@ -55,11 +55,11 @@ class SearchPage extends Component {
         results: response.data,
         data: true
       });
-      console.log(this.state);
+      // console.log(this.state);
     });
     axios.get(`/search/projects/${term}`).then(res => {
         let { proj, skills } = res.data;
-        console.log(proj , skills)
+        // console.log(proj , skills)
 
         let pro = proj.filter(elem => {
         if (elem.public === true) {
@@ -68,7 +68,6 @@ class SearchPage extends Component {
         return null;
       });
       pro.forEach(project => {
-        console.log(project)
         skills[0].forEach(skill => {
           if(skill.project_id === project.project_id){
             project.skills.push(skill.skill)

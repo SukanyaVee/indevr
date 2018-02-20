@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import router from './router';
 import AltHeader from './components/AltHeader';
+import Footer from './components/Footer';
 
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
             <div>
                 <AltHeader />
                 {router}
+                <Footer />
             </div>
         );
     }

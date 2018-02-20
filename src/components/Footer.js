@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
 import { Link } from 'react-router-dom'
-import logo from '../assets/LogoMain.png'
+import logo from '../assets/in_DEV_r.png'
+import SearchBar from './SearchBar'
 
 
 class Footer extends Component {
@@ -14,11 +15,11 @@ class Footer extends Component {
     render() {
         return (
             <Foot>
-                <Link to='/about'>About</Link>
-                <Link to=''>Explore</Link>
+                <SearchBar />
                 <Image src={logo} alt='' />
-                <Link to=''>News</Link>
-                <Link to=''>Contact</Link>
+                <Link to='/about/indevr' style={link}>About</Link>
+                <Link to='' style={link}>Explore</Link>
+                <Link to='' style={link}>Contact</Link>
             </Foot>
         )
     }
@@ -27,9 +28,26 @@ class Footer extends Component {
 const Foot = glam.div({
     width: '100vw',
     height: 100,
-    backgroundColor: 'var(--main-purple)',
+    // marginTop: 10,
+    // backgroundColor: 'var(--main-purple)',
     // backgroundColor: 'var(--main-grey)',
-    // backgroundColor: 'var(--main-black)',
+    backgroundColor: 'var(--main-black)',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    textDecoration: 'none',
+    color: 'white',
+    borderTop: 'Solid black 5px',
 })
+
+const Image = glam.img({
+    height: '90%'
+})
+
+const link = {
+    color: 'white',
+    textDecoration: 'none',
+}
 
 export default Footer;

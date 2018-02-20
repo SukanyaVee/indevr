@@ -17,14 +17,14 @@ class tasks extends Component {
                 <Topic>
                 <Desc><div className='p'><strong>Delegate and Celebrate,</strong>{' '}
                 with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc>
-                <Image src={one} />
+                <Image src={one} className="img-responsive"/>
                 </Topic>
                 <Topic2>
                 
                 <Desc2>
                     <div className='p'>Blabbity duh blah blah. I was walking around and forgot where I was going. I then said something but can't remember that either. <strong>Please send help!</strong></div>
                 </Desc2>
-                <Image2 src={one}/>
+                <Image2 src={one} className="img-responsive"/>
                 </Topic2>
             </Main>
         )

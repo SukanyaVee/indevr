@@ -1,3 +1,7 @@
+/*
+* @jest-environment node
+*/
+
 const profile = require('./profile.js');
 
 describe ('Existing Data', function(){

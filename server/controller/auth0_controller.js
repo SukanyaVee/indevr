@@ -49,18 +49,10 @@ module.exports = {
       });
   },
 
-  // function checkLoggedIn(req, res, next) {
-  //     if (req.session.user) {
-  //       next();
-  //     } else {
-  //       res.status(403).json({ message: 'Unauthorized' });
-  //     }
-  // }
-
   //Check User Session - Associated with App.js
-  sessionCheck: (req, res, next) => {
+  sessionCheck: (req, res) => {
     if (req.session.user) {
-      next();
+      res.status(200).send(req.session.user);
     } else {
       res
         .status(403)
@@ -73,13 +65,4 @@ module.exports = {
     req.session.destroy();
     res.status(200).send("You have been successfully logged out.");
   },
-
-  search: (req, res) => {
-    const { searchTerm } = req.body;
-    console.log(req, res);
-    app
-      .get("db")
-      .search_users(searchTerm)
-      .then(response => {});
-  }
 };

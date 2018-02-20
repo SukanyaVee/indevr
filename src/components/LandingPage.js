@@ -7,6 +7,7 @@ import glam from "glamorous";
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import MidBar from './landing-page-assets/MidBar';
+import Footer from './Footer';
 
 const options = {
   theme: {
@@ -102,6 +103,7 @@ class LandingPage extends Component {
         <Profile />
         <MidBar />
         <Tasks />
+        <Footer />
       </div>
     );
   }

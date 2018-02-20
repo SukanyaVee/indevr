@@ -17,14 +17,18 @@ class SearchBar extends Component {
     }
 
     onInputChange(value){
-        this.setState({
-            searchTerm: value
-        });
-        console.log(this.state.searchTerm)
+            this.setState({
+                searchTerm: value
+            });
+        // console.log(this.state.searchTerm)
     };
 
     search(){
+        if(this.state.searchTerm.length <= 1){
+            alert('Need more information to complete search!')
+        } else if (this.state.searchTerm.length > 1){
         this.props.searching(this.state.searchTerm);
+        }
     }
 
     render() {

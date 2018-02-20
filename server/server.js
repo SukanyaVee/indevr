@@ -161,16 +161,17 @@ app.get('/search/skills/:term', search.getSkills);
 
 
 // //----------------AUTH0----------------
-// const userUrl = '/'
-// //Auth0
-// app.post(`${userUrl}/login`, (req, res) => {
-//     const {userId} = req.body;
-//     const auth0Url = `https://${process.env.REACT_APP_AUTH0_domain}/api/v2/users/${userId}`;
-//     axios.get(auth0Url)
-// })
+app.post('/login', auth_ctrl.user);
 
-// app.get("/checkSession", auth_ctrl.sessionCheck);
-
+function checkLoggedIn(req, res, next) {
+    if (req.session.user) {
+      next();
+    } else {
+      res.status(403).json({ message: 'Unauthorized' });
+    }
+};
+app.get("/checkSession", checkLoggedIn, auth_ctrl.sessionCheck);
+app.post('/logout', auth_ctrl.logout);
 
 
 //Shhh Listen...
@@ -189,3 +190,10 @@ io.on('connection', (socket) => {
         io.emit('RECEIVE_MESSAGE', data);
     })
 });
+
+//Socket.io Whiteboard Setup
+// function onConnection(socket){
+//     socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+// }
+
+// io.on('connection', onConnection);

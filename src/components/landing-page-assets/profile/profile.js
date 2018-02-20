@@ -17,13 +17,13 @@ class profile extends Component {
                 <Topic>
                 <Desc><div className='p'><strong>Connect and follow</strong>{' '}
                 fellow devs with the social tools that inDevr offers. With the ability to provide links to the vast majority of development tools across the internet, show the world your work and rejoice in the benefits. These connections can lead to lasting friendships and future business endeavors.</div></Desc>
-                <Image src={one} />
+                <Image src={one} className="img-responsive"/>
                 </Topic>
                 <Topic2>
                 <Desc2>
                     <div className='p'>Customize and personalize your profile page with information to grow your brand, influence the industry and display your skills. <strong>With a multitude of partnering sites,</strong> inDevr can help you take the next step in your development career.</div>
                 </Desc2>
-                <Image2 src={one}/>
+                <Image2 src={one} className="img-responsive"/>
                 </Topic2>
             </Main>
         )
@@ -32,9 +32,11 @@ class profile extends Component {
 
 const Main = glam.div({
     height: '100vh',
-    // display: 'flex',
+    color: 'white',
+    backgroundColor: 'var(--main-purple)',
     '& .heading': {
         textAlign: 'center',
+        marginTop: 0,
     }
 })
 
@@ -115,6 +117,7 @@ const Image2 = glam.img({
     height: '100%',
     width: '60%',
     margin: '5px 10px',
+    marginBottom: '10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
