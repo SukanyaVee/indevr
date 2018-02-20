@@ -26,7 +26,10 @@ class SearchBar extends Component {
 
     search(){
         if(this.state.searchTerm.length <= 1){
-            alert('Need more information to complete search!')
+            this.setState({
+                searchTerm: ''
+            })
+            return <Redirect to='/search' />
         } else if (this.state.searchTerm.length > 1){
         this.props.searching(this.state.searchTerm);
         this.setState({
@@ -39,6 +42,9 @@ class SearchBar extends Component {
     render() {
         if(this.state.redirect){
             return <Redirect to={`/search/${this.state.searchTerm}`} />
+            this.setState({
+                searchTerm: ''
+            })
         }
         return (
             <Main>
@@ -48,7 +54,7 @@ class SearchBar extends Component {
                             className="form-control"
                             placeholder="Search inDevr"
                             onChange={e => this.onInputChange(e.target.value)}/>
-                            <button type="submit" className="btn btn-default" onClick={this.search}><i className="fas fa-search"></i></button>
+                            <button type="submit" disabled={this.state.searchTerm.length <= 1} className="btn btn-default" onClick={this.search}><i className="fas fa-search"></i></button>
                     </div>
                 </div>
             </Main>
