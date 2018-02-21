@@ -175,8 +175,11 @@ CREATE TABLE IF NOT EXISTS taskboard_items (
     project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     contributor_id INTEGER REFERENCES users(id) ON DELETE CASCADE
-
+    
 );
+
+ALTER TABLE add_messages
+ADD UNIQUE (project_id, contributor_id);
 
 INSERT INTO users
 (Auth0_id, username, first_name, last_name, email, picture)

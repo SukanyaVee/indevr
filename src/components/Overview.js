@@ -81,6 +81,7 @@ class  Overview extends Component  {
                 x++
             }
         })
+        console.log('x',x)
         return (
             <ProjectOverview>
                 <ProjectTitle>
@@ -88,9 +89,7 @@ class  Overview extends Component  {
                         {this.state.project.project_name}
                         <a href={this.state.project.repo} target="_blank"><i className="far fa-code-branch pull-right"></i></a>
                     </div>
-                    {this.state.project.user_id===this.props.user.id &&
-                    <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
-                    {this.state.project.project_name}
+                    
                     {this.state.project.user_id===this.props.user.id && 
                     <div>
                         <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
@@ -119,7 +118,7 @@ class  Overview extends Component  {
                     {this.state.contributors.map(contributor =>
                     <div key={contributor.id}>
                         <Link to={`/dev/${contributor.id}`}>
-
+=                           <UserTile
                                 name={contributor.first_name + ' ' + contributor.last_name}
                                 img={contributor.picture} />
                         </Link>
