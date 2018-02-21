@@ -33,7 +33,7 @@ class Dashboard extends Component {
     }
 
     componentDidMount(){
-        axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{ 
+        axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{
             this.setState({contacts: res.data})
             console.log('connections', this.state.contacts)
         }).catch(error=>console.log(error))
@@ -49,7 +49,7 @@ class Dashboard extends Component {
             this.setState({posts: res.data})
         console.log('posts', this.state.posts)
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {   
+        axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
             this.setState({messages: resp.data, messageCount: resp.data.length})
             console.log('messages', resp.data)
         }).catch(error=>console.log(error))
@@ -65,7 +65,7 @@ class Dashboard extends Component {
 
     acceptContributor(messageId, project_id, contributor_id){
         console.log('input', messageId, project_id, contributor_id)
-        axios.post('/indevr/contributors', {project_id: project_id, user_id: contributor_id, owner: false}).then(resp=>{ 
+        axios.post('/indevr/contributors', {project_id: project_id, user_id: contributor_id, owner: false}).then(resp=>{
             axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
                 axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
                     this.setState({messages: resp.data})
@@ -77,7 +77,7 @@ class Dashboard extends Component {
 
     declineContributor = (messageId) => {
         axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
-            axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> { 
+            axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
                 this.setState({messages: resp.data})
                 console.log('messages', resp.data)
             }).catch(error=>console.log(error))
@@ -107,7 +107,7 @@ class Dashboard extends Component {
             axios.get('/indevr/posts').then(res=>{
                 this.setState({posts: res.data})
             console.log('posts', this.state.posts)
-            }).catch(error=>console.log(error))        
+            }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
     }
 
@@ -123,13 +123,13 @@ class Dashboard extends Component {
                             My Connections
                             <Collapse><img src={this.state.showConnections? showtrue:showfalse} alt="contacts"/></Collapse>
                         </h4>
-                        {this.state.showConnections && <h6>To manage your connections, got to your <Link to={`/dev/${this.props.user.id}`}>profile</Link></h6>} 
-                        {this.state.showConnections && 
+                        {this.state.showConnections && <h6>To manage your connections, got to your <Link to={`/dev/${this.props.user.id}`}>profile</Link></h6>}
+                        {this.state.showConnections &&
                             <div>
-                                {this.state.contacts.map(contact => 
+                                {this.state.contacts.map(contact =>
                                     <ContactItem key={contact.id}>
-                                        <Link to={`/dev/${contact.id}`}> 
-                                            <img src={contact.picture||profpic} alt="contact"/> 
+                                        <Link to={`/dev/${contact.id}`}>
+                                            <img src={contact.picture||profpic} alt="contact"/>
                                             <span>{contact.first_name} {contact.last_name}</span>
                                         </Link>
                                     </ContactItem>)
@@ -143,12 +143,12 @@ class Dashboard extends Component {
                             <Count>{this.state.messageCount}</Count>
                             <Collapse><img src={this.state.showMessage ? showtrue:showfalse} alt="messages"/></Collapse>
                         </h4>
-                        {this.state.showMessage && 
+                        {this.state.showMessage &&
                             <div>
-                                {this.state.messages.map(message => 
+                                {this.state.messages.map(message =>
                                     <MessageItem key={message.id} >
-                                        <Link to={`/dev/${message.contributor_id}`}> 
-                                            <img src={message.picture||profpic} alt="message"/> 
+                                        <Link to={`/dev/${message.contributor_id}`}>
+                                            <img src={message.picture||profpic} alt="message"/>
                                             <span>{message.first_name} {message.last_name}</span>
                                         </Link>
                                         &nbsp;wants to work on&nbsp;
@@ -174,15 +174,15 @@ class Dashboard extends Component {
                         </Nav>
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
-                            {this.state.projectView==='mine' &&  
-                                this.state.projects.map(proj => 
+                            {this.state.projectView==='mine' &&
+                                this.state.projects.map(proj =>
                                     <ProjectItem key={`mine${proj.id}`}>
-                                        <Link to={`/project/${proj.project_id}`}> 
-                                            <h2>{proj.project_name}</h2> 
+                                        <Link to={`/project/${proj.project_id}`}>
+                                            <h2>{proj.project_name}</h2>
                                         </Link>
                                         <div>{proj.description}</div>
                                     </ProjectItem>)}
-                            {this.state.projectView==='create' && <CreateProject user_id={this.props.user.id}/>} 
+                            {this.state.projectView==='create' && <CreateProject user_id={this.props.user.id}/>}
                             {this.state.projectView==='others' && <Explorer/>}
                         </ProjectList>
                     </Projects>
@@ -200,8 +200,8 @@ class Dashboard extends Component {
                                         <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
                                     </PostTitle>
                                     <div>
-                                    <small><small>{item.created_at}</small></small> 
-                                    
+                                    <small><small>{item.created_at}</small></small>
+
                                     <div><img src={item.picture} alt="profile"/> {item.first_name} {item.last_name}</div>
                                     </div>
                                 </PostItem>)}
@@ -296,7 +296,7 @@ const Messagesss = glam.div ({
         borderRadius: '50%'
     },
     '& span': {
-        
+
     },
     '@media (max-width: 500px)': {
         marginBottom: 0,
@@ -463,6 +463,6 @@ const mapStateToProps = state => {
       user: state.user
     }
   }
- 
+
 
 export default connect(mapStateToProps)(Dashboard);

@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import router from './router';
 import AltHeader from './components/AltHeader';
 import Footer from './components/Footer';
-import axios from 'axios';
+// import axios from 'axios';
 
 
 class App extends Component {
@@ -17,13 +17,13 @@ class App extends Component {
     // }
 
     componentDidMount(){
-       axios.get('/checkSession').then(response => {
-           const user = response.data;
-           this.props.login(user);
-       }).catch(err => {
-           console.log(err, 'user error')
-           this.props.history.push('/')
-       });
+       // axios.get('/checkSession').then(response => {
+       //     const user = response.data;
+       //     this.props.login(user);
+       // }).catch(err => {
+       //     console.log(err, 'user error')
+       //     this.props.history.push('/')
+       // });
     }
 
 

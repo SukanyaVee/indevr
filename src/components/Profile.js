@@ -9,7 +9,7 @@ import UserTile from './UserTile';
 import ProjectTile from './ProjectTile';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {hasData} from '../tests/unit/profile';
+import {hasData} from '../tests/unit/ProfileTests/profile';
 
 
 

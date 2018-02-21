@@ -62,7 +62,7 @@ const Main = glam.div({
 })
 
 const Messages = glam.div({
-    height: '80vh'
+    height: 'calc(100vh - 205px)'
 })
 
 const Form = glam.form({

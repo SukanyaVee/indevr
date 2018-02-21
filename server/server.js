@@ -72,7 +72,7 @@ massive(process.env.CONNECTION_STRING)
 .catch(err => console.error(err));
 
 
-//Nodemailer Setup 
+//Nodemailer Setup
 
 app.post('/indevr/send', (req, res) => {
 
@@ -185,9 +185,7 @@ app.post('/login', auth_ctrl.user);
 
 function checkLoggedIn(req, res, next) {
     if(!req.session.user){
-        req.session.user = {
-            user: null
-        }
+        req.session.user = null;
     }
     next();
 };
