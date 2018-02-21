@@ -15,7 +15,7 @@ class Chat extends Component {
             room: props.room
         };
 
-        this.socket = io('localhost:3483');
+        this.socket = io();
 
         this.sendMessage = e => {
             e.preventDefault();
@@ -24,8 +24,10 @@ class Chat extends Component {
                 message: this.state.message,
                 room: this.state.room
             });
-            axios.post('/indevr/chat', this.state).then( () => {
-                this.setState({message: ''});
+            const {username, message, room} = this.state;
+            this.setState({message: ''});
+            axios.post('/indevr/chat', {username, message, room}).then( () => {
+                console.log('updated')
             }).catch(err => console.log(err))
         }
 
@@ -44,7 +46,6 @@ class Chat extends Component {
 
     componentDidMount(){
         axios.get(`/indevr/chat?room=${this.state.room}`).then(res => {
-            console.log(res.data)
             this.setState({messages: res.data})
         }).catch(err => console.log(err))
     }
