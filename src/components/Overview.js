@@ -4,6 +4,7 @@ import glam from 'glamorous';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import UserTile from './UserTile';
 
 import profpic from '../assets/prof-pic.png';
 
@@ -70,8 +71,11 @@ class  Overview extends Component  {
         return (
             <ProjectOverview>
                 <ProjectTitle>
-                    {this.state.project.project_name}
-                    {this.state.project.user_id===this.props.user.id && 
+                    <div>
+                        {this.state.project.project_name}
+                        <a href={this.state.project.repo} target="_blank"><i class="far fa-code-branch pull-right"></i></a>
+                    </div>
+                    {this.state.project.user_id===this.props.user.id &&
                     <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
@@ -80,7 +84,6 @@ class  Overview extends Component  {
                     {this.state.project.description}<br/>
                     {this.state.editShow===true &&
                     <Input placeholder="Edit Description" value={this.state.newDescr} onChange={e=>{this.setState({newDescr: e.target.value})}}/>}<br/>
-                    {this.state.project.repo}<br/>
                     {this.state.editShow===true &&
                     <Input placeholder="Edit Repo" value={this.state.newRepo} onChange={e=>{this.setState({newRepo: e.target.value})}}/>}<br/>
                 </ProjectDescription>
@@ -89,24 +92,25 @@ class  Overview extends Component  {
                     <div><button onClick={e=>{this.editTitleDescr(this.state.newTitle, this.state.newDescr, this.state.newRepo)}}>Submit</button>
                     <Edit style={inline} onClick={e=>{this.setState({editShow: false})}}>close</Edit></div>}
                 <br/>
-
+                <hr></hr>
+                <h4>Contributors</h4>
                 <ProjectCollaborators>
-                    <h4>Contributors</h4>
                     {this.state.contributors.map(contributor =>
                     <div key={contributor.id}>
                         <Link to={`/dev/${contributor.id}`}>
-                            <img src={contributor.picture||profpic} alt="contributor"/>
-                            {contributor.first_name} {contributor.last_name}
+                            <UserTile
+                                name={contributor.first_name + ' ' + contributor.last_name}
+                                img={contributor.picture} />
                         </Link>
-                        {this.state.project.user_id===this.props.user.id && 
+                        {this.state.project.user_id===this.props.user.id &&
                         <span id="remove" onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</span>}
-                        {contributor.id===this.props.user.id && 
+                        {contributor.id===this.props.user.id &&
                         <span id="remove" onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</span>}
                     </div>)}
                 </ProjectCollaborators>
-
+                <hr></hr>
+                <h4>Skill Stack</h4>
                 <ProjectSkills>
-                    <h4>Skill Stack</h4>
                     {this.state.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level===1?'Worthy Warrior':skill.level===2?'Noble Ninja':'Supreme Samurai'}
                     {/* <span id="remove">edit</span> */}
                     </div>)}
@@ -118,11 +122,15 @@ class  Overview extends Component  {
 const ProjectOverview = glam.div ({
     padding: 10,
     fontSize: 14,
-    minWidth: 400
+    minWidth: 400,
+    '& h4':{
+        fontWeight: 'bold'
+    },
 })
 
 const ProjectTitle = glam.div ({
     fontSize: '3em',
+    fontWeight: 'bold',
     // marginBottom: 10,
     '& span': {
         fontSize: 10,
@@ -147,32 +155,35 @@ const ProjectDescription = glam.div ({
     }
 })
 const ProjectCollaborators = glam.div ({
-    marginBottom: 10,
-    padding: 12,
-    borderRadius: 10,
-    '& div': {
-        padding: 10,
-        background: '#eeeeee',
-        margin: 5,
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginBottom: 20,
+    // padding: 12,
+    // borderRadius: 10,
+    '> div': {
+        margin: 10
     },
-    '& img': {
-        width: 30,
-        height: 30,
-        borderRadius: '50%'
-    },
+    // '& img': {
+    //     width: 30,
+    //     height: 30,
+    //     borderRadius: '50%'
+    // },
     '& span': {
         fontSize: 10,
         cursor: 'pointer',
-        marginLeft: 5
+        marginLeft: 5,
     },
-    '@media (max-width: 500px)': {
-        maxWidth: 300,
-    }
+    // '@media (max-width: 500px)': {
+    //     maxWidth: 300,
+    // }
 })
 const ProjectSkills = glam.div ({
     marginBottom: 10,
     padding: 12,
     borderRadius: 10,
+    display: 'flex',
+    justifyContent: 'center',
     '& div': {
         borderRadius: 3,
         background: 'var(--main-purple)',
