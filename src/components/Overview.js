@@ -97,7 +97,7 @@ class  Overview extends Component  {
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
                     </div>}
                     {x===0 &&
-                    <Edit style={inline1} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
+                    <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}
@@ -119,7 +119,7 @@ class  Overview extends Component  {
                     {this.state.contributors.map(contributor =>
                     <div key={contributor.id}>
                         <Link to={`/dev/${contributor.id}`}>
-                            <UserTile
+
                                 name={contributor.first_name + ' ' + contributor.last_name}
                                 img={contributor.picture} />
                         </Link>
