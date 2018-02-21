@@ -1,6 +1,7 @@
 module.exports = {
     getUserProj: (req, res) => {
         const db = req.app.get('db')
+        // console.log(req.query)
         db.get_projects([req.query.user_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
     getPublicProj: (req, res) => {
@@ -12,6 +13,11 @@ module.exports = {
         const db = req.app.get('db')
         console.log('get messages for user', req.query.user_id)
         db.get_messages([req.query.user_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
+    },
+    createMessage: (req, res) => {
+        const db = req.app.get('db')
+        console.log('create add request message+', req.body)
+        db.create_message([req.body.project_id, req.body.user_id, request.body.contributor_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
     deleteMessage: (req, res) => {
         const db = req.app.get('db')

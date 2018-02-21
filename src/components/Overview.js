@@ -65,14 +65,33 @@ class  Overview extends Component  {
         }).catch(error=>console.log(error))
     }
 
+    requestJoin(){
+        axios.post('/indevr/messages', {project_id: this.state.project.id, user_id:this.state.project.user_id, contributor_id: this.props.user.id}).then(resp=>{
+            
+        }).catch(error=>console.log(error))
+
+    }
+
     render( ) {
         var inline={marginLeft:'5px', cursor:'pointer'}
+        var inline2={fontSize: 16}
+        var x = 0;
+        this.state.contributors.map(e=>{
+            if (e.user_id===this.props.user.id) {
+                x++
+            }
+        })
         return (
             <ProjectOverview>
                 <ProjectTitle>
                     {this.state.project.project_name}
                     {this.state.project.user_id===this.props.user.id && 
-                    <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
+                    <div>
+                        <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
+                        <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
+                    </div>}
+                    {x===0 &&
+                    <Edit style={inline1} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}
@@ -99,16 +118,15 @@ class  Overview extends Component  {
                             {contributor.first_name} {contributor.last_name}
                         </Link>
                         {this.state.project.user_id===this.props.user.id && 
-                        <span id="remove" onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</span>}
+                        <span onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</span>}
                         {contributor.id===this.props.user.id && 
-                        <span id="remove" onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</span>}
+                        <span onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</span>}
                     </div>)}
                 </ProjectCollaborators>
 
                 <ProjectSkills>
                     <h4>Skill Stack</h4>
                     {this.state.skills.map(skill => <div key={skill.id}>{skill.skill} - {skill.level===1?'Worthy Warrior':skill.level===2?'Noble Ninja':'Supreme Samurai'}
-                    {/* <span id="remove">edit</span> */}
                     </div>)}
                 </ProjectSkills>
             </ProjectOverview>
