@@ -78,11 +78,11 @@ class Container extends Component {
             boxShadow: '3px 3px 5px 0px rgba(0,0,0,0.75)',
 		};
 
-        const backgroundColor = isActive ? 'var(--main-black)' : 'var(--main-grey)';
+        const backgroundColor = isActive ? 'var(--main-grey)' : 'var(--main-purple)';
 		const color = isActive ? '#fff' : '#333';
 		return connectDropTarget(
 			<div style={{...style, backgroundColor, color}}>
-                <label>{this.props.title}</label>
+                <label style={{color: '#fff'}}>{this.props.title}</label>
 				{cards.map((card, i) => {
 					return (
 						<Card

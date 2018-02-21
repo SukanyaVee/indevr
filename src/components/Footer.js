@@ -15,11 +15,17 @@ class Footer extends Component {
     render() {
         return (
             <Foot>
-                <SearchBar />
-                <Image src={logo} alt='' />
-                <Link to='/about/indevr' style={link}>About</Link>
-                <Link to='/explore' style={link}>Explore</Link>
-                <Link to='/contact/indevr' style={link}>Contact</Link>
+                <div>
+                    <SearchBar />
+                </div>
+                <div>
+                    <Image src={logo} alt='' />
+                </div>
+                <div>
+                    <Link to='/about/indevr' style={link}>About</Link>
+                    <Link to='/explore' style={link}>Explore</Link>
+                    <Link to='/contact/indevr' style={link}>Contact</Link>
+                </div>
             </Foot>
         )
     }
@@ -28,9 +34,7 @@ class Footer extends Component {
 const Foot = glam.div({
     width: '100vw',
     minHeight: 100,
-    // marginTop: 10,
-    // backgroundColor: 'var(--main-purple)',
-    // backgroundColor: 'var(--main-grey)',
+    
     backgroundColor: 'var(--main-black)',
     display: 'flex',
     flexDirection: 'row',
@@ -41,7 +45,7 @@ const Foot = glam.div({
     color: 'white',
     borderTop: 'Solid black 5px',
     '> div':{
-        margin: 20
+        // margin: 20
     },
     '& a':{
         margin: 20

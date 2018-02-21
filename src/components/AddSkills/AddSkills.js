@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import glam from 'glamorous';
 import skillList from './SkillList';
 import axios from 'axios';
-import {checkInput} from '../../tests/unit/profile';
+import {checkInput} from '../../tests/unit/ProfileTests/profile';
 
 class AddSkills extends Component {
     constructor(props){

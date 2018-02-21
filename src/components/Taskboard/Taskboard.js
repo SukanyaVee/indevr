@@ -68,7 +68,7 @@ const Main = glam.div({
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    paddingTop: 20,
-    backgroundColor: 'var(--main-purple)',
+    // paddingTop: 20,
+    // backgroundColor: 'var(--main-purple)',
     minHeight: '100vh',
 })
