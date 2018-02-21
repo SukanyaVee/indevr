@@ -32,13 +32,15 @@ class Chat extends Component {
 
         const addMessage = data => {
             this.setState({messages: [...this.state.messages, data]});
+            const objDiv = document.getElementById("messages");
+            objDiv.scrollTop = objDiv.scrollHeight;
         };
     }
 
     render(){
         return (
             <Main>
-                <Messages className="messages">
+                <Messages className="messages" id="messages">
                     {this.state.messages.map((message,i) => {
                         return (
                             <div key={i}><strong>{message.author}:</strong> {message.message}</div>

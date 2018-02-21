@@ -22,7 +22,7 @@ class Card extends Component {
             id: props.card.id,
             title: props.card.title,
             description: props.card.description,
-            status: props.card.status,
+            status: props.card.status || 'Not started',
             due: props.card.due
         }
     }
