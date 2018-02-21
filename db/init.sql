@@ -72,6 +72,13 @@ CREATE TABLE IF NOT EXISTS images (
     url TEXT
 );
 
+CREATE TABLE IF NOT EXISTS chat (
+    id SERIAL PRIMARY KEY,
+    username TEXT,
+    message TEXT,
+    room TEXT
+);
+
 INSERT INTO users
 (auth0_id, username, first_name, last_name, email, picture)
 VALUEs
@@ -171,7 +178,7 @@ CREATE TABLE IF NOT EXISTS taskboard_items (
 
 );
 
-INSERT INTO users 
+INSERT INTO users
 (Auth0_id, username, first_name, last_name, email, picture)
 VALUES
 ('Auth0DummySecret5', 'first5_last5', 'first5', 'last5', 'first5@last5.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
@@ -181,7 +188,7 @@ VALUES
 ('Auth0DummySecret9', 'first9_last9', 'first9', 'last9', 'first9@last9.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg'),
 ('Auth0DummySecret10', 'first10_last10', 'first10', 'last10', 'first10@last10.com', 'https://cdn.pixabay.com/photo/2016/03/03/22/33/anonymus-1235169_1280.jpg');
 
-INSERT INTO add_messages 
+INSERT INTO add_messages
 (project_id, user_id, contributor_id)
 VALUES
 (1, 1, 7),

@@ -14,6 +14,7 @@ const express = require('express'),
     auth_ctrl = require('./controller/auth0_controller'),
     taskboard_ctrl = require('./controller/taskboard_controller'),
     news_feed_ctrl = require('./controller/news_feed_controller'),
+    chat_ctrl = require('./controller/chat_controller'),
     search = require('./controller/search_controller'),
     nodemailer = require('nodemailer');
 
@@ -170,7 +171,9 @@ app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
 app.put(taskboardAPIurl, taskboard_ctrl.updateCard);
 app.post(taskboardAPIurl, taskboard_ctrl.newCard);
 
-
+//-------------------Chat------------------
+app.get('/indevr/chat', chat_ctrl.getMessages);
+app.post('/indevr/chat', chat_ctrl.addMessage);
 
 
 //-------------------Search------------------
@@ -202,10 +205,10 @@ const server = app.listen(port, () => console.log(`Up and running on port ${port
 //Socket.io chat Setup
 const io = socket(server);
 io.on('connection', (socket) => {
-    console.log(socket.id);
-});
-io.on('connection', (socket) => {
-    console.log(socket.id);
+    console.log('User connected:', socket.id);
+    socket.on('disconnect', function(){
+        console.log('User disconnected:', socket.id);
+    });
 
     socket.on('SEND_MESSAGE', function(data){
         io.emit('RECEIVE_MESSAGE', data);

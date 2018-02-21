@@ -6,7 +6,6 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import UserTile from './UserTile';
 
-import profpic from '../assets/prof-pic.png';
 
 class  Overview extends Component  {
     constructor(props){
@@ -73,7 +72,7 @@ class  Overview extends Component  {
                 <ProjectTitle>
                     <div>
                         {this.state.project.project_name}
-                        <a href={this.state.project.repo} target="_blank"><i class="far fa-code-branch pull-right"></i></a>
+                        <a href={this.state.project.repo} target="_blank"><i className="far fa-code-branch pull-right"></i></a>
                     </div>
                     {this.state.project.user_id===this.props.user.id &&
                     <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}

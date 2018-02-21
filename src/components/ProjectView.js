@@ -64,7 +64,7 @@ export default class ProjectView extends Component {
                         <Overview />
                     </ToggleDisplay>
                     <ToggleDisplay show={this.state.showChat}>
-                        <Chat />
+                        <Chat room={`ProjectRoom${this.state.projectId}`} />
                     </ToggleDisplay>
                     <ToggleDisplay show={this.state.showTaskboard}>
                         <TaskBoard project={this.state.projectId}/>
