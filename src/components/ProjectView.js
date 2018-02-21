@@ -49,8 +49,6 @@ export default class ProjectView extends Component {
     }
 
     render() {
-        console.log(this.props)
-
         return (
             <Main>
                 <Sidebar>
@@ -117,93 +115,3 @@ const View = glam.div({
     marginLeft: 150,
     padding: 20,
 })
-
-
-{/* <ProjectViewer>
-    <nav>
-        PROJECT TOOLS
-        <div onClick={e=>this.toggleView('overview')}>Overview</div>
-        <div onClick={e=>this.toggleView('repo')}>Repo</div>
-        <div onClick={e=>this.toggleView('tasks')}>Tasks</div>
-    </nav>
-
-    <main>
-            {this.state.viewToggler==='overview' && <Overview/> }
-            {this.state.viewToggler==='tasks' && <TaskBoard/> }
-            {this.state.viewToggler==='repo' &&
-                <div>
-                    <a href={this.state.project.repo} target="_blank"></a>
-                    <iframe title="repo" src="http://github.com" width="600px" height="400px">
-                        <p>Github Repo</p>
-                    </iframe>
-                </div>}
-            {this.state.viewToggler==='repo' && <div id="repo"></div> }
-            {this.state.viewToggler==='white' && <Whiteboard/> }
-    </main>
-
-    <aside>
-        <div>Chat message</div>
-        <div>Chat message</div>
-        <div>Chat message</div>
-        <div>Chat message</div>
-        <div>Chat message</div>
-        <div>Chat message</div>
-        <div>Chat message</div>
-        <div>Chat message</div>
-    </aside>
-</ProjectViewer> */}
-
-
-
-
-
-
-// const ProjectViewer = glam.div ({
-//     display: 'flex',
-//     justifyContent: 'space-between',
-//     alignItems: 'flex-start',
-//     // width: '100%',
-//     // flex: 1,
-//     // padding: 50,
-//     '& main': {
-//         padding: 20
-//     },
-//     '& nav': {
-//         background: 'var(--main-purple)',
-//         padding: 20,
-//         color: 'white',
-//         minWidth: 200,
-//         height: '100vh',
-//         '& div': {
-//             cursor: 'pointer',
-//             padding: 5
-//         }
-//     },
-//     '& aside': {
-//         maxWidth: 300,
-//         minWidth: 200,
-//         padding: 20,
-//         height: '100vh',
-//         background: 'var(--main-grey)'
-//     },
-//     '@media (max-width: 500px)': {
-//         flexDirection: 'column',
-//         justifyContent: 'flex-start',
-//         alignItems:'center',
-//         width: '100%',
-//         '& nav': {
-//             width: '100vw',
-//             padding: 10,
-//             height: 'auto',
-//             fontSize: 16
-//         },
-//         '& aside': {
-//             width: '100%',
-//             height: 'auto'
-//         },
-//         '& main': {
-//             width: '100%',
-//         }
-//     }
-// })
-//

@@ -2,7 +2,7 @@ const LOGGED_IN = 'LOGGED_IN';
 const LOGOUT = 'LOGOUT';
 
 const initialState = {
-    user: {},
+    user: {id: null},
     results: [],
     projects: [],
     posts: [],

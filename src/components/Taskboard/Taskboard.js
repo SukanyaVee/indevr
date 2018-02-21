@@ -46,7 +46,6 @@ class Taskboard extends Component {
     }
 
 	render(){
-    console.log(this.props);
 		return (
             <Main>
                 {this.state.lists.map( (list,i) => {
@@ -68,7 +67,5 @@ const Main = glam.div({
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    // paddingTop: 20,
-    // backgroundColor: 'var(--main-purple)',
     minHeight: '100vh',
 })

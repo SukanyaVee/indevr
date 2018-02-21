@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 import router from './router';
 import AltHeader from './components/AltHeader';
 import Footer from './components/Footer';
-// import axios from 'axios';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -17,15 +17,18 @@ class App extends Component {
     // }
 
     componentDidMount(){
-       // axios.get('/checkSession').then(response => {
-       //     const user = response.data;
-       //     this.props.login(user);
-       // }).catch(err => {
-       //     console.log(err, 'user error')
-       //     this.props.history.push('/')
-       // });
+       axios.get('/checkSession').then(response => {
+           const user = response.data;
+           console.log(response.data)
+           this.props.login(user);
+           if(!this.props.user){
+               this.props.history.push('/')
+           }
+       }).catch(err => {
+           console.log(err, 'user error')
+           this.props.history.push('/')
+       });
     }
-
 
     render() {
         return (
@@ -38,9 +41,15 @@ class App extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
 const mapDispatchToProps = {
     login,
     logout
 }
 
-export default withRouter(connect(null, mapDispatchToProps, null, {pure: false})(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(App));

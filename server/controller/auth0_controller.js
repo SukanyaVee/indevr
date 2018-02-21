@@ -51,13 +51,15 @@ module.exports = {
 
   //Check User Session - Associated with App.js
   sessionCheck: (req, res) => {
-    if (req.session.user) {
       res.status(200).send(req.session.user);
-    } else {
-      res
-        .status(403)
-        .json({ message: "Unauthorized, please log in to verify access." });
-    }
+
+    // if (req.session.user) {
+    //   res.status(200).send(req.session.user);
+    // } else {
+    //   res
+    //     .status(403)
+    //     .json({ message: "Unauthorized, please log in to verify access." });
+    // }
   },
 
   //Destroy user session, facilitate logout
