@@ -51,7 +51,7 @@ module.exports = {
     removeContr: (req, res, next) => {
         const db = req.app.get('db') 
         console.log('add contributor', req.params)
-        db.remove_contributor([req.params.contributorId]).then((resp)=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
+        db.remove_contributor([req.params.id]).then((resp)=> res.status(200).send()).catch(error=>{console.error(error);res.status(500).send(err)})
     },
     updateProj: (req, res) => {
         const db = req.app.get('db')

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import {login} from '../ducks/reducer';
+// import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import glam from 'glamorous';
-import {withRouter} from 'react-router-dom';
 import profpic from '../assets/prof-pic.png';
 import showtrue from '../assets/collapse.png';
 import showfalse from '../assets/show.png';
@@ -16,7 +15,6 @@ class Dashboard extends Component {
     constructor(){
         super();
         this.state={
-            user: {},
             projects: [],
             publicProj: [],
            posts: [],
@@ -35,16 +33,15 @@ class Dashboard extends Component {
     }
 
     componentDidMount(){
-        // session check get user details from req.session and send to redux
-        axios.get('/indevr/contacts?user_id=1').then(res=>{ //HARDCODED
+        axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{ 
             this.setState({contacts: res.data})
             console.log('connections', this.state.contacts)
         }).catch(error=>console.log(error))
-        axios.get('/indevr/projects?user_id=1').then(res=>{//HARDCODED
+        axios.get(`/indevr/projects?user_id=${this.props.user.id}`).then(res=>{
             res.data[0] ? this.setState({projects: res.data}) : this.setState({projectView: 'others'})
             console.log('my projects', this.state.projects)
         }).catch(error=>console.log(error))
-        axios.get('/indevr/public?user_id=1').then(res=>{//HARDCODED
+        axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{
             this.setState({publicProj: res.data})
             console.log('public projects', this.state.projects)
         }).catch(error=>console.log(error))
@@ -52,7 +49,7 @@ class Dashboard extends Component {
             this.setState({posts: res.data})
         console.log('posts', this.state.posts)
         }).catch(error=>console.log(error))
-        axios.get('/indevr/messages?user_id=1').then(resp=> { //HARDCODED  
+        axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {   
             this.setState({messages: resp.data, messageCount: resp.data.length})
             console.log('messages', resp.data)
         }).catch(error=>console.log(error))
@@ -70,7 +67,7 @@ class Dashboard extends Component {
         console.log('input', messageId, project_id, contributor_id)
         axios.post('/indevr/contributors', {project_id: project_id, user_id: contributor_id, owner: false}).then(resp=>{ 
             axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
-                axios.get('/indevr/messages?user_id=1').then(resp=> { //HARDCODED  
+                axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
                     this.setState({messages: resp.data})
                     console.log('messages', resp.data)
                 }).catch(error=>console.log(error))
@@ -80,7 +77,7 @@ class Dashboard extends Component {
 
     declineContributor = (messageId) => {
         axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
-            axios.get('/indevr/messages?user_id=1').then(resp=> { //HARDCODED  
+            axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> { 
                 this.setState({messages: resp.data})
                 console.log('messages', resp.data)
             }).catch(error=>console.log(error))
@@ -94,11 +91,12 @@ class Dashboard extends Component {
 
     submitPost(content) {
         console.log('post content', content)
-        axios.post('/indevr/posts', {user_Id: 2, content:content}).then(resp=>{//HARDCODED
+        axios.post('/indevr/posts', {user_Id: this.props.user.id, content:content}).then(resp=>{
             console.log('this is the response', resp.data)
-            this.setState(prevState=>{
-                return {posts: [...prevState.posts, resp.data[0]]}
-            })
+            axios.get('/indevr/posts').then(res=>{
+                this.setState({posts: res.data, postContent: ''})
+            console.log('posts', this.state.posts)
+            }).catch(error=>console.log(error))
             console.log('this is the state after setting response to it', this.state.posts)
         }).catch(error=>console.log(error))
     }
@@ -106,11 +104,15 @@ class Dashboard extends Component {
     deletePost(postId){
         console.log(postId)
         axios.delete(`/indevr/posts/${postId}`).then(resp=>{
-            // this.setState({posts: resp.data})
+            axios.get('/indevr/posts').then(res=>{
+                this.setState({posts: res.data})
+            console.log('posts', this.state.posts)
+            }).catch(error=>console.log(error))        
         }).catch(error=>console.log(error))
     }
 
     render() {
+        console.log(this.props.user.id)
         return (
             <Dashboard1>
 
@@ -119,10 +121,9 @@ class Dashboard extends Component {
                     <Contacts>
                         <h4 onClick={e=>this.showConn()}>
                             My Connections
-                            <Collapse><img src={this.state.showConnections? showtrue:showfalse}/></Collapse>
+                            <Collapse><img src={this.state.showConnections? showtrue:showfalse} alt="contacts"/></Collapse>
                         </h4>
-                        {/* HARDCODED */}
-                        {this.state.showConnections && <h6>To manage your connections, got to your <Link to="/dev/1">profile</Link></h6>} 
+                        {this.state.showConnections && <h6>To manage your connections, got to your <Link to={`/dev/${this.props.user.id}`}>profile</Link></h6>} 
                         {this.state.showConnections && 
                             <div>
                                 {this.state.contacts.map(contact => 
@@ -140,7 +141,7 @@ class Dashboard extends Component {
                         <h4 onClick={e=>this.showMess()}>
                             My Messages
                             <Count>{this.state.messageCount}</Count>
-                            <Collapse><img src={this.state.showMessage ? showtrue:showfalse}/></Collapse>
+                            <Collapse><img src={this.state.showMessage ? showtrue:showfalse} alt="messages"/></Collapse>
                         </h4>
                         {this.state.showMessage && 
                             <div>
@@ -181,14 +182,13 @@ class Dashboard extends Component {
                                         </Link>
                                         <div>{proj.description}</div>
                                     </ProjectItem>)}
-                                {/* HARDCODED */}
-                            {this.state.projectView==='create' && <CreateProject user_id="1"/>} 
+                            {this.state.projectView==='create' && <CreateProject user_id={this.props.user.id}/>} 
                             {this.state.projectView==='others' && <Explorer/>}
                         </ProjectList>
                     </Projects>
                     <Side>
                         <Newpost>
-                            <textarea placeholder="what gem did you find?" cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea><br/>
+                            <textarea placeholder="what gem did you find?" value={this.state.postContent} cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea><br/>
                             <button onClick={e=>{this.submitPost(this.state.postContent)}}>Post</button>
                         </Newpost>
                         <PostFeed>
@@ -369,7 +369,7 @@ const Projects = glam.div ({
 
 const Nav = glam.div ({
     display: 'flex',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
     alignItems: 'flex-end',
     // padding: 20,
     '& div': {
@@ -463,8 +463,6 @@ const mapStateToProps = state => {
       user: state.user
     }
   }
-  const mapDispatchToProps = {
-    login: login
-  }
+ 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+export default connect(mapStateToProps)(Dashboard);
