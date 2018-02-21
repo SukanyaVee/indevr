@@ -48,4 +48,15 @@ module.exports = {
         })
     },
 
+    deleteCard(req,res) {
+        let {cardID} = req.params;
+        const db = req.app.get('db');
+        db.delete_card_from_taskboard([cardID]).then( () => {
+            res.status(200).send('Card deleted');
+        }).catch(err => {
+            console.log('Error updating task:', err);
+            res.status(500).send('Oops, something went wrong!');
+        })
+    },
+
 }
