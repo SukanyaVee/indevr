@@ -7,11 +7,14 @@ import glam from "glamorous";
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import MidBar from './landing-page-assets/MidBar';
+import logo from '../assets/lock.png';
 
 const options = {
   theme: {
-    primaryColor: "#593c8f"
+    primaryColor: "#593c8f",
+    logo: logo,
   },
+  popupOptions: {width: 300, height: 400},
   // allowSignUp: false,
   redirect: true,
   redirectUrl: "/dashboard",
@@ -62,12 +65,6 @@ class LandingPage extends Component {
   render() {
     return (
       <div>
-        {/* <Header>
-          <Logo className='big' src={logo} alt="" />
-          <LogoSmall className='small' src={logo2} alt='' />
-          <SearchBar />
-        </Header>  */}
-        {/* <Initial> */}
           <Main>
             <Heading >
               <strong>
@@ -82,7 +79,7 @@ class LandingPage extends Component {
                 is a project application designed to help you and
                 your team of connections <strong>accomplish </strong>your development goals.
                 From internal communication and access to project multi-tools, we've got it.
-                welcome to your one-stop-shop developer platform.
+                Welcome to your one-stop-shop developer platform.
               </Desc>
             </Heading>
             <Btnlogin onClick={this.login}>

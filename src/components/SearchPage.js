@@ -182,40 +182,6 @@ class SearchPage extends Component {
   }
 }
 
-const Skill = glam.span({
-  display: 'flex',
-  flexDirection: 'row',
-
-})
-
-const Ill = glam.div({
-  marginLeft: 10,
-})
-
-const ProjWrap = glam.div({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  flexWrap: "wrap",
-  marginBottom: 20,
-  borderRadius: 5,
-  "> div": {
-      width: '80%',
-    minWidth: 300,
-    maxWidth: '95vw'
-  }
-});
-
-const PostsWrapper = glam.div({
-    width: '100%',
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    '> div':{
-        margin: 20
-    }
-});
 
 const SkillTile = glam.div({
   color: 'white',
