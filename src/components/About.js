@@ -25,15 +25,15 @@ class About extends Component {
                     <Section>
                         <Person>
                             <div className='spot1'></div>
-                            <p> Sukanya </p>
+                            <p> Sukanya Vee </p>
                         </Person>
                         <Person className='two'>
                             <div className='spot2'></div>
-                            <p> Andrea </p>
+                            <p> Andrea Stringham </p>
                         </Person>
                         <Person className='three'>
                             <div className='spot3'></div>
-                            <p> Brent </p>
+                            <p> Brent Eckert </p>
                         </Person>
                     </Section>
             </Main>

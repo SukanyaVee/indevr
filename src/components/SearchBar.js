@@ -3,8 +3,6 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
 import { Redirect } from 'react-router-dom'
-import { searching } from '../ducks/reducer'
-import { connect } from 'react-redux'
 
 class SearchBar extends Component {
     constructor(props) {
@@ -21,7 +19,6 @@ class SearchBar extends Component {
             this.setState({
                 searchTerm: value
             });
-        // console.log(this.state.searchTerm)
     };
 
     search(){
@@ -31,20 +28,15 @@ class SearchBar extends Component {
             })
             return <Redirect to='/search' />
         } else if (this.state.searchTerm.length > 1){
-        this.props.searching(this.state.searchTerm);
         this.setState({
             redirect: true,
         })
-        // this.props.history.push(`/search/${this.state.searchTerm}`);
         }
     }
 
     render() {
         if(this.state.redirect){
             this.setState({redirect: false})
-            this.setState({
-                searchTerm: ''
-            })
             return <Redirect to={`/search/${this.state.searchTerm}`} />
         }
         return (
@@ -85,8 +77,4 @@ const Main = glam.form({
 
 })
 
-const mapDispatchToProps = {
-    searching,
-}
-
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default SearchBar;
