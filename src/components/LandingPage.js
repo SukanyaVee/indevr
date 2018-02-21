@@ -6,8 +6,10 @@ import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
+import Project from './landing-page-assets/projectview/project';
 import MidBar from './landing-page-assets/MidBar';
 import logo from '../assets/lock.png';
+
 
 const options = {
   theme: {
@@ -101,6 +103,8 @@ class LandingPage extends Component {
             </Aside> */}
         {/* </Initial> */}
         <MidBar />
+        <Project />
+        <MidBar />
         <Profile />
         <MidBar />
         <Tasks />
@@ -160,13 +164,15 @@ const Desc = glam.p({
 
 const Heading = glam.h1({
   fontSize: "2.5em",
-  // margin: 20,
-  // marginright: 100,
-  // textAlign: 'center',
   width: "65%",
-  padding: 10,
-  // boxShadow: '0 0 0 4px white',
-  // border: 'solid white 2px',
+  padding: 20,
+  // boxShadow: '0px 0px 0px 4px var(--main-purple)',
+  // border: 'solid var(--main-purple) 2px',
+  '& :hover': {
+    backgroundColor: 'var(--main-purple)',
+    color: 'white',
+    border: 'solid var(--main-black) 2px',
+  },
   '@media (max-width: 729px)':{
     width: '100vw',
     minHeight: '50%',
@@ -184,6 +190,7 @@ const Main = glam.div({
   width: "100vw",
   height: "90vh",
   color: 'var(--main-purple)',
+  // backgroundImage: 'url(`${keys}`)',
   '@media (max-width: 729px)': {
       flexDirection: 'column',
   }
@@ -224,10 +231,12 @@ const Btnlogin = glam.button({
   fontSize: "18pt",
   height: 100,
   width: 200,
+  marginLeft: 20,
   '@media (max-width: 729px)': {
     fontSize: '14pt',
     height: 75,
     width: 150,
+    marginLeft: 0,
   }
 });
 

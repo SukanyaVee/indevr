@@ -3,8 +3,8 @@ import glam from 'glamorous'
 import axios from 'axios'
 
 class Contact extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
             name: '',
             address: '',
@@ -12,6 +12,27 @@ class Contact extends Component {
         }
 
     }
+
+formUpdate(target){
+    const input = document.getElementById(target.id);
+    const val = target.value;
+
+    if(val === '' || (target.id === 'address' && !(/[^@]+@[^@]+\.[^@]+/.test(val)))){
+        input.classList.add('required');
+    } else {
+        input.classList.remove('required')
+    }
+
+    const name = document.getElementById('name').value;
+    const address = document.getElementById('address').value;
+    const email = document.getElementById('email').value;
+
+    this.setState({
+        name, 
+        address,
+        email
+    })
+}
 
 
 sendMail(e){
@@ -28,10 +49,10 @@ sendMail(e){
 
     if(formComplete){
         const button = document.getElementById('button');
-        button.setAttribute('disabled', '');
+        button.setAttribute("disabled", "");
         button.innerHTML = 'Sending...'
         axios.post('/indevr/send', this.state).then(res => {
-            button.removeAttribute('disabled');
+            button.removeAttribute("disabled");
             const alert = document.getElementById('mailAlert');
             if(res.status === 200){
             alert.classList.remove('alert-danger', 'hidden');
@@ -46,6 +67,10 @@ sendMail(e){
             button.innderHTML = 'Try Again'
         }
         }).catch(err => console.log(err))
+
+        // setTimeout(() => {
+        //     document.getElementById('form').reset();
+        // }, 100);
 }
 }
 
@@ -63,21 +88,49 @@ clearText(){
                 <TopRow>
                     <div>
                     <label>Name:</label>
-                    <Name id='name' className='form-control' placeholder='Please enter your name' onChange={e => this.setState({name: e.target.value})}></Name>
+                    <Name 
+                    id='name' 
+                    className='form-control' 
+                    placeholder='Please enter your name' 
+                    onBlur={e => this.formUpdate(e.target)} />
                     </div>
                     <div className='two'>
                     <label>Email:</label>
-                    <Name id='address' className='form-control' placeholder='Please enter your email address' onChange={e => this.setState({address: e.target.value})}></Name>
+                    <Name 
+                    id='address' 
+                    className='form-control' 
+                    placeholder='Please enter your email address' 
+                    onBlur={e => this.formUpdate(e.target)} />
                     </div>
                 </TopRow>
-
-                <Text id='email' className='form-control' placeholder='Please enter your comments or questions' onChange={e => this.setState({email: e.target.value})}></Text>
+                    <div>
+                    <label>How can we help?</label>
+                    <Text 
+                    id='email' 
+                    className='form-control' 
+                    placeholder='Please enter your comments or questions' 
+                    onBlur={e => this.formUpdate(e.target)} />
+                    <div 
+                    className='alert alert-success hidden' 
+                    id='mailAlert' 
+                    role='alert'>
+                    Message was sent successfully! Thank you!
+                    </div>
+                    </div>
             </Inputs>
 
                 <Buttons>
-                    <div className='alert alert-success hidden' id='mailAlert' role='alert'>Message was send successfully!</div>
-                    <Submit id='button' className='btn btn-success' type='submit' onClick={e => this.sendMail(e)}>Submit & Send</Submit>
-                    <Submit className='btn' type='clear' onClick={this.clearText}>Clear</Submit>
+                    <Submit 
+                    id='button' 
+                    className='btn btn-success' 
+                    onClick={e => this.sendMail(e)}>
+                    Submit & Send
+                    </Submit>
+                    <Submit 
+                    className='btn' 
+                    onClick={this.clearText}>
+                    Clear
+                    </Submit>
                 </Buttons>
             </Form>
         </Main>
@@ -103,13 +156,24 @@ const Form = glam.form({
     borderRadius: 8,
     '> input': {
         margin: '20px auto',
-    }
+    },
+    // '& .alert': {
+    //     fontSize: 12,
+    //     heigth: 60,
+    //     display: 'flex',
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    // }
 })
 
 const Inputs = glam.div({
     margin: 'auto',
     width: '90%',
     height: '400px',
+    '& label': {
+        color: 'white',
+        fontSize: '14pt',
+    }
     // backgroundColor: 'aqua',
 })
 
@@ -118,7 +182,6 @@ const TopRow = glam.div({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    color: 'white',
     marginBottom: 20,
     '> div': {
         width: '100%',
@@ -128,7 +191,7 @@ const TopRow = glam.div({
 
         marginLeft: '5%'
     },
-    '> label': {
+    '& label': {
         marginBottom: 0,
     }
 })
@@ -152,11 +215,10 @@ const Buttons = glam.div({
     margin: 'auto',
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 40,
 })
 
 const Submit = glam.button({
-    margin: 'auto',
-    // margin: 10,
+    margin: 10,
 })
 export default Contact;

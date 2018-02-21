@@ -3,8 +3,8 @@ import one from './Screen Shot 2018-02-16 at 10.41.49 AM.png'
 import glam from 'glamorous'
 
 class profile extends Component {
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
         this.state = {
         }
     }
@@ -15,8 +15,7 @@ class profile extends Component {
                 <h3 className='heading'><strong>Team Building</strong></h3>
                 <h1 className='heading'><i>Grow your network</i></h1>
                 <Topic>
-                <Desc><div className='p'><strong>Connect and follow</strong>{' '}
-                fellow devs with the social tools that inDevr offers. With the ability to provide links to the vast majority of development tools across the internet, show the world your work and rejoice in the benefits. These connections can lead to lasting friendships and future business endeavors.</div></Desc>
+                <Desc><div className='p'><strong>Connect and follow</strong> fellow devs with the social tools that inDevr offers. With the ability to provide links to the vast majority of development tools across the internet, show the world your work and rejoice in the benefits. These connections can lead to lasting friendships and future business endeavors.</div></Desc>
                 <Image src={one} className="img-responsive"/>
                 </Topic>
                 <Topic2>
@@ -34,6 +33,7 @@ const Main = glam.div({
     height: '100vh',
     color: 'white',
     backgroundColor: 'var(--main-purple)',
+    fontFamily: 'Helvetica Neue',
     '& .heading': {
         textAlign: 'center',
         marginTop: 0,
@@ -70,31 +70,51 @@ const Topic2 = glam.section({
 
 const Desc = glam.span({
     width: '45%',
-    height: '55%',
-    fontSize: '24pt',
-    // marginTop: 100,
+    height: '100%',
+    fontSize: '22pt',
+    // backgroundColor: 'yellow',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
     '& .p': {
-        padding: 10,
+        // backgroundColor: 'blue',
+        // padding: 10,
+        // display: 'flex',
+        // flexDirection: 'column',
+        // justifyContent: 'center',
+        // alignItems: 'center',
     },
     '@media (max-width: 729px)':{
         fontSize: '10pt',
         width: '100vw',
-        marginTop: 75,
+        marginTop: 20,
         textAlign: 'center'
     }
 })
 const Desc2 = glam.span({
     width: '45%',
-    height: '55%',
-    fontSize: '24pt',
+    height: '100%',
+    fontSize: '22pt',
+    // backgroundColor: 'green',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
     // marginTop: 20,
-    '& .p': {
-        padding: 10,
-    },
+    // '& .p': {
+    //     padding: 10,
+    //     display: 'flex',
+    //     flexDirection: 'column',
+    //     // justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
     '@media (max-width: 729px)':{
       '& .p': {  
         fontSize: '10pt',
-        marginTop: 185,
+        marginTop: 50,
         width: '100vw',
         textAlign: 'center'
       }
@@ -109,22 +129,21 @@ const Image = glam.img({
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
-        maxHeight: '100%',
+        maxHeight: '60%',
         margin: '20px auto',
         // marginBottom: 20,
     }
 })
 const Image2 = glam.img({
     height: '98%',
-    minWidth: '60%',
+    width: '60%',
     margin: '5px 10px',
     marginBottom: '10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
-        maxHeight: '100%',
-        marginTop: 100,
-        margin: 'auto',
+        maxHeight: '60%',
+        margin: '20px auto',
     }
 })
 
