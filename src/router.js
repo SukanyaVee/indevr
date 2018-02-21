@@ -11,6 +11,7 @@ import ExplorePage from './components/ExplorePage';
 import EditProfile from './components/EditProfile';
 import About from './components/About';
 import Contact from './components/Contact';
+// import Whiteboard from './components/Whiteboard';
 
 
 export default (
@@ -26,5 +27,6 @@ export default (
         <Route path='/about/indevr' component={About} />
         <Route path="/explore" component={ExplorePage}/>
         <Route path='/contact/indevr' component={Contact} />
+        {/* <Route path='/whiteboard' component={Whiteboard} /> */}
     </Switch>
 )

@@ -49,7 +49,7 @@ const Foot = glam.div({
     },
     '& a':{
         margin: 20
-    }
+    },
 })
 
 const Image = glam.img({

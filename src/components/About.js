@@ -24,15 +24,15 @@ class About extends Component {
                 <Title>Meet the Team</Title>
                     <Section>
                         <Person>
-                            <div className='spot1'></div>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot1'><i className='fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-purple)'></i></div></a>
                             <p> Sukanya Vee </p>
                         </Person>
                         <Person className='two'>
-                            <div className='spot2'></div>
+                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer"><div className='spot2'><i className="fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-purple)'></i></div></a>
                             <p> Andrea Stringham </p>
                         </Person>
                         <Person className='three'>
-                            <div className='spot3'></div>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot3'><i className="fas fa-cog fa-spin fa-7x" data-fa-transform="grow-6 down-16" color='var(--main-purple)'></i></div></a>
                             <p> Brent Eckert </p>
                         </Person>
                     </Section>
@@ -84,6 +84,10 @@ const Section = glam.section({
         width: 300,
         borderRadius: '50%',
         backgroundColor: 'var(--main-grey)',
+        '& .fa-black-tie': {
+            zIndex: 10,
+
+        }
     }
 })
 

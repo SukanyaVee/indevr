@@ -95,8 +95,10 @@ app.post('/indevr/send', (req, res) => {
     transporter.sendMail(mailOptions, function(err, info){
         if(err){
             console.log(err)
+            res.status(500).send('Uh-Oh, Something went wrong!');
         } else {
-            console.log(info)
+            console.log('Email sent:', info.response);
+            res.status(200).send('Message Sent!')
         }
     })
 })
@@ -213,8 +215,8 @@ io.on('connection', (socket) => {
 });
 
 //Socket.io Whiteboard Setup
-// function onConnection(socket){
-//     socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-// }
+function onConnection(socket){
+    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+}
 
-// io.on('connection', onConnection);
+io.on('connection', onConnection);
