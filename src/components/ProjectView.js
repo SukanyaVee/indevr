@@ -64,7 +64,6 @@ export default class ProjectView extends Component {
     constructor(props){
         super()
         this.state={
-            projectId: 1,//this.props.match.params.id //HARDCODED
             // user: {},
             project: {},
             skills: [],
@@ -75,10 +74,7 @@ export default class ProjectView extends Component {
         this.toggleView = this.toggleView.bind(this)
     }
 
-    componentDidMount(){
-         // session check get user detaisl from req.session
-
-    }
+    
 
     openRepo () {
         // var output = document.getElementById("repo");

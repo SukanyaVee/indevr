@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import glam from 'glamorous';
 import axios from 'axios';
 import {withRouter} from 'react-router-dom';
-// import {connect} from 'react-redux';
+import {connect} from 'react-redux';
 
 import profpic from '../assets/prof-pic.png';
 
@@ -41,9 +41,10 @@ class  Overview extends Component  {
     removeContributor = (contributorId) => {
         console.log('contributor record id', contributorId)
         axios.delete(`/indevr/contributors/${contributorId}`).then(resp=>{
-            this.setState(prevState=>{
-                return {posts: prevState.posts.filter((e, i) => this.state.contributor.id !== contributorId)}
-            })
+            axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
+                this.setState({contributors: res.data})
+                // console.log('contributors', this.state.contributors)
+            }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
     }
 
@@ -70,7 +71,7 @@ class  Overview extends Component  {
             <ProjectOverview>
                 <ProjectTitle>
                     {this.state.project.project_name}
-                    {this.state.project.user_id===1 && //HARDCODED user id from req,session or redux
+                    {this.state.project.user_id===this.props.user.id && 
                     <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
@@ -97,9 +98,9 @@ class  Overview extends Component  {
                             <img src={contributor.picture||profpic} alt="contributor"/>
                             {contributor.first_name} {contributor.last_name}
                         </Link>
-                        {this.state.project.user_id===1 && //HARDCODED user id from req,session
+                        {this.state.project.user_id===this.props.user.id && 
                         <span id="remove" onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</span>}
-                        {contributor.id===1 && //HARDCODED user id from req,session
+                        {contributor.id===this.props.user.id && 
                         <span id="remove" onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</span>}
                     </div>)}
                 </ProjectCollaborators>
@@ -200,4 +201,11 @@ const Edit=glam.span({
 })
 
 
-export default withRouter(Overview);
+const mapStateToProps = state => {
+    return {
+      user: state.user
+    }
+  }
+
+
+export default withRouter(connect(mapStateToProps)(Overview));
