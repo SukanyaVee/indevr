@@ -173,6 +173,7 @@ const taskboardAPIurl = '/indevr/taskboard';
 app.get(`${taskboardAPIurl}/:projectID`, taskboard_ctrl.get);
 app.put(taskboardAPIurl, taskboard_ctrl.updateCard);
 app.post(taskboardAPIurl, taskboard_ctrl.newCard);
+app.delete(`${taskboardAPIurl}/:cardID`, taskboard_ctrl.deleteCard)
 
 //-------------------Chat------------------
 app.get('/indevr/chat', chat_ctrl.getMessages);

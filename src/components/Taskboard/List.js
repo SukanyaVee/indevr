@@ -28,13 +28,18 @@ class Container extends Component {
 	}
 
 	removeCard(index) {
-		this.setState(update(this.state, {
-			cards: {
-				$splice: [
-					[index, 1]
-				]
-			}
-		}));
+		const {id} = this.state.cards[index];
+
+	    axios.delete(`/indevr/taskboard/${id}`).then( res => {
+	        console.log(res.data);
+			this.setState(update(this.state, {
+				cards: {
+					$splice: [
+						[index, 1]
+					]
+				}
+			}));
+        }).catch(err => console.log(err));
 	}
 
 	moveCard(dragIndex, hoverIndex) {
@@ -54,8 +59,7 @@ class Container extends Component {
     addNewCard(){
 		console.log(this.props);
         axios.post(`/indevr/taskboard`, {card: this.state, project_id: this.props.project_id}).then(res => {
-            console.log(res.data);
-			this.pushCard(this.state);
+			this.pushCard(res.data);
 			this.setState({
 				title: '',
 	            description: '',

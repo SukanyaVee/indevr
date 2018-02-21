@@ -38,6 +38,12 @@ class Card extends Component {
         }).catch( err => console.log(err));
     }
 
+    deleteCard(){
+        this.props.removeCard(this.props.index);
+    }
+
+
+
 	render() {
 		const { card, isDragging, connectDragSource, connectDropTarget } = this.props;
 		const opacity = isDragging ? 0 : 1;
@@ -46,6 +52,9 @@ class Card extends Component {
 			<div style={{ ...style, opacity }}>
                 <Status>
                     <sub>{this.state.status}</sub>
+                    <sub className="pull-right" onClick={() => this.deleteCard()}>
+                        <i className="far fa-trash-alt"></i>
+                    </sub>
                 </Status>
                 <Title>
                     <a role="button" data-toggle="modal" data-backdrop="static" data-keyboard="false" data-target={`#${card.id}`}>
@@ -195,6 +204,9 @@ const Status = glam.div({
     alignItems: 'center',
     marginBottom: 10,
     width: '100%',
+    '& .fa-trash-alt':{
+        cursor: 'pointer'
+    }
 })
 
 const Title = glam.div({
