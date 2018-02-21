@@ -17,7 +17,7 @@ module.exports = {
     createMessage: (req, res) => {
         const db = req.app.get('db')
         console.log('create add request message+', req.body)
-        db.create_message([req.body.project_id, req.body.user_id, request.body.contributor_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
+        db.create_message([req.body.project_id, req.body.user_id, req.body.contributor_id]).then(posts=> res.status(200).send(posts)).catch(error=>{console.error(error);res.status(500).send(err)})
     },
     deleteMessage: (req, res) => {
         const db = req.app.get('db')

@@ -77,11 +77,12 @@ class  Overview extends Component  {
         var inline2={fontSize: 16}
         var x = 0;
         this.state.contributors.map(e=>{
-            if (e.user_id===this.props.user.id) {
+            console.log('e', e)
+            if (e.id===this.props.user.id) {
                 x++
             }
         })
-        console.log('x',x)
+        
         return (
             <ProjectOverview>
                 <ProjectTitle>
@@ -118,14 +119,14 @@ class  Overview extends Component  {
                     {this.state.contributors.map(contributor =>
                     <div key={contributor.id}>
                         <Link to={`/dev/${contributor.id}`}>
-=                           <UserTile
+                            <UserTile
                                 name={contributor.first_name + ' ' + contributor.last_name}
                                 img={contributor.picture} />
                         </Link>
                         {this.state.project.user_id===this.props.user.id && 
-                        <span onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</span>}
+                        <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</Edit>}
                         {contributor.id===this.props.user.id && 
-                        <span onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</span>}
+                        <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</Edit>}
                     </div>)}
                 </ProjectCollaborators>
                 <hr></hr>
