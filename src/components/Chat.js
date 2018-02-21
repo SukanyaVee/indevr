@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import glam from 'glamorous';
-// import axios from 'axios';
+import axios from 'axios';
 import io from "socket.io-client";
 import {connect} from 'react-redux';
 
@@ -8,11 +8,11 @@ import {connect} from 'react-redux';
 class Chat extends Component {
     constructor(props){
         super(props);
-
         this.state = {
             username: props.user.first_name + ' ' + props.user.last_name,
             message: '',
-            messages: []
+            messages: [],
+            room: props.room
         };
 
         this.socket = io('localhost:3483');
@@ -21,13 +21,18 @@ class Chat extends Component {
             e.preventDefault();
             this.socket.emit('SEND_MESSAGE', {
                 author: this.state.username,
-                message: this.state.message
+                message: this.state.message,
+                room: this.state.room
             });
-            this.setState({message: ''});
+            axios.post('/indevr/chat', this.state).then( () => {
+                this.setState({message: ''});
+            }).catch(err => console.log(err))
         }
 
         this.socket.on('RECEIVE_MESSAGE', function(data){
-            addMessage(data);
+            if(data.room === props.room){
+                addMessage(data);
+            }
         });
 
         const addMessage = data => {
@@ -35,6 +40,13 @@ class Chat extends Component {
             const objDiv = document.getElementById("messages");
             objDiv.scrollTop = objDiv.scrollHeight;
         };
+    }
+
+    componentDidMount(){
+        axios.get(`/indevr/chat?room=${this.state.room}`).then(res => {
+            console.log(res.data)
+            this.setState({messages: res.data})
+        }).catch(err => console.log(err))
     }
 
     render(){
