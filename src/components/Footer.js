@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
 import { Link } from 'react-router-dom'
-import logo from '../assets/in_DEV_r.png'
+import logo from '../assets/in_DEV_rFoot.png'
 import SearchBar from './SearchBar'
+import {connect } from 'react-redux'
 
 
 class Footer extends Component {
@@ -13,13 +14,16 @@ class Footer extends Component {
     }
 
     render() {
+        console.log(this.props.id, this.props.user)
         return (
             <Foot>
                 <div>
-                    <SearchBar />
+                    <SearchBar className='search'/>
                 </div>
                 <div>
+                    <Link to={this.props.user.id ? '/dashboard' : '/'} className='img-responsive'>
                     <Image src={logo} alt='' />
+                    </Link>
                 </div>
                 <div>
                     <Link to='/about/indevr' style={link}>About</Link>
@@ -35,7 +39,7 @@ const Foot = glam.div({
     width: '100vw',
     minHeight: 100,
     
-    backgroundColor: 'var(--main-black)',
+    backgroundColor: 'var(--main-purple)',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -50,10 +54,14 @@ const Foot = glam.div({
     '& a':{
         margin: 20
     },
+    '& .search': {
+        marginTop: 30,
+    }
 })
 
 const Image = glam.img({
-    height: 50
+    height: 75,
+    marginBottom: 10,
 })
 
 const link = {
@@ -61,4 +69,11 @@ const link = {
     textDecoration: 'none',
 }
 
-export default Footer;
+function mapStateToProps(state){
+    const { user } = state;
+    return {
+        user
+    }
+}
+
+export default connect(mapStateToProps)(Footer);

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
+import { css } from 'glamor';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import Project from './landing-page-assets/projectview/project';
@@ -114,6 +115,12 @@ class LandingPage extends Component {
   }
 }
 
+
+const bounce = css.keyframes({
+  '0%': {transform: `scale(1.3)`},
+  '100%': {transform: `scale(1.0)`}
+})
+
 // const Initial = glam.section({
 //   display: "flex",
 //   flexDirection: "row",
@@ -125,6 +132,7 @@ class LandingPage extends Component {
 const Desc = glam.p({
   // margin: 20,
   width: "90%",
+  // animation: `${bounce} 5s ease-in-out alternate`,
   "hover & .text": {
     color: 'black'
 },
@@ -169,6 +177,7 @@ const Heading = glam.h1({
   padding: 20,
   // boxShadow: '0px 0px 0px 4px var(--main-purple)',
   // border: 'solid var(--main-purple) 2px',
+  animation: `${bounce} 5s ease-in-out alternate`,
   '& :hover': {
     backgroundColor: 'var(--main-purple)',
     color: 'white',
@@ -233,6 +242,7 @@ const Btnlogin = glam.button({
   height: 100,
   width: 200,
   marginLeft: 20,
+  animation: `${bounce} 5s ease-in-out alternate`,
   '@media (max-width: 729px)': {
     fontSize: '14pt',
     height: 75,
