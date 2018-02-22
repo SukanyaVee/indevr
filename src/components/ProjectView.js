@@ -50,30 +50,45 @@ export default class ProjectView extends Component {
 
     render() {
         return (
-            <Main>
-                <Sidebar>
-                    <Nav>
-                        <div id="overview" className="active" onClick={() => this.switchTab('overview')}>Overview</div>
-                        <div id="chat" onClick={() => this.switchTab('chat')}>Team Chat</div>
-                        <div id="taskboard" onClick={() => this.switchTab('taskboard')}>Taskboard</div>
-                        <div id="whiteboard" onClick={() => this.switchTab('whiteboard')}>Whiteboard</div>
-                    </Nav>
-                </Sidebar>
-                <View>
-                    <ToggleDisplay show={this.state.showOverview}>
-                        <Overview />
-                    </ToggleDisplay>
-                    <ToggleDisplay show={this.state.showChat}>
-                        <Chat room={`ProjectRoom${this.state.projectId}`} />
-                    </ToggleDisplay>
-                    <ToggleDisplay show={this.state.showTaskboard}>
-                        <TaskBoard project={this.state.projectId}/>
-                    </ToggleDisplay>
-                    <ToggleDisplay show={this.state.showWhiteboard}>
+            <div>
+                <MobileHeader>
+                    <div className="navbar-header">
 
-                    </ToggleDisplay>
-                </View>
-            </Main>
+                          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#project-tools" aria-expanded="false">
+                            <span className="sr-only">Toggle navigation</span>
+                            <div className="submenu-btn">
+                                Project Tools &nbsp; <i className="fas fa-wrench" color="#fff"></i>
+                            </div>
+                          </button>
+                    </div>
+                </MobileHeader>
+                <Main>
+
+                    <Sidebar>
+
+                        <Nav className="collapse navbar-collapse" id="project-tools">
+                            <div id="overview" className="active" onClick={() => this.switchTab('overview')}>Overview</div>
+                            <div id="chat" onClick={() => this.switchTab('chat')}>Team Chat</div>
+                            <div id="taskboard" onClick={() => this.switchTab('taskboard')}>Taskboard</div>
+                            <div id="whiteboard" onClick={() => this.switchTab('whiteboard')}>Whiteboard</div>
+                        </Nav>
+                    </Sidebar>
+                    <View>
+                        <ToggleDisplay show={this.state.showOverview}>
+                            <Overview />
+                        </ToggleDisplay>
+                        <ToggleDisplay show={this.state.showChat}>
+                            <Chat room={`ProjectRoom${this.state.projectId}`} />
+                        </ToggleDisplay>
+                        <ToggleDisplay show={this.state.showTaskboard}>
+                            <TaskBoard project={this.state.projectId}/>
+                        </ToggleDisplay>
+                        <ToggleDisplay show={this.state.showWhiteboard}>
+
+                        </ToggleDisplay>
+                    </View>
+                </Main>
+            </div>
         );
     }
 }
@@ -83,12 +98,41 @@ const Main = glam.div({
     minHeight: 'calc(100vh - 205px)',
     backgroundColor: 'var(--main-purple)',
     display: 'flex',
+    '& .navbar-collapse':{
+        padding: 0,
+    },
+    '@media (max-width: 767px)':{
+        '& #project-tools':{
+            backgroundColor: 'var(--main-purple)',
+            width: '100vw',
+            marginTop: -20
+        }
+    }
+
 })
 
 const Sidebar = glam.div({
     width: 150,
     paddingTop: 20,
-    position: 'fixed'
+    position: 'fixed',
+
+})
+
+const MobileHeader = glam.div({
+    '& .submenu-btn':{
+        color: '#fff',
+    },
+    '@media (max-width: 767px)':{
+        '& .navbar-header':{
+            backgroundColor: 'var(--main-purple) !important',
+            height: 35,
+            display: 'flex',
+            justifyContent: 'center'
+        },
+        '& .navbar-toggle':{
+            padding: 0
+        }
+    }
 })
 
 
@@ -106,6 +150,14 @@ const Nav = glam.div({
         fontWeight: 'bold',
         borderRadius: '0 10px 10px 0'
     },
+    '@media (max-width: 767px)':{
+        textAlign: 'center',
+        width: '100%',
+        '& .active':{
+            borderRadius: 0
+        },
+    }
+
 })
 
 const View = glam.div({
@@ -114,4 +166,7 @@ const View = glam.div({
     width: '100%',
     marginLeft: 150,
     padding: 20,
+    '@media (max-width: 767px)':{
+        marginLeft: 0
+    }
 })

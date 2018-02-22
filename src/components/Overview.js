@@ -89,8 +89,9 @@ class  Overview extends Component  {
                         {this.state.project.project_name}
                         <a href={this.state.project.repo} target="_blank"><i className="far fa-code-branch pull-right"></i></a>
                     </div>
-                    
-                    {this.state.project.user_id===this.props.user.id && 
+                    {this.state.project.user_id===this.props.user.id &&
+                    <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
+                    {this.state.project.user_id===this.props.user.id &&
                     <div>
                         <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
@@ -121,9 +122,9 @@ class  Overview extends Component  {
                                 name={contributor.first_name + ' ' + contributor.last_name}
                                 img={contributor.picture} />
                         </Link>
-                        {this.state.project.user_id===this.props.user.id && 
+                        {this.state.project.user_id===this.props.user.id &&
                         <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</Edit>}
-                        {contributor.id===this.props.user.id && 
+                        {contributor.id===this.props.user.id &&
                         <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</Edit>}
                     </div>)}
                 </ProjectCollaborators>
