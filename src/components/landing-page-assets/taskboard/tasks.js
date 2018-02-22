@@ -34,9 +34,13 @@ class tasks extends Component {
 const Main = glam.div({
     height: '100vh',
     fontFamily: 'Helvetica Neue',
-    // display: 'flex',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .heading': {
         textAlign: 'center',
+        margin: 10,
     }
 })
 
@@ -48,7 +52,7 @@ const Topic = glam.section({
     justifyContent: 'center',
     '@media (max-width: 729px)':{
         height: '35%',
-        marginTop: 0,
+        marginTop: 20,
         flexDirection: 'column',
         
     }
@@ -61,9 +65,8 @@ const Topic2 = glam.section({
     justifyContent: 'center',
     '@media (max-width: 729px)':{
         height: '35%',
-        marginTop: 0,
+        marginTop: 20,
         flexDirection: 'column',
-        
     }
 })
 
@@ -76,13 +79,11 @@ const Desc = glam.span({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    // '& .p': {
-    //     padding: 10,
-    // },
+
     '@media (max-width: 729px)':{
         fontSize: '12pt',
         width: '100vw',
-        marginTop: 10,
+        marginTop: 20,
         textAlign: 'center'
     }
 })
@@ -101,7 +102,7 @@ const Desc2 = glam.span({
     '@media (max-width: 729px)':{
       '& .p': {  
         fontSize: '12pt',
-        maginTop: 50,
+        marginLeft: 205,
         width: '100vw',
         textAlign: 'center'
       }
@@ -117,7 +118,9 @@ const Image = glam.img({
     '@media (max-width: 729px)':{
         width: '75%',
         maxHeight: '60%',
-        margin: 'auto',
+        margin: '50px auto',
+        marginBottom: 0,
+        // margin: '30px auto',
         // marginBottom: 20,
     }
 })

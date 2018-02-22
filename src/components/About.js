@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
-import { css } from 'glamor'
+// import { css } from 'glamor'
 
 class About extends Component {
     constructor(props) {
@@ -25,15 +25,15 @@ class About extends Component {
                 <Title>Meet the Team</Title>
                     <Section>
                         <Person>
-                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot1'><i className='fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot1'><i className='icon fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
                             <p><strong>Sukanya Vee</strong></p>
                         </Person>
                         <Person className='two'>
-                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer"><div className='spot2'><i className="fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
+                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer"><div className='spot2'><i className="icon fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
                             <p><strong>Andrea Stringham</strong></p>
                         </Person>
                         <Person className='three'>
-                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot3'><i className="fas fa-cog fa-spin fa-7x" data-fa-transform="grow-6 down-16" color='var(--main-grey)'></i></div></a>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot3'><i className="icon fas fa-cog fa-spin fa-7x"  data-fa-transform='grow-8 down-16' color='var(--main-grey)'></i></div></a>
                             <p><strong>Brent Eckert</strong></p>
                         </Person>
                     </Section>
@@ -42,15 +42,16 @@ class About extends Component {
     }
 }
 
-const grow = css.keyframes({
-    '0%': { transform: `scale(1.3)`},
-    '100%': { transform: `scale(1.0)`}
-})
+// const grow = css.keyframes({
+//     '0%': { transform: `scale(1.3)`},
+//     '100%': { transform: `scale(1.0)`}
+// })
 
 const Main = glam.div({
     minHeight: '100vh',
     width: '100vw',
     backgroundColor: 'var(--main-grey)',
+    // backgroundColor: 'var(--main-purple)',
     textAlign: 'center',
     marginTop: 0,
     color: 'var(--main-purple)'
@@ -67,25 +68,35 @@ const Title = glam.p({
     color: 'var(--main-purple)',
     fontWeight: '700',
     borderBottom: 'solid var(--main-purple) 3px',
+    // borderBottom: 'solid var(--main-grey) 3px',
+    boxShadow: '0px 0px 0px 0px',
     width: 400,
+    '@media (max-width: 729px)': {
+        width: 300,
+        fontSize: '24pt',
+    }
 })
 
 const Description = glam.section({
     margin: 'auto',
     color: 'var(--main-purple)',
+    // color: 'var(--main-grey)',
     fontSize: '14pt',
     width: '75%'
 })
 
 const Section = glam.section({
-    '& .spot1': {
+    '& .spot1, .spot3': {
         height: 300,
         width: 300,
         borderRadius: '50%',
         boxShadow: '5px 5px 5px 0px black',
         backgroundColor: 'var(--main-purple)',
-        '& :hover': {
-            animation: `${grow} 5s ease-in-out alternate`
+        // backgroundColor: 'var(--main-grey)',
+        '@media (max-width: 729px)': {
+            height: 200,
+            width: 200,
+            marginLeft: 5,
         }
     },
     '& .spot2': {
@@ -94,18 +105,30 @@ const Section = glam.section({
         borderRadius: '50%',
         boxShadow: '5px 5px 5px 0px black',
         backgroundColor: 'var(--main-purple)',
+        // backgroundColor: 'var(--main-grey)',
+        '@media (max-width: 729px)': {
+            height: 200,
+            width: 200,
+            marginRight: 5,
+        }
     },
-    '& .spot3': {
-        height: 300,
-        width: 300,
-        borderRadius: '50%',
-        boxShadow: '5px 5px 5px 0px black',
-        backgroundColor: 'var(--main-purple)',
-        '& .fa-black-tie': {
-            zIndex: 10,
-
+    '@media (max-width: 729px)': {
+        '& .icon': {
+            marginTop: -45,
+            // fontSize: '14pt'
         }
     }
+    // '& .spot3': {
+    //     height: 300,
+    //     width: 300,
+    //     borderRadius: '50%',
+    //     boxShadow: '5px 5px 5px 0px black',
+    //     backgroundColor: 'var(--main-purple)',
+    //     '& .fa-black-tie': {
+    //         zIndex: 10,
+
+    //     }
+    // }
 })
 
 const Person = glam.div({
@@ -124,7 +147,8 @@ const Person = glam.div({
     '& p': {
         fontSize: '22pt',
         color: 'var(--main-purple)',
-    }
+        // color: 'var(--main-grey)',
+    },
 })
 
 

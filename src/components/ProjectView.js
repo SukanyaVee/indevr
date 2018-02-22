@@ -8,6 +8,7 @@ import Chat from './Chat';
 import TaskBoard from './Taskboard/Taskboard';
 // import Whiteboard from './Whiteboard';
 import ToggleDisplay from 'react-toggle-display';
+import White from './White';
 
 
 
@@ -49,6 +50,8 @@ export default class ProjectView extends Component {
     }
 
     render() {
+        const innerW = window.innerWidth < 767 ? 0 : 150;
+        const innerH = window.innerWidth < 767 ? 140 : 105;
         return (
             <div>
                 <MobileHeader>
@@ -84,7 +87,7 @@ export default class ProjectView extends Component {
                             <TaskBoard project={this.state.projectId}/>
                         </ToggleDisplay>
                         <ToggleDisplay show={this.state.showWhiteboard}>
-
+                            <White width={innerW} height={innerH}/>
                         </ToggleDisplay>
                     </View>
                 </Main>
