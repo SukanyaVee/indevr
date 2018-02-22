@@ -77,7 +77,7 @@ class  Overview extends Component  {
             this.setState({showReqButton: [1]})
         }).catch(error=>console.log(error))
 
-    }
+    } 
 
     render( ) {
         var inline={marginLeft:'5px', cursor:'pointer'}
