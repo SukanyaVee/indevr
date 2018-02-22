@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
+import { css } from 'glamor'
 
 class About extends Component {
     constructor(props) {
@@ -24,16 +25,16 @@ class About extends Component {
                 <Title>Meet the Team</Title>
                     <Section>
                         <Person>
-                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot1'><i className='fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-purple)'></i></div></a>
-                            <p> Sukanya Vee </p>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot1'><i className='fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
+                            <p><strong>Sukanya Vee</strong></p>
                         </Person>
                         <Person className='two'>
-                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer"><div className='spot2'><i className="fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-purple)'></i></div></a>
-                            <p> Andrea Stringham </p>
+                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer"><div className='spot2'><i className="fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
+                            <p><strong>Andrea Stringham</strong></p>
                         </Person>
                         <Person className='three'>
-                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot3'><i className="fas fa-cog fa-spin fa-7x" data-fa-transform="grow-6 down-16" color='var(--main-purple)'></i></div></a>
-                            <p> Brent Eckert </p>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot3'><i className="fas fa-cog fa-spin fa-7x" data-fa-transform="grow-6 down-16" color='var(--main-grey)'></i></div></a>
+                            <p><strong>Brent Eckert</strong></p>
                         </Person>
                     </Section>
             </Main>
@@ -41,27 +42,37 @@ class About extends Component {
     }
 }
 
+const grow = css.keyframes({
+    '0%': { transform: `scale(1.3)`},
+    '100%': { transform: `scale(1.0)`}
+})
+
 const Main = glam.div({
     minHeight: '100vh',
     width: '100vw',
-    backgroundColor: 'var(--main-purple)',
+    backgroundColor: 'var(--main-grey)',
     textAlign: 'center',
     marginTop: 0,
+    color: 'var(--main-purple)'
     // '& .heading': {
     //     marginTop: 0,
     // }
 })
 
 const Title = glam.p({
+    margin: 'auto',
+    marginBottom: 20,
     paddingTop: 50,
     fontSize: '36pt',
-    color: 'white',
+    color: 'var(--main-purple)',
     fontWeight: '700',
+    borderBottom: 'solid var(--main-purple) 3px',
+    width: 400,
 })
 
 const Description = glam.section({
     margin: 'auto',
-    color: 'white',
+    color: 'var(--main-purple)',
     fontSize: '14pt',
     width: '75%'
 })
@@ -71,19 +82,25 @@ const Section = glam.section({
         height: 300,
         width: 300,
         borderRadius: '50%',
-        backgroundColor: 'var(--main-grey)',
+        boxShadow: '5px 5px 5px 0px black',
+        backgroundColor: 'var(--main-purple)',
+        '& :hover': {
+            animation: `${grow} 5s ease-in-out alternate`
+        }
     },
     '& .spot2': {
         height: 300,
         width: 300,
         borderRadius: '50%',
-        backgroundColor: 'var(--main-grey)',
+        boxShadow: '5px 5px 5px 0px black',
+        backgroundColor: 'var(--main-purple)',
     },
     '& .spot3': {
         height: 300,
         width: 300,
         borderRadius: '50%',
-        backgroundColor: 'var(--main-grey)',
+        boxShadow: '5px 5px 5px 0px black',
+        backgroundColor: 'var(--main-purple)',
         '& .fa-black-tie': {
             zIndex: 10,
 
@@ -105,8 +122,8 @@ const Person = glam.div({
         paddingBottom: 20,
     },
     '& p': {
-        fontSize: '16pt',
-        color: 'white',
+        fontSize: '22pt',
+        color: 'var(--main-purple)',
     }
 })
 

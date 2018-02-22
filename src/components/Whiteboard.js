@@ -1,4 +1,5 @@
-'use strict';
+import React, {Component} from 'react';
+import io from 'socket.io-client'
 // const io = require('socket.io');
 
 (function() {

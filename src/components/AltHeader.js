@@ -38,7 +38,7 @@ class Header extends Component {
                             </li>}
                             {this.props.user.id && <li className="dropdown mobile-hide" id="user-img">
                                 <a href="" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <img src={this.props.user.picture} alt="user"/>
+                                    <img src={this.props.user.picture} alt="user" className='profilepic'/>
                                     <span className="caret"></span>
                                 </a>
                                 <ul className="dropdown-menu">
@@ -88,6 +88,8 @@ const Nav = glam.nav({
     fontSize: 18,
     '& img':{
         maxHeight: 70,
+    },
+    '& .profilepic': {
         borderRadius: '50%',
     },
     '& #user-img':{

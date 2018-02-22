@@ -215,8 +215,8 @@ io.on('connection', (socket) => {
 });
 
 //Socket.io Whiteboard Setup
-function onConnection(socket){
-    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-}
+// function onConnection(socket){
+//     socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+// }
 
-io.on('connection', onConnection);
+// io.on('connection', onConnection);

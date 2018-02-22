@@ -69,9 +69,12 @@ const Topic2 = glam.section({
 
 const Desc = glam.span({
     width: '45%',
-    height: '55%',
-    fontSize: '24pt',
-    // marginTop: 100,
+    height: '100%',
+    fontSize: '22pt',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .p': {
         padding: 10,
     },
@@ -84,9 +87,12 @@ const Desc = glam.span({
 })
 const Desc2 = glam.span({
     width: '45%',
-    height: '55%',
-    fontSize: '24pt',
-    // marginTop: 20,
+    height: '100%',
+    fontSize: '22pt',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .p': {
         padding: 10,
     },
