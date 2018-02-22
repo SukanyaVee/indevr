@@ -50,6 +50,12 @@ class Chat extends Component {
         }).catch(err => console.log(err))
     }
 
+    componentWillReceiveProps(nextProps){
+        if(this.props.user.first_name !== nextProps.user.first_name){
+            this.setState({username: nextProps.user.first_name + ' ' + nextProps.user.last_name})
+        }
+    }
+
     render(){
         return (
             <Main>
