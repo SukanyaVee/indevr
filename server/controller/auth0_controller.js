@@ -51,8 +51,7 @@ module.exports = {
 
   //Check User Session - Associated with App.js
   sessionCheck: (req, res) => {
-      res.status(200).send(req.session.user);
-    // if (req.session.user) {
+    req.session.user ? res.status(200).send(req.session.user) : res.status(500).send()    // if (req.session.user) {
     //   res.status(200).send(req.session.user);
     // } else {
     //   res

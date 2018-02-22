@@ -74,7 +74,7 @@ class  Overview extends Component  {
 
     requestJoin(){
         axios.post('/indevr/messages', {project_id: this.state.project.id, user_id:this.state.project.user_id, contributor_id: this.props.user.id}).then(resp=>{
-            this.setState({showReqButton: []})
+            this.setState({showReqButton: [1]})
         }).catch(error=>console.log(error))
 
     }
