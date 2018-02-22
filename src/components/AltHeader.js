@@ -10,7 +10,7 @@ class Header extends Component {
 
     render() {
         return (
-            <Nav className="navbar navbar-inverse">
+            <Nav className="navbar navbar-inverse" id='nav'>
                 <div className="container-fluid">
 
                     <div className="navbar-header">

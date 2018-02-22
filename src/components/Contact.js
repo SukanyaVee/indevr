@@ -143,7 +143,7 @@ const Main = glam.div({
     backgroundColor: 'var(--main-grey)',
     display: 'flex',
     flexDirection: 'column',
-    // justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
 })
 
@@ -188,18 +188,22 @@ const TopRow = glam.div({
         margin: '10px auto',
     },
     '& .two': {
-
         marginLeft: '5%'
     },
     '& label': {
         marginBottom: 0,
+    },
+    '@media (max-width: 729px)': {
+        flexDirection: 'column',
+        '& .two': {
+            marginLeft: 0,
+        }
     }
 })
 
 const Name = glam.input({
     width: '100%',
     height: '30%',
-    // marginTop: 20,
     boxShadow: '5px 5px 5px 0px',
 })
 
@@ -207,7 +211,10 @@ const Text = glam.textarea({
     width: '100%',
     minHeight: '300px',
     margin: 'auto',
-    boxShadow: '5px 5px 5px 0px'
+    boxShadow: '5px 5px 5px 0px',
+    '@media (max-width: 729px)': {
+        minHeight: 200,
+    }
 })
 
 const Buttons = glam.div({

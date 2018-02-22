@@ -70,16 +70,14 @@ const Topic2 = glam.section({
 const Desc = glam.span({
     width: '45%',
     height: '100%',
-    fontSize: '22pt',
+    fontSize: '20pt',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    '& .p': {
-        padding: 10,
-    },
+    textAlign: 'center',
     '@media (max-width: 729px)':{
-        fontSize: '10pt',
+        fontSize: '12pt',
         width: '100vw',
         marginTop: 20,
         textAlign: 'center'
@@ -88,18 +86,18 @@ const Desc = glam.span({
 const Desc2 = glam.span({
     width: '45%',
     height: '100%',
-    fontSize: '22pt',
+    fontSize: '20pt',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    '& .p': {
-        padding: 10,
-    },
+    textAlign: 'center',
     '@media (max-width: 729px)':{
       '& .p': {  
-        fontSize: '10pt',
+        fontSize: '12pt',
         marginTop: 50,
+        marginLeft: 205,
+        marginBottom: 50,
         width: '100vw',
         textAlign: 'center'
       }
@@ -109,26 +107,28 @@ const Desc2 = glam.span({
 const Image = glam.img({
     height: '99%',
     width: '60%',
-    float: 'right',
+    // float: 'right',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
         maxHeight: '60%',
-        margin: '20px auto',
+        margin: '60px auto',
+        marginBottom: 0,
+        // margin: '30px auto',
         // marginBottom: 20,
     }
 })
 const Image2 = glam.img({
-    height: '98%',
+    height: '99%',
     width: '60%',
     margin: '5px 10px',
-    marginBottom: '10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
         width: '75%',
         maxHeight: '60%',
-        margin: '20px auto',
+        margin: '30px auto',
+        marginBottom: 0,
     }
 })
 
