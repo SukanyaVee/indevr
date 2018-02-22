@@ -9,7 +9,7 @@ class PostTile extends Component {
                     <img src="http://via.placeholder.com/50x50" alt="" /> &nbsp;
                     <div>
                         <strong>{this.props.name}</strong><br/>
-                        <sub>{this.props.timestamp}</sub>
+                        <sub>{new Date(this.props.timestamp).toLocaleDateString("en-us", { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" })}</sub>
                     </div>
                 </Header>
                 <Content>

@@ -19,7 +19,7 @@ class ExplorePage extends Component {
 }
 
 const Epage = glam.div ({
-    padding: 20,
+    // padding: 20,
 })
 
 export default ExplorePage;

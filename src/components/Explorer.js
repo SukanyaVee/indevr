@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import glam from 'glamorous';
+import _ from 'lodash';
+import ProjectTile from './ProjectTile';
 
 class Explorer extends Component {
     constructor(props) {
@@ -13,27 +15,42 @@ class Explorer extends Component {
 
     componentDidMount(){
     axios.get('/indevr/public?user_id=1').then(res=>{//HARDCODED
-        this.setState({publicProj: res.data})
-        console.log('public projects', this.state.projects)
+        const projects = _.uniqBy(res.data, 'project_id');
+        projects.forEach(project => {
+            project.skills = [];
+            res.data.forEach(skill => {
+                if (skill.project_id === project.project_id){
+                    project.skills.push(skill.skill);
+                }
+            })
+        })
+        this.setState({ publicProj: projects })
     }).catch(error=>console.log(error))
     }
 
     render() {
         return (
-            <div>
-                {this.state.publicProj.map(proj => <ProjectItem key={`others${proj.id}`}><Link to={`/project/${proj.project_id}`}> <h2>{proj.project_name}</h2> </Link><div>{proj.description}</div></ProjectItem> )}
-            </div>
+            <Main>
+                <div className="container">
+                    {this.state.publicProj.map((project,i) => {
+                        return (
+                            <ProjectTile
+                                key={i}
+                                title={project.project_name}
+                                skills={project.skills}
+                                desc={project.desc} />
+                        )
+                    })}
+                </div>
+            </Main>
         )
     }
 }
 
-const ProjectItem = glam.div ({
-    cursor: 'pointer',
-    background: '#eeeeee',
-    margin: 2,
-    '& a': {
-        textDecoration: 'none'
-    }
+const Main = glam.div({
+    minHeight: 'calc(100vh - 230px)',
+    backgroundColor: 'var(--main-grey)'
 })
+
 
 export default Explorer;
