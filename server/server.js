@@ -217,10 +217,7 @@ io.on('connection', (socket) => {
     socket.on('SEND_MESSAGE', function(data){
         io.emit('RECEIVE_MESSAGE', data);
     })
+        socket.on('draw', (data) => socket.broadcast.emit('drawing', data));
 });
 
-//Socket.io Whiteboard Setup
-// function onConnection(socket){
-//     socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-// }
-// io.on('connection', onConnection);
+// Socket.io Whiteboard Setup
