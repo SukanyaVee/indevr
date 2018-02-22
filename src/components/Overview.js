@@ -67,7 +67,7 @@ class  Overview extends Component  {
 
     requestJoin(){
         axios.post('/indevr/messages', {project_id: this.state.project.id, user_id:this.state.project.user_id, contributor_id: this.props.user.id}).then(resp=>{
-            
+
         }).catch(error=>console.log(error))
 
     }
@@ -90,14 +90,13 @@ class  Overview extends Component  {
                     </div>
                     {this.state.project.user_id===this.props.user.id &&
                     <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
-                    {this.state.project.project_name}
-                    {this.state.project.user_id===this.props.user.id && 
+                    {this.state.project.user_id===this.props.user.id &&
                     <div>
                         <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
                     </div>}
                     {x===0 &&
-                    <Edit style={inline1} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
+                    <Edit style={inline} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}
@@ -123,9 +122,9 @@ class  Overview extends Component  {
                                 name={contributor.first_name + ' ' + contributor.last_name}
                                 img={contributor.picture} />
                         </Link>
-                        {this.state.project.user_id===this.props.user.id && 
+                        {this.state.project.user_id===this.props.user.id &&
                         <span onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</span>}
-                        {contributor.id===this.props.user.id && 
+                        {contributor.id===this.props.user.id &&
                         <span onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</span>}
                     </div>)}
                 </ProjectCollaborators>
