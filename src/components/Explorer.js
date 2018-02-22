@@ -38,7 +38,7 @@ class Explorer extends Component {
                                 key={i}
                                 title={project.project_name}
                                 skills={project.skills}
-                                desc={project.desc} />
+                                desc={project.description} />
                         )
                     })}
                 </div>
