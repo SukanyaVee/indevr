@@ -143,7 +143,7 @@ class  Overview extends Component  {
 const ProjectOverview = glam.div ({
     padding: 10,
     fontSize: 14,
-    minWidth: 400,
+    // minWidth: 400,
     '& h4':{
         fontWeight: 'bold'
     },
@@ -183,7 +183,7 @@ const ProjectCollaborators = glam.div ({
     // padding: 12,
     // borderRadius: 10,
     '> div': {
-        margin: 10
+        margin: 10,
     },
     // '& img': {
     //     width: 30,
@@ -195,15 +195,14 @@ const ProjectCollaborators = glam.div ({
         cursor: 'pointer',
         marginLeft: 5,
     },
-    // '@media (max-width: 500px)': {
-    //     maxWidth: 300,
-    // }
+
 })
 const ProjectSkills = glam.div ({
     marginBottom: 10,
     padding: 12,
     borderRadius: 10,
     display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     '& div': {
         borderRadius: 3,

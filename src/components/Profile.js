@@ -247,7 +247,7 @@ class Profile extends Component {
                                     {!hasData(this.state.projects) && <h1>{this.state.user} hasn't joined any projects on inDevr yet :(</h1>}
                                     {this.state.projects.map((project,i) => {
                                         return (
-                                            <Link to={`/project/${project.id}`} key={i}>
+                                            <Link to={`/project/${project.project_id}`} key={i}>
                                                 <ProjectTile
                                                 id={project.id}
                                                 title={project.project_name}
