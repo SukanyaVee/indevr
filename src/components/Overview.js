@@ -26,7 +26,7 @@ class  Overview extends Component  {
     componentDidMount(){
         axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
             this.setState({project: res.data[0]})
-            // console.log('single project', res.data[0])
+            console.log('single project', res.data[0])
             this.setState({newDescr: this.state.project.description, newTitle: this.state.project.project_name, newRepo: this.state.project.repo})
         }).catch(error=>console.log(error))
         axios.get(`/indevr/skills/${this.state.projectId}`).then(res=>{
@@ -35,10 +35,12 @@ class  Overview extends Component  {
         }).catch(error=>console.log(error))
         axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
             this.setState({contributors: res.data})
-            var x=this.state.contributors.filter(e=> {
+            var x=this.state.contributors.filter(e=> 
                 e.id===this.props.user.id
-            })            
+            )  
+            console.log(x)          
             this.setState({showReqButton: x})
+            console.log('showReqButton', this.state.showReqButton)
             // console.log('contributors', this.state.contributors)
         }).catch(error=>console.log(error))
     }
@@ -90,19 +92,17 @@ class  Overview extends Component  {
                         <a href={this.state.project.repo} target="_blank"><i className="far fa-code-branch pull-right"></i></a>
                     </div>
                     {this.state.project.user_id===this.props.user.id &&
-                    <div><Edit id="remove" onClick={e=>{this.setState({editShow: true})}}>edit details</Edit><Edit onClick={e=>{this.deleteProj()}}>delete</Edit></div>}
-                    {this.state.project.user_id===this.props.user.id &&
                     <div>
                         <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
                     </div>}
-                    {this.state.showReqButton.length==0 && <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
+                    {!this.state.showReqButton.length && <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}
                 <ProjectDescription>
                     {this.state.project.description}<br/>
-                    {this.state.editShow===true &&
+                    {this.state.editShow===true && 
                     <Input placeholder="Edit Description" value={this.state.newDescr} onChange={e=>{this.setState({newDescr: e.target.value})}}/>}<br/>
                     {this.state.editShow===true &&
                     <Input placeholder="Edit Repo" value={this.state.newRepo} onChange={e=>{this.setState({newRepo: e.target.value})}}/>}<br/>

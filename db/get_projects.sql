@@ -1,3 +1,3 @@
 
 
-SELECT * FROM projects JOIN project_users ON projects.id=project_users.project_id WHERE project_users.user_id=$1;
+SELECT * FROM project_users FULL JOIN projects ON project_users.project_id=projects.id WHERE project_users.user_id=14;
