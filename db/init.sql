@@ -178,6 +178,9 @@ CREATE TABLE IF NOT EXISTS taskboard_items (
     
 );
 
+ALTER TABLE project_users
+ADD UNIQUE (project_id, user_id); 
+
 ALTER TABLE add_messages
 ADD UNIQUE (project_id, contributor_id);
 

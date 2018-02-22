@@ -16,6 +16,7 @@ class  Overview extends Component  {
             project: [],
             skills:[],
             editShow: false,
+            showReqButton: [],
             newTitle: '',
             newDescr: '',
             newRepo: ''
@@ -34,6 +35,10 @@ class  Overview extends Component  {
         }).catch(error=>console.log(error))
         axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
             this.setState({contributors: res.data})
+            var x=this.state.contributors.filter(e=> {
+                e.id===this.props.user.id
+            })            
+            this.setState({showReqButton: x})
             // console.log('contributors', this.state.contributors)
         }).catch(error=>console.log(error))
     }
@@ -67,7 +72,7 @@ class  Overview extends Component  {
 
     requestJoin(){
         axios.post('/indevr/messages', {project_id: this.state.project.id, user_id:this.state.project.user_id, contributor_id: this.props.user.id}).then(resp=>{
-            
+            this.setState({showReqButton: []})
         }).catch(error=>console.log(error))
 
     }
@@ -75,13 +80,7 @@ class  Overview extends Component  {
     render( ) {
         var inline={marginLeft:'5px', cursor:'pointer'}
         var inline2={fontSize: 16}
-        var x = 0;
-        this.state.contributors.map(e=>{
-            console.log('e', e)
-            if (e.id===this.props.user.id) {
-                x++
-            }
-        })
+        
         
         return (
             <ProjectOverview>
@@ -96,8 +95,7 @@ class  Overview extends Component  {
                         <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
                     </div>}
-                    {x===0 &&
-                    <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
+                    {this.state.showReqButton.length==0 && <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}
