@@ -15,12 +15,12 @@ class Component extends Component {
                 <h1 className='heading'><i>Cool Whip</i></h1>
                 <Topic>
                     <Desc><div className='p'><strong>Hey</strong>{" "}
-                    Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. </div></Desc>
+                    Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. blasdan</div></Desc>
                 <Image src={''} className='img-responsive' />
                 </Topic>
                 <Topic2>
                     <Desc2><div className='p'><strong>Hey</strong>{" "}
-                    Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. </div></Desc2>
+                    Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. blasdan</div></Desc2>
                 <Image src={''} className='img-responsive' />
                 </Topic2>
             </Main>
