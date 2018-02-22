@@ -174,7 +174,7 @@ class Dashboard extends Component {
                         </Nav>
                         {/* {this.state.projects[0] && */}
                         <ProjectList>
-                            {this.state.projectView==='mine' &&
+                            {this.state.projectView==='mine' && this.state.projects[0] &&
                                 this.state.projects.map(proj =>
                                     <ProjectItem key={`mine${proj.id}`}>
                                         <Link to={`/project/${proj.project_id}`}>
@@ -182,6 +182,7 @@ class Dashboard extends Component {
                                         </Link>
                                         <div>{proj.description}</div>
                                     </ProjectItem>)}
+                            {this.state.projectView==='mine' && !this.state.projects[0] && <div> You have no projects. Explore other projects to contribute</div>}
                             {this.state.projectView==='create' && <CreateProject user_id={this.props.user.id}/>}
                             {this.state.projectView==='others' && <Explorer/>}
                         </ProjectList>

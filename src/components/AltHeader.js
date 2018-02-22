@@ -50,7 +50,7 @@ class Header extends Component {
                                     </li>
                                     <li role="separator" className="divider"></li>
                                     <li>
-                                        <a href=""><i className="fas fa-sign-out"></i> &nbsp; Logout</a>
+                                        <Link to="/"><i className="fas fa-sign-out"></i> &nbsp; Logout</Link>
                                     </li>
                                 </ul>
                             </li>}
