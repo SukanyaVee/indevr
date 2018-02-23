@@ -11,15 +11,19 @@ class ExplorePage extends Component {
 
     render() {
         return (
-            <Epage>
-                <Explorer/>
-            </Epage>
+            <Main>
+                <div className="container">
+                    <Explorer/>
+                </div>
+            </Main>
         )
     }
 }
 
-const Epage = glam.div ({
-    // padding: 20,
-})
 
 export default ExplorePage;
+
+const Main = glam.div({
+    backgroundColor: 'var(--main-grey)',
+    minHeight: 'calc(100vh - 235px)'
+})

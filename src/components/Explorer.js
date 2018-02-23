@@ -31,18 +31,16 @@ class Explorer extends Component {
     render() {
         return (
             <Main>
-                <div className="container">
-                    {this.state.publicProj.map((project,i) => {
-                        return (
-                            <Link to={`project/${project.project_id}`} key={i}>
-                                <ProjectTile
-                                    title={project.project_name}
-                                    skills={project.skills}
-                                    desc={project.description} />
-                            </Link>
-                        )
-                    })}
-                </div>
+                {this.state.publicProj.map((project,i) => {
+                    return (
+                        <Link to={`project/${project.project_id}`} key={i}>
+                            <ProjectTile
+                                title={project.project_name}
+                                skills={project.skills}
+                                desc={project.description} />
+                        </Link>
+                    )
+                })}
             </Main>
         )
     }
@@ -51,6 +49,7 @@ class Explorer extends Component {
 const Main = glam.div({
     minHeight: 'calc(100vh - 230px)',
     backgroundColor: 'var(--main-grey)',
+    padding: '20px 0',
     '& a':{
         color: 'inherit',
         textDecoration: 'none'
