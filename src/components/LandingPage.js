@@ -8,8 +8,8 @@ import { css } from 'glamor';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import Project from './landing-page-assets/projectview/project';
-import MidBar from './landing-page-assets/MidBar';
 import logo from '../assets/lock.png';
+import keys from './landing-page-assets/keys.png';
 
 
 const options = {
@@ -46,6 +46,7 @@ class LandingPage extends Component {
 
   //Creating Auth0 Functionality
   componentDidMount() {
+    console.log(this.props)
     this.lock = new Auth0Lock(
       process.env.REACT_APP_AUTH0_CLIENT_ID,
       process.env.REACT_APP_AUTH0_DOMAIN,
@@ -86,9 +87,9 @@ class LandingPage extends Component {
                 Welcome to your one-stop-shop developer platform.
               </Desc>
             </Heading>
-            <Btnlogin onClick={this.login}>
+            {/* <Btnlogin onClick={this.login}>
               <b>Login/Register</b>
-            </Btnlogin>
+            </Btnlogin> */}
           </Main>
           {/* <Aside>
                 <Signup>
@@ -104,11 +105,8 @@ class LandingPage extends Component {
                 </Signup>
             </Aside> */}
         {/* </Initial> */}
-        <MidBar />
         <Project />
-        <MidBar />
         <Profile />
-        <MidBar />
         <Tasks />
       </div>
     );
@@ -130,8 +128,8 @@ const bounce = css.keyframes({
 // });
 
 const Desc = glam.p({
-  // margin: 20,
-  width: "90%",
+  textAlign: 'center',
+  width: "100%",
   // animation: `${bounce} 5s ease-in-out alternate`,
   "hover & .text": {
     color: 'black'
@@ -139,6 +137,7 @@ const Desc = glam.p({
   '@media (max-width: 729px)': {
     textAlign: 'center',
     width: '100%',
+    // height: '25%',
   }
 });
 
@@ -173,8 +172,11 @@ const Desc = glam.p({
 
 const Heading = glam.h1({
   fontSize: "2.5em",
-  width: "65%",
+  width: "50%",
   padding: 20,
+  textAlign: 'center',
+  backgroundColor: 'rgba(255, 255, 255, .8)',
+  borderRadius: '3px',
   // boxShadow: '0px 0px 0px 4px var(--main-purple)',
   // border: 'solid var(--main-purple) 2px',
   animation: `${bounce} 5s ease-in-out alternate`,
@@ -185,7 +187,7 @@ const Heading = glam.h1({
   },
   '@media (max-width: 729px)':{
     width: '100vw',
-    minHeight: '50%',
+    // minHeight: '50%',
     fontSize: '12pt',
     textAlign: 'center',
 }
@@ -200,56 +202,29 @@ const Main = glam.div({
   width: "100vw",
   height: "90vh",
   color: 'var(--main-purple)',
-  // backgroundImage: 'url(`${keys}`)',
+  backgroundImage: `url(${keys})`,
+  backgroundSize: 'cover',
   '@media (max-width: 729px)': {
       flexDirection: 'column',
-  }
+  },
 });
 
-// const Aside = glam.aside({
-//     display: 'flex',
-//     flexDirection: 'column',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     width: '40vw',
-//     height: '90vh',
-//     backgroundColor: '#9b9b9b',
-//     float: 'right',
-// })
-
-// const Signup = glam.div({
-//     backgroundColor: 'white',
-//     height: '75%',
-//     width: '70%',
-//     display: 'flex',
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-// })
-
-// const Field = glam.input({
-//     width: '80%',
-//     height: '8%',
-//     // marginTop: 15,
-//     marginBottom: 10,
-// })
-
-const Btnlogin = glam.button({
-  // color: "white",
-  backgroundColor: "var(--main-grey)",
-  borderRadius: 5,
-  fontSize: "18pt",
-  height: 100,
-  width: 200,
-  marginLeft: 20,
-  animation: `${bounce} 5s ease-in-out alternate`,
-  '@media (max-width: 729px)': {
-    fontSize: '14pt',
-    height: 75,
-    width: 150,
-    marginLeft: 0,
-  }
-});
+// const Btnlogin = glam.button({
+//   // color: "white",
+//   backgroundColor: "var(--main-grey)",
+//   borderRadius: 5,
+//   fontSize: "18pt",
+//   height: 100,
+//   width: 200,
+//   marginLeft: 20,
+//   animation: `${bounce} 5s ease-in-out alternate`,
+//   '@media (max-width: 729px)': {
+//     fontSize: '14pt',
+//     height: 75,
+//     width: 150,
+//     marginLeft: 0,
+//   }
+// });
 
 const mapDispatchToProps = {
   login
