@@ -9,6 +9,8 @@ import showtrue from '../assets/collapse.png';
 import showfalse from '../assets/show.png';
 import CreateProject from './CreateProject'
 import Explorer from './Explorer';
+import UserTile from './UserTile';
+import ToggleDisplay from 'react-toggle-display';
 
 
 class Dashboard extends Component {
@@ -17,7 +19,7 @@ class Dashboard extends Component {
         this.state={
             projects: [],
             publicProj: [],
-           posts: [],
+            posts: [],
             contacts: [],
             messages: [],
             messageCount: 0,
@@ -26,7 +28,6 @@ class Dashboard extends Component {
             projectView: 'mine',
             postContent: ''
         };
-        this.showConn = this.showConn.bind(this)
         this.submitPost = this.submitPost.bind(this)
         this.deletePost = this.deletePost.bind(this)
         this.switchProjectView = this.switchProjectView.bind(this)
@@ -49,19 +50,13 @@ class Dashboard extends Component {
             this.setState({posts: res.data})
         console.log('posts', this.state.posts)
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
+        // axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
+        axios.get(`/indevr/messages?user_id=13`).then(resp=> {
             this.setState({messages: resp.data, messageCount: resp.data.length})
             console.log('messages', resp.data)
         }).catch(error=>console.log(error))
     }
 
-    showConn() {
-        this.setState({showConnections: !this.state.showConnections})
-    }
-
-    showMess() {
-        this.setState({showMessage: !this.state.showMessage})
-    }
 
     acceptContributor(messageId, project_id, contributor_id){
         console.log('input', messageId, project_id, contributor_id)
@@ -115,54 +110,72 @@ class Dashboard extends Component {
         console.log(this.props.user.id)
         return (
             <Dashboard1>
+                <Heading>Hello, Friendly Developer!</Heading>
 
-                <Greeting>
-                    <Hi>Hello, Friendly Developer! </Hi>
-                    <Contacts>
-                        <h4 onClick={e=>this.showConn()}>
-                            My Connections
-                            <Collapse><img src={this.state.showConnections? showtrue:showfalse} alt="contacts"/></Collapse>
-                        </h4>
-                        {this.state.showConnections && <h6>To manage your connections, got to your <Link to={`/dev/${this.props.user.id}`}>profile</Link></h6>}
-                        {this.state.showConnections &&
-                            <div>
-                                {this.state.contacts.map(contact =>
-                                    <ContactItem key={contact.id}>
-                                        <Link to={`/dev/${contact.id}`}>
-                                            <img src={contact.picture||profpic} alt="contact"/>
-                                            <span>{contact.first_name} {contact.last_name}</span>
-                                        </Link>
-                                    </ContactItem>)
-                                }
-                            </div>
-                        }
-                    </Contacts>
-                    <Messagesss>
-                        <h4 onClick={e=>this.showMess()}>
-                            My Messages
-                            <Count>{this.state.messageCount}</Count>
-                            <Collapse><img src={this.state.showMessage ? showtrue:showfalse} alt="messages"/></Collapse>
-                        </h4>
-                        {this.state.showMessage &&
-                            <div>
-                                {this.state.messages.map(message =>
-                                    <MessageItem key={message.id} >
+                <Messages>
+                    <div className="clickable" onClick={ () => this.setState({ showMessage: !this.state.showMessage})}>
+                        {this.state.messageCount > 0 && `You have ${this.state.messageCount} ${this.state.messageCount > 1 ? ' messages ' : ' message '}`} {this.state.messageCount > 0 && <i class="far fa-envelope"></i>}
+                    </div>
+
+                    <ToggleDisplay show={this.state.showMessage}>
+                        {this.state.messages.map(message => {
+                            return (
+                                <MessageItem key={message.id}>
+                                    <div>
                                         <Link to={`/dev/${message.contributor_id}`}>
                                             <img src={message.picture||profpic} alt="message"/>
-                                            <span>{message.first_name} {message.last_name}</span>
                                         </Link>
-                                        &nbsp;wants to work on&nbsp;
+                                    </div>
+                                    <div>
+                                        <h3>{message.first_name} {message.last_name}</h3>
+                                        <div>wants to work on</div>
                                         <Link to={`/project/${message.project_id}`}>
-                                            <span>{message.project_name}</span>
+                                            <h3>{message.project_name}</h3>
                                         </Link>
-                                        <button onClick={e=>{this.acceptContributor(message.id, message.project_id, message.contributor_id)}}>Accept</button>
-                                        <button onClick={e=>{this.declineContributor(message.id)}}>Decline</button>
-                                    </MessageItem>)
-                                }
-                            </div>
-                        }
-                    </Messagesss>
-                </Greeting>
+                                    </div>
+                                    <div>
+                                        <button className="btn btn-success" onClick={e=>{this.acceptContributor(message.id, message.project_id, message.contributor_id)}}>Accept</button>
+                                        <button className="btn btn-danger" onClick={e=>{this.declineContributor(message.id)}}>Decline</button>
+                                    </div>
+                                </MessageItem>
+                            )
+                        })}
+                    </ToggleDisplay>
+
+                </Messages>
+
+                <Network className="container">
+                    <h4  className="clickable" onClick={() => this.setState({showConnections: !this.state.showConnections})}>
+                        My Network &nbsp;
+                        <ToggleDisplay show={this.state.showConnections}>
+                            <i className="fas fa-chevron-up"></i>
+                        </ToggleDisplay>
+                        <ToggleDisplay show={!this.state.showConnections}>
+                            <i className="fas fa-chevron-down"></i>
+                        </ToggleDisplay>
+                    </h4>
+                    <ToggleDisplay show={this.state.showConnections} className="contacts">
+                        {this.state.contacts.map((contact,i) => {
+                            return (
+                                <Link to={`/dev/${contact.id}`} key={i}>
+                                    <UserTile
+                                        name={contact.first_name + ' ' + contact.last_name}
+                                        img={contact.picture}/>
+                                </Link>
+                            );
+                        })}
+                        {!this.state.contacts.length && 'You haven\'t made any connections yet :('}
+                    </ToggleDisplay>
+                </Network>
+
+
+
+
+
+
+
+
+
 
 
                 <Main>
@@ -219,7 +232,74 @@ class Dashboard extends Component {
 
 const Dashboard1 = glam.div ({
     // padding: 50
+    backgroundColor: 'var(--main-purple)',
+    color: '#fff',
+    paddingTop: 20,
+    '& .clickable':{
+        cursor: 'pointer'
+    }
 })
+
+const Heading= glam.h1 ({
+    padding: 20,
+    color: 'white',
+    background: 'var(--main-purple)',
+    fontSize: 24,
+    textAlign: 'center',
+})
+
+const Network = glam.div({
+    maxWidth: '90vw',
+    overflowX: 'auto',
+    '> .contacts':{
+        display: 'flex',
+        justifyContent:'flex-start',
+        '> a':{
+            margin: 10
+        }
+    },
+})
+
+const Messages = glam.div({
+    textAlign: 'center',
+    color: 'red'
+})
+
+const MessageItem = glam.div ({
+    color: '#fff',
+    margin: '20px 0',
+    '& a': {
+        textDecoration: 'none',
+        color: 'inherit'
+    },
+    '& button': {
+        marginLeft: 10,
+    },
+    '& img': {
+        marginRight: 5,
+        height: 100,
+        width: 100,
+        marginBottom: 20,
+        borderRadius: '50%'
+    },
+    '& h3':{
+        marginTop: 0
+    },
+    '@media (min-width: 767px)':{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '> div':{
+            margin: 20
+        }
+    }
+
+})
+
+
+
+
 
 
 
@@ -230,12 +310,7 @@ const Greeting = glam.div ({
     width: '100%'
 })
 
-const Hi= glam.div ({
-    padding: 20,
-    color: 'white',
-    background: 'var(--main-purple)',
-    fontSize: 24
-})
+
 
 const Contacts = glam.div ({
     fontSize: 14,
@@ -313,30 +388,30 @@ const Messagesss = glam.div ({
 })
 
 
-const MessageItem = glam.div ({
-    cursor: 'pointer',
-    // padding:10,
-    background: '#eeeeee',
-    borderRadius: 2,
-    padding: 2,
-    // width:200,
-    margin: 2,
-    '& a': {
-        textDecoration: 'none'
-    },
-    '& button': {
-        marginLeft: 10,
-        padding: 3,
-        borderRadius: 3,
-        background: 'var(--main-grey)'
-    },
-    '@media (max-width: 500px)': {
-        maxWidth: 350
-    },
-    '& img': {
-        marginRight: 5
-    }
-})
+// const MessageItem = glam.div ({
+//     cursor: 'pointer',
+//     // padding:10,
+//     background: '#eeeeee',
+//     borderRadius: 2,
+//     padding: 2,
+//     // width:200,
+//     margin: 2,
+//     '& a': {
+//         textDecoration: 'none'
+//     },
+//     '& button': {
+//         marginLeft: 10,
+//         padding: 3,
+//         borderRadius: 3,
+//         background: 'var(--main-grey)'
+//     },
+//     '@media (max-width: 500px)': {
+//         maxWidth: 350
+//     },
+//     '& img': {
+//         marginRight: 5
+//     }
+// })
 
 const Count = glam.span({
     margin: '0 0 0 5px',

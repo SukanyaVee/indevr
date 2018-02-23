@@ -18,7 +18,7 @@ class Header extends Component {
                             <span className="sr-only">Toggle navigation</span>
                             <i className="far fa-chevron-square-down fa-2x" color="white"></i>
                         </button>
-                        <Link to={this.props.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
+                        <Link to={this.props.user.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="topNav">
