@@ -25,7 +25,7 @@ const Main = glam.div({
     border: '1px solid #ddd',
     backgroundColor: '#fff',
     padding: 20,
-    margin: 20,
+    margin: '20px',
     display: 'flex',
     flexDirection: 'column',
 

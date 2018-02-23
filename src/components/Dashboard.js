@@ -11,7 +11,7 @@ import CreateProject from './CreateProject'
 import Explorer from './Explorer';
 import UserTile from './UserTile';
 import ToggleDisplay from 'react-toggle-display';
-
+import ProjectTile from './ProjectTile';
 
 class Dashboard extends Component {
     constructor(){
@@ -23,26 +23,30 @@ class Dashboard extends Component {
             contacts: [],
             messages: [],
             messageCount: 0,
-            showConnections: false,
+            showConnections: true,
             showMessage: false,
-            projectView: 'mine',
-            postContent: ''
+            postContent: '',
+            showMine: true,
+            showExplore: false,
+            showCreate: false,
         };
         this.submitPost = this.submitPost.bind(this)
         this.deletePost = this.deletePost.bind(this)
-        this.switchProjectView = this.switchProjectView.bind(this)
     }
 
     componentDidMount(){
-        axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{
+        // axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{
+        axios.get(`/indevr/contacts?user_id=1`).then(res=>{
             this.setState({contacts: res.data})
             console.log('connections', this.state.contacts)
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/projects?user_id=${this.props.user.id}`).then(res=>{
+        // axios.get(`/indevr/projects?user_id=${this.props.user.id}`).then(res=>{
+        axios.get(`/indevr/projects?user_id=13`).then(res=>{
             res.data[0] ? this.setState({projects: res.data}) : this.setState({projectView: 'others'})
             console.log('my projects', this.state.projects)
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{
+        // axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{
+        axios.get(`/indevr/public?user_id=1`).then(res=>{
             this.setState({publicProj: res.data})
             console.log('public projects', this.state.projects)
         }).catch(error=>console.log(error))
@@ -50,8 +54,7 @@ class Dashboard extends Component {
             this.setState({posts: res.data})
         console.log('posts', this.state.posts)
         }).catch(error=>console.log(error))
-        // axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
-        axios.get(`/indevr/messages?user_id=13`).then(resp=> {
+        axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
             this.setState({messages: resp.data, messageCount: resp.data.length})
             console.log('messages', resp.data)
         }).catch(error=>console.log(error))
@@ -79,9 +82,15 @@ class Dashboard extends Component {
         }).catch(error=>console.log(error))
     }
 
-    switchProjectView (view) {
-        // console.log(view)
-        this.setState({projectView: view})
+    switchProjectView(tab){
+        document.querySelector('.active').classList.remove('active');
+        document.getElementById(tab).classList.add('active');
+
+        this.setState({
+            showMine: tab === 'mine' ? true : false,
+            showExplore: tab === 'explore' ? true : false,
+            showCreate: tab === 'create' ? true : false,
+        })
     }
 
     submitPost(content) {
@@ -144,7 +153,7 @@ class Dashboard extends Component {
 
                 </Messages>
 
-                <Network className="container">
+                <div className="container">
                     <h4  className="clickable" onClick={() => this.setState({showConnections: !this.state.showConnections})}>
                         My Network &nbsp;
                         <ToggleDisplay show={this.state.showConnections}>
@@ -154,6 +163,8 @@ class Dashboard extends Component {
                             <i className="fas fa-chevron-down"></i>
                         </ToggleDisplay>
                     </h4>
+                </div>
+                <Network className="container">
                     <ToggleDisplay show={this.state.showConnections} className="contacts">
                         {this.state.contacts.map((contact,i) => {
                             return (
@@ -168,6 +179,51 @@ class Dashboard extends Component {
                     </ToggleDisplay>
                 </Network>
 
+                <Content className="container">
+
+                    <Projects>
+                        <Tabs>
+                            <div onClick={ () => this.switchProjectView('mine')} id="mine" className="active">
+                                My projects
+                            </div>
+                            <div onClick={ () => this.switchProjectView('explore')} id="explore">
+                                Explore projects
+                            </div>
+                            <div onClick={ () => this.switchProjectView('create')} id="create">
+                                Create New Project
+                            </div>
+                        </Tabs>
+                        <div class="project-wrapper">
+                            <ToggleDisplay show={this.state.showMine}>
+                                {this.state.projects.length &&
+                                    this.state.projects.map((project, i) => {
+                                        return (
+                                            <Link to={`project/${project.project_id}`} key={i}>
+                                                <ProjectTile
+                                                    title={project.project_name}
+                                                    skills={project.skills}
+                                                    desc={project.description} />
+                                            </Link>
+                                        )
+                                    })}
+                                {!this.state.projects[0] && <div> You have no projects. Explore other projects to contribute</div>}
+                            </ToggleDisplay>
+
+                            <ToggleDisplay show={this.state.showExplore}>
+                                <Explorer />
+                            </ToggleDisplay>
+
+                            <ToggleDisplay show={this.state.showCreate}>
+                                <CreateProject user_id={this.props.user.id}/>
+                            </ToggleDisplay>
+                        </div>
+                    </Projects>
+                    
+                    <Feed>
+
+                    </Feed>
+                </Content>
+
 
 
 
@@ -179,27 +235,7 @@ class Dashboard extends Component {
 
 
                 <Main>
-                    <Projects>
-                        <Nav>
-                            <div onClick={e=>this.switchProjectView('mine')}>My projects</div>
-                            <div onClick={e=>this.switchProjectView('others')}>Explore projects</div>
-                            <div onClick={e=>this.switchProjectView('create')}>Create New Project</div>
-                        </Nav>
-                        {/* {this.state.projects[0] && */}
-                        <ProjectList>
-                            {this.state.projectView==='mine' && this.state.projects[0] &&
-                                this.state.projects.map(proj =>
-                                    <ProjectItem key={`mine${proj.id}`}>
-                                        <Link to={`/project/${proj.project_id}`}>
-                                            <h2>{proj.project_name}</h2>
-                                        </Link>
-                                        <div>{proj.description}</div>
-                                    </ProjectItem>)}
-                            {this.state.projectView==='mine' && !this.state.projects[0] && <div> You have no projects. Explore other projects to contribute</div>}
-                            {this.state.projectView==='create' && <CreateProject user_id={this.props.user.id}/>}
-                            {this.state.projectView==='others' && <Explorer/>}
-                        </ProjectList>
-                    </Projects>
+
                     <Side>
                         <Newpost>
                             <textarea placeholder="what gem did you find?" value={this.state.postContent} cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea><br/>
@@ -297,136 +333,65 @@ const MessageItem = glam.div ({
 
 })
 
-
-
-
-
-
-
-const Greeting = glam.div ({
-    // display: 'flex',
-    // justifyContent: 'space-between',
-    // alignItems: 'flex-start',
-    width: '100%'
-})
-
-
-
-const Contacts = glam.div ({
-    fontSize: 14,
-    padding: '5px 5px 5px 20px',
-    marginBottom: 10,
-    cursor: 'Pointer',
-    '& img': {
-        width: 40,
-        height: 40,
-        borderRadius: '50%'
-    },
-    '& div': {
-        // width: 500,
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexWrap: 'wrap'
-    },
-    '@media (max-width: 500px)': {
-        marginBottom: 0,
-        padding: 10,
-        '& span': {
-            margin: 'auto',
-        }
-    },
-    '& h4': {
-        margin: 0,
-        padding: 10
-    },
-    '& h6': {
-        margin: 0,
-        padding: 10
-    }
-})
-
-const ContactItem = glam.div ({
-    cursor: 'pointer',
+const Content = glam.div({
+    marginTop: 50,
     display: 'flex',
-    background: '#eeeeee',
-    borderRadius: 2,
-    padding: 2,
-    margin: '2px 10px 2px 2px',
-    '& a': {
-        textDecoration: 'none'
-    },
-    '& img': {
-        marginRight: 5
-    }
-})
-
-const Messagesss = glam.div ({
-    fontSize: 14,
-    padding: '5px 5px 5px 20px',
-    marginBottom: 10,
-    cursor: 'Pointer',
-    '& img': {
-        width: 40,
-        height: 40,
-        borderRadius: '50%'
-    },
-    '& span': {
-
-    },
-    '@media (max-width: 500px)': {
-        marginBottom: 0,
-        padding: 10,
-        '& span': {
-            margin: 'auto',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '@media (max-width: 767px)':{
+        '> div':{
+            width: '100vw',
+            minWidth: '100vw'
         }
-    },
-    '& h4': {
-        margin: 0,
-        padding: 10
-    },
-})
-
-
-// const MessageItem = glam.div ({
-//     cursor: 'pointer',
-//     // padding:10,
-//     background: '#eeeeee',
-//     borderRadius: 2,
-//     padding: 2,
-//     // width:200,
-//     margin: 2,
-//     '& a': {
-//         textDecoration: 'none'
-//     },
-//     '& button': {
-//         marginLeft: 10,
-//         padding: 3,
-//         borderRadius: 3,
-//         background: 'var(--main-grey)'
-//     },
-//     '@media (max-width: 500px)': {
-//         maxWidth: 350
-//     },
-//     '& img': {
-//         marginRight: 5
-//     }
-// })
-
-const Count = glam.span({
-    margin: '0 0 0 5px',
-    background: 'red',
-    color: 'white'
-})
-
-const Collapse = glam.span({
-    padding: 0,
-    margin: '0 0 0 5px',
-    '& img': {
-        width: 15,
-        height:15
     }
 })
+
+const Projects = glam.div ({
+    color: '#333',
+    padding: 10,
+    width: '40%',
+    minWidth: 400,
+    minHeight: '50vh',
+    '& a':{
+        textDecoration: 'none',
+        color: 'inherit'
+    },
+    '& .project-wrapper':{
+        backgroundColor: 'var(--main-grey)',
+        paddingTop: 20
+    }
+})
+
+const Feed = glam.div({
+    width: '60%',
+    minWidth: 400
+})
+
+const Tabs = glam.div({
+    color: '#fff',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
+    '> div':{
+        backgroundColor: 'var(--main-black)',
+        padding: 10,
+        borderRadius: '10px 10px 0 0',
+        marginRight: 5,
+        cursor: 'pointer',
+    },
+    '& .active':{
+        backgroundColor: 'var(--main-grey)'
+    }
+})
+
+
+
+
+
+
+
+
 
 const Main = glam.div ({
     display: 'flex',
@@ -439,9 +404,7 @@ const Main = glam.div ({
     }
 })
 
-const Projects = glam.div ({
-    padding: 10
-})
+
 
 const Nav = glam.div ({
     display: 'flex',
@@ -468,12 +431,6 @@ const ProjectItem = glam.div ({
     }
 })
 
-const ProjectList = glam.div ({
-    '& div': {
-        padding: 10,
-        textAlign: 'left',
-    }
-})
 
 
 const Side = glam.div ({
