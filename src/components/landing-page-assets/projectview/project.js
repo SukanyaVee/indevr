@@ -11,6 +11,7 @@ class Project extends Component {
     render() {
         return (
             <Main>
+                <div className='container'>
                 <h3 className='heading'><strong>Project Matching</strong></h3>
                 <h1 className='heading'><i>Collaborate on Inventions</i></h1>
                 <Topic>
@@ -23,6 +24,7 @@ class Project extends Component {
                     Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. blasdan</div></Desc2>
                 <Image2 src={''} className='img-responsive' />
                 </Topic2>
+                </div>
             </Main>
         )
     }
@@ -30,13 +32,22 @@ class Project extends Component {
 
 
 const Main = glam.div({
-    height: '100vh',
+    minHeight: '100vh',
     color: 'var(--main-purple)',
     backgroundColor: 'var(--main-black)',
+    fontFamily: 'Helvetica Neue',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '100px 0',
     '& .heading': {
         textAlign: 'center',
-        marginTop: 0,
-        paddingTop: 10,
+        margin: 10,
+        // paddingTop: 10,
+    },
+    '& .container': {
+        width: '85%',
     }
 })
 
@@ -46,9 +57,10 @@ const Topic = glam.section({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     '@media (max-width: 729px)':{
-        height: '35%',
-        marginTop: 20,
+        height: '45%',
+        marginTop: 30,
         flexDirection: 'column',
         
     }
@@ -59,9 +71,10 @@ const Topic2 = glam.section({
     display: 'flex',
     flexDirection: 'row-reverse',
     justifyContent: 'center',
+    alignItems: 'center',
     '@media (max-width: 729px)':{
-        height: '35%',
-        marginTop: 20,
+        height: '45%',
+        marginTop: 30,
         flexDirection: 'column',
         
     }
@@ -76,9 +89,22 @@ const Desc = glam.span({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    '& .p': {
+        padding: 10,
+        minHeight: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    '@media (max-width: 1100px)': {
+        '& .p': {
+            fontSize: '12pt',
+        }
+    },
     '@media (max-width: 729px)':{
         fontSize: '12pt',
-        width: '100vw',
+        width: '100%',
         marginTop: 20,
         textAlign: 'center'
     }
@@ -92,14 +118,26 @@ const Desc2 = glam.span({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    '& .p': {
+        padding: 10,
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    '@media (max-width: 1100px)': {
+        '& .p': {
+            fontSize: '12pt',
+        }
+    },
     '@media (max-width: 729px)':{
+        fontSize: '12pt',
+        width: '100%',
+        marginTop: 20,
+        textAlign: 'center',
       '& .p': {  
         fontSize: '12pt',
-        marginTop: 50,
-        marginLeft: 205,
-        marginBottom: 50,
-        width: '100vw',
-        textAlign: 'center'
       }
     }
 })

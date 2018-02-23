@@ -13,30 +13,39 @@ class About extends Component {
         return (
             <Main>
                 <Title className='heading'>Inside inDevr</Title>
-
+                <div className='container'>
                 <Description>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Blandit turpis cursus in hac habitasse platea dictumst. Faucibus vitae aliquet nec ullamcorper sit. Sagittis purus sit amet volutpat consequat mauris. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Sed velit dignissim sodales ut eu. Scelerisque mauris pellentesque pulvinar pellentesque habitant. Felis bibendum ut tristique et egestas. Tincidunt tortor aliquam nulla facilisi cras. At quis risus sed vulputate odio ut enim blandit. Turpis egestas integer eget aliquet nibh. Aliquet risus feugiat in ante metus dictum at. Sit amet luctus venenatis lectus magna fringilla urna porttitor. Eget felis eget nunc lobortis mattis aliquam faucibus purus in.
+                       The idea behind inDevr stemmed from the mind of one of the most creative creatures in the office who wanted a better way to communicate with the various teams they worked with in their professional career, as well as their personal life. As a result, inDevr ended up as a website that is intended for those who need a little extra when they're discussing their next project or deciphering their upcoming plan.
                         <br/>
                         <br/>
-                        Nisl suscipit adipiscing bibendum est ultricies integer. Non nisi est sit amet facilisis magna etiam tempor. Velit egestas dui id ornare arcu odio ut sem nulla. Neque volutpat ac tincidunt vitae semper. Arcu cursus vitae congue mauris rhoncus. Nunc id cursus metus aliquam eleifend mi. Ac placerat vestibulum lectus mauris ultrices eros in cursus turpis. Non sodales neque sodales ut etiam. Nulla facilisi cras fermentum odio eu feugiat. Vitae sapien pellentesque habitant morbi tristique. Massa tincidunt dui ut ornare lectus sit amet est. Quam nulla porttitor massa id neque aliquam vestibulum morbi blandit. Integer vitae justo eget magna fermentum iaculis.
+                        Built by developers for developers, inDevr continues to find top-notch tools that can assist with breaking down the 
                     </p>
                 </Description>
-                <Title>Meet the Team</Title>
+                </div>
+
+
+            {/* <Bottom> */}
+                    <SectionBig>
+                <Title2>Meet the Team</Title2>
                     <Section>
                         <Person>
-                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot1'><i className='icon fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
+                            <a href='' target='_blank' rel="noopener noreferrer"><div className='opacity'><div className='spot1'><i className='icon fas fa-spinner fa-pulse fa-7x' data-fa-transform='grow-6 down-16' color='var(--main-purple)'></i></div></div></a>
                             <p><strong>Sukanya Vee</strong></p>
                         </Person>
                         <Person className='two'>
-                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer"><div className='spot2'><i className="icon fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-grey)'></i></div></a>
+                            <a href='http://astringham.com' target='_blank' rel="noopener noreferrer">
+                            <div className='opacity'><div className='spot1'><i className="icon fas fa-sync fa-spin fa-7x" data-fa-transform='grow-6 down-16' color='var(--main-purple)'></i></div></div></a>
                             <p><strong>Andrea Stringham</strong></p>
                         </Person>
                         <Person className='three'>
-                            <a href='' target='_blank' rel="noopener noreferrer"><div className='spot3'><i className="icon fas fa-cog fa-spin fa-7x"  data-fa-transform='grow-8 down-16' color='var(--main-grey)'></i></div></a>
+                            <a href='' target='_blank' rel="noopener noreferrer">
+                            <div className='opacity'><div className='spot1'><i className="icon fas fa-cog fa-spin fa-7x"  data-fa-transform='grow-8 down-16' color='var(--main-purple)'></i></div></div></a>
                             <p><strong>Brent Eckert</strong></p>
                         </Person>
                     </Section>
+                </SectionBig>
+                {/* </Bottom> */}
             </Main>
         )
     }
@@ -50,11 +59,12 @@ class About extends Component {
 const Main = glam.div({
     minHeight: '100vh',
     width: '100vw',
-    backgroundColor: 'var(--main-grey)',
-    // backgroundColor: 'var(--main-purple)',
+    // backgroundColor: 'var(--main-grey)',
+    backgroundColor: 'var(--main-purple)',
     textAlign: 'center',
     marginTop: 0,
-    color: 'var(--main-purple)'
+    // color: 'var(--main-purple)'
+    color: 'var(--main-grey)'
     // '& .heading': {
     //     marginTop: 0,
     // }
@@ -65,10 +75,26 @@ const Title = glam.p({
     marginBottom: 20,
     paddingTop: 50,
     fontSize: '36pt',
-    color: 'var(--main-purple)',
+    color: 'white',
     fontWeight: '700',
-    borderBottom: 'solid var(--main-purple) 3px',
-    // borderBottom: 'solid var(--main-grey) 3px',
+    // borderBottom: 'solid var(--main-purple) 3px',
+    borderBottom: 'solid white 3px',
+    boxShadow: '0px 0px 0px 0px',
+    width: 400,
+    '@media (max-width: 729px)': {
+        width: 300,
+        fontSize: '24pt',
+    }
+})
+const Title2 = glam.p({
+    margin: 'auto',
+    marginBottom: 20,
+    paddingTop: 50,
+    fontSize: '36pt',
+    // color: '#fff',
+    fontWeight: '700',
+    // borderBottom: 'solid var() 3px',
+    borderBottom: 'solid white 3px',
     boxShadow: '0px 0px 0px 0px',
     width: 400,
     '@media (max-width: 729px)': {
@@ -79,66 +105,65 @@ const Title = glam.p({
 
 const Description = glam.section({
     margin: 'auto',
-    color: 'var(--main-purple)',
-    // color: 'var(--main-grey)',
+    // color: 'var(--main-purple)',
+    color: 'white',
     fontSize: '14pt',
-    width: '75%'
+    width: '75%',
+    paddingBottom: 50,
 })
 
 const Section = glam.section({
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    flexWrap: 'wrap',
+    color: '#fff',
     '& .spot1, .spot3': {
-        height: 300,
-        width: 300,
+        height: '250px !important',
+        width: '250px !important',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: '50%',
         boxShadow: '5px 5px 5px 0px black',
-        backgroundColor: 'var(--main-purple)',
+        '& .icon': {
+            marginTop: -180,
+            // fontSize: '14pt'
+        },
+        // backgroundColor: 'var(--main-purple)',
         // backgroundColor: 'var(--main-grey)',
         '@media (max-width: 729px)': {
             height: 200,
             width: 200,
-            marginLeft: 5,
-        }
-    },
-    '& .spot2': {
-        height: 300,
-        width: 300,
-        borderRadius: '50%',
-        boxShadow: '5px 5px 5px 0px black',
-        backgroundColor: 'var(--main-purple)',
-        // backgroundColor: 'var(--main-grey)',
-        '@media (max-width: 729px)': {
-            height: 200,
-            width: 200,
-            marginRight: 5,
+            // marginLeft: 5,
         }
     },
     '@media (max-width: 729px)': {
         '& .icon': {
-            marginTop: -45,
+            marginTop: -85,
             // fontSize: '14pt'
         }
     }
-    // '& .spot3': {
-    //     height: 300,
-    //     width: 300,
-    //     borderRadius: '50%',
-    //     boxShadow: '5px 5px 5px 0px black',
-    //     backgroundColor: 'var(--main-purple)',
-    //     '& .fa-black-tie': {
-    //         zIndex: 10,
-
-    //     }
-    // }
 })
 
 const Person = glam.div({
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'space-around',
+    // alignItems: 'center',
+    margin: 50, 
     marginBottom: 20,
-    '.two': {
-        flexDirection: 'row-reverse',
+    '& .opacity': {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 275,
+        width: 275,
+        backgroundColor: 'rgba(255, 255, 255, .1)',
+        borderRadius: '50%',
+        // padding: 50,
     },
     '.three': {
         marginBottom: 0,
@@ -146,9 +171,23 @@ const Person = glam.div({
     },
     '& p': {
         fontSize: '22pt',
-        color: 'var(--main-purple)',
-        // color: 'var(--main-grey)',
+        color: '#fff',
+        margin: 15, 
     },
+})
+
+const SectionBig = glam.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    color: '#fff',
+    backgroundImage: 'url("https://images.unsplash.com/photo-1513957391641-38811fee23f9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=986a50abca5b48ee42a346454feb018f&auto=format&fit=crop&w=1351&q=80")',
+    backgroundSize: 'cover',
+    // '@media (max-width: 729px)': {
+    //     backgroundImage: 'hidden',
+    // }
 })
 
 

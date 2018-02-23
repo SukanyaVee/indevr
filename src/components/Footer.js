@@ -47,7 +47,7 @@ const Foot = glam.div({
     flexWrap: 'wrap',
     textDecoration: 'none',
     color: 'white',
-    borderTop: 'Solid black 5px',
+    // borderTop: 'Solid black 5px',
     '> div':{
         // margin: 20
     },

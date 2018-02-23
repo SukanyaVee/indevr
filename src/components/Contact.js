@@ -81,7 +81,7 @@ clearText(){
     render() {
         return (
         <Main>
-            <h1><strong>Contact the inDevr Team</strong></h1>
+            <h1 className='title'><strong>Contact the inDevr Team</strong></h1>
             <Form id='form'>
 
             <Inputs>
@@ -145,6 +145,12 @@ const Main = glam.div({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    '& .title': {
+        color: 'var(--main-purple)',
+        '@media (max-width: 729px)': {
+            fontSize: '22pt'
+        }
+    }
 })
 
 const Form = glam.form({
