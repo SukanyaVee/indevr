@@ -12,6 +12,7 @@ import Explorer from './Explorer';
 import UserTile from './UserTile';
 import ToggleDisplay from 'react-toggle-display';
 import ProjectTile from './ProjectTile';
+import PostTile from './PostTile';
 
 class Dashboard extends Component {
     constructor(){
@@ -218,9 +219,33 @@ class Dashboard extends Component {
                             </ToggleDisplay>
                         </div>
                     </Projects>
-                    
-                    <Feed>
 
+                    <Feed>
+                        <Form>
+                            <textarea
+                                className="form-control"
+                                placeholder="What gem did you find?"
+                                value={this.state.postContent}  onChange={e=>{this.setState({postContent:e.target.value})}}
+                                ></textarea>
+                            <button
+                                className="btn btn-default pull-right"
+                                onClick={e=>{this.submitPost(this.state.postContent)}}
+                                >Post</button>
+                        </Form>
+
+                        THE LATEST NEWS
+                        {this.state.posts.map((item,i) => {
+                            return (
+                                <PostTile
+                                    key={i}
+                                    name={item.first_name + ' ' + item.last_name}
+                                    timestamp={item.created_at}
+                                    content={item.content}
+                                    user_id={item.user_id}
+                                    picture={item.picture}
+                                />
+                            );
+                        })}
                     </Feed>
                 </Content>
 
@@ -273,7 +298,8 @@ const Dashboard1 = glam.div ({
     paddingTop: 20,
     '& .clickable':{
         cursor: 'pointer'
-    }
+    },
+
 })
 
 const Heading= glam.h1 ({
@@ -363,8 +389,16 @@ const Projects = glam.div ({
 })
 
 const Feed = glam.div({
+    color: '#fff',
     width: '60%',
-    minWidth: 400
+    minWidth: 400,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    '> div':{
+        margin: 10,
+        color: '#333',
+    }
 })
 
 const Tabs = glam.div({
@@ -382,6 +416,22 @@ const Tabs = glam.div({
     },
     '& .active':{
         backgroundColor: 'var(--main-grey)'
+    }
+})
+
+const Form = glam.form({
+    marginBottom: 20,
+    width: 400,
+    maxWidth: 'calc(100vw - 20px)',
+    '> textarea':{
+        height: 100,
+    },
+    '> button':{
+        marginTop: 10,
+        height: 50,
+        width: 100,
+        fontSize: 18,
+        alignItems: 'flex-end'
     }
 })
 

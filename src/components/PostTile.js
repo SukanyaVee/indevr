@@ -1,16 +1,19 @@
 import React, {Component} from 'react';
 import glam from 'glamorous';
+import {Link} from 'react-router-dom';
 
 class PostTile extends Component {
     render(){
         return (
             <Main>
                 <Header>
-                    <img src="http://via.placeholder.com/50x50" alt="" /> &nbsp;
-                    <div>
-                        <strong>{this.props.name}</strong><br/>
-                        <sub>{new Date(this.props.timestamp).toLocaleDateString("en-us", { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" })}</sub>
-                    </div>
+                    <Link to={`/dev/${this.props.user_id}`}>
+                        <img src={this.props.picture} alt="" /> &nbsp;
+                        <div>
+                            <strong>{this.props.name}</strong><br/>
+                            <sub>{new Date(this.props.timestamp).toLocaleDateString("en-us", { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" })}</sub>
+                        </div>
+                    </Link>
                 </Header>
                 <Content>
                     <div>
@@ -36,12 +39,21 @@ const Main = glam.div({
 const Header = glam.div({
     backgroundColor: 'var(--main-purple)',
     color: '#fff',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+
     padding: 10,
-    '> div':{
+    '> a':{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        color: 'inherit',
+        textDecoration: 'none'
+    },
+    '& div':{
         paddingLeft: 10
+    },
+    '& img':{
+        height: 50,
+        width: 50
     }
 })
 

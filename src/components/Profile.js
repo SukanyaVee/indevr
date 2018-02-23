@@ -221,6 +221,7 @@ class Profile extends Component {
                                                         id={post.id}
                                                         name={post.first_name + ' ' + post.last_name}
                                                         user_id={post.user_id}
+                                                        picture={post.picture}
                                                         content={post.content}
                                                         timestamp={post.created_at}/>
                                             )
