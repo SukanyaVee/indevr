@@ -5,8 +5,6 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import glam from 'glamorous';
 import profpic from '../assets/prof-pic.png';
-import showtrue from '../assets/collapse.png';
-import showfalse from '../assets/show.png';
 import CreateProject from './CreateProject'
 import Explorer from './Explorer';
 import UserTile from './UserTile';
@@ -36,39 +34,29 @@ class Dashboard extends Component {
     }
 
     componentDidMount(){
-        // axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{
-        axios.get(`/indevr/contacts?user_id=1`).then(res=>{
+        axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{
             this.setState({contacts: res.data})
-            console.log('connections', this.state.contacts)
         }).catch(error=>console.log(error))
-        // axios.get(`/indevr/projects?user_id=${this.props.user.id}`).then(res=>{
-        axios.get(`/indevr/projects?user_id=13`).then(res=>{
+        axios.get(`/indevr/projects?user_id=${this.props.user.id}`).then(res=>{
             res.data[0] ? this.setState({projects: res.data}) : this.setState({projectView: 'others'})
-            console.log('my projects', this.state.projects)
         }).catch(error=>console.log(error))
-        // axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{
-        axios.get(`/indevr/public?user_id=1`).then(res=>{
+        axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{
             this.setState({publicProj: res.data})
-            console.log('public projects', this.state.projects)
         }).catch(error=>console.log(error))
         axios.get('/indevr/posts').then(res=>{
             this.setState({posts: res.data})
-        console.log('posts', this.state.posts)
         }).catch(error=>console.log(error))
         axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
             this.setState({messages: resp.data, messageCount: resp.data.length})
-            console.log('messages', resp.data)
         }).catch(error=>console.log(error))
     }
 
 
     acceptContributor(messageId, project_id, contributor_id){
-        console.log('input', messageId, project_id, contributor_id)
         axios.post('/indevr/contributors', {project_id: project_id, user_id: contributor_id, owner: false}).then(resp=>{
             axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
                 axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
                     this.setState({messages: resp.data})
-                    console.log('messages', resp.data)
                 }).catch(error=>console.log(error))
             }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
@@ -78,7 +66,6 @@ class Dashboard extends Component {
         axios.delete(`/indevr/messages/${messageId}`).then(resp=>{
             axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
                 this.setState({messages: resp.data})
-                console.log('messages', resp.data)
             }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
     }
@@ -95,36 +82,29 @@ class Dashboard extends Component {
     }
 
     submitPost(content) {
-        console.log('post content', content)
         axios.post('/indevr/posts', {user_Id: this.props.user.id, content:content}).then(resp=>{
-            console.log('this is the response', resp.data)
             axios.get('/indevr/posts').then(res=>{
                 this.setState({posts: res.data, postContent: ''})
-            console.log('posts', this.state.posts)
             }).catch(error=>console.log(error))
-            console.log('this is the state after setting response to it', this.state.posts)
         }).catch(error=>console.log(error))
     }
 
     deletePost(postId){
-        console.log(postId)
         axios.delete(`/indevr/posts/${postId}`).then(resp=>{
             axios.get('/indevr/posts').then(res=>{
                 this.setState({posts: res.data})
-            console.log('posts', this.state.posts)
             }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
     }
 
     render() {
-        console.log(this.props.user.id)
         return (
-            <Dashboard1>
+            <Main>
                 <Heading>Hello, Friendly Developer!</Heading>
 
                 <Messages>
                     <div className="clickable" onClick={ () => this.setState({ showMessage: !this.state.showMessage})}>
-                        {this.state.messageCount > 0 && `You have ${this.state.messageCount} ${this.state.messageCount > 1 ? ' messages ' : ' message '}`} {this.state.messageCount > 0 && <i class="far fa-envelope"></i>}
+                        {this.state.messageCount > 0 && `You have ${this.state.messageCount} ${this.state.messageCount > 1 ? ' messages ' : ' message '}`} {this.state.messageCount > 0 && <i className="far fa-envelope"></i>}
                     </div>
 
                     <ToggleDisplay show={this.state.showMessage}>
@@ -194,7 +174,7 @@ class Dashboard extends Component {
                                 Create New Project
                             </div>
                         </Tabs>
-                        <div class="project-wrapper">
+                        <div className="project-wrapper">
                             <ToggleDisplay show={this.state.showMine}>
                                 {this.state.projects.length &&
                                     this.state.projects.map((project, i) => {
@@ -235,55 +215,23 @@ class Dashboard extends Component {
 
                         THE LATEST NEWS
                         {this.state.posts.map((item,i) => {
+                            let deletePost = this.deletePost.bind(this, item.post_id)
                             return (
                                 <PostTile
                                     key={i}
+                                    id={item.post_id}
                                     name={item.first_name + ' ' + item.last_name}
                                     timestamp={item.created_at}
                                     content={item.content}
                                     user_id={item.user_id}
                                     picture={item.picture}
+                                    deletePost={deletePost}
                                 />
                             );
                         })}
                     </Feed>
                 </Content>
-
-
-
-
-
-
-
-
-
-
-
-                <Main>
-
-                    <Side>
-                        <Newpost>
-                            <textarea placeholder="what gem did you find?" value={this.state.postContent} cols="25" onChange={e=>{this.setState({postContent:e.target.value})}}></textarea><br/>
-                            <button onClick={e=>{this.submitPost(this.state.postContent)}}>Post</button>
-                        </Newpost>
-                        <PostFeed>
-                            THE LATEST NEWS
-                            {this.state.posts.map(item =>
-                                <PostItem key={item.post_id}>
-                                    <PostTitle>
-                                        {item.content}
-                                        <Xxx onClick={e=>{this.deletePost(item.post_id)}}>x</Xxx>
-                                    </PostTitle>
-                                    <div>
-                                    <small><small>{item.created_at}</small></small>
-
-                                    <div><img src={item.picture} alt="profile"/> {item.first_name} {item.last_name}</div>
-                                    </div>
-                                </PostItem>)}
-                        </PostFeed>
-                    </Side>
-                </Main>
-            </Dashboard1>
+            </Main>
         );
     }
 }
@@ -291,7 +239,7 @@ class Dashboard extends Component {
 
 
 
-const Dashboard1 = glam.div ({
+const Main = glam.div ({
     // padding: 50
     backgroundColor: 'var(--main-purple)',
     color: '#fff',
@@ -438,108 +386,6 @@ const Form = glam.form({
 
 
 
-
-
-
-
-
-const Main = glam.div ({
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    padding: 20,
-    '@media (max-width: 500px)':{
-        flexDirection: 'column',
-        padding: 10
-    }
-})
-
-
-
-const Nav = glam.div ({
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    // padding: 20,
-    '& div': {
-        padding: '8px 15px 8px 15px',
-        marginRight: 10,
-        color: 'black',
-        background: 'var(--main-grey)',
-        borderBottom: '3px solid #593c8f',
-        borderRadius: '8px 8px 0 0',
-        cursor: 'pointer'
-    }
-})
-
-const ProjectItem = glam.div ({
-    cursor: 'pointer',
-    background: '#eeeeee',
-    margin: 2,
-    '& a': {
-        textDecoration: 'none'
-    }
-})
-
-
-
-const Side = glam.div ({
-    maxWidth: 300,
-    background: '#eeeeee',
-    padding: 20,
-    '@media (max-width: 500px)': {
-        display: 'none'
-    }
-})
-
-const Newpost = glam.div ({
-    '& textarea': {
-        borderRadius: 3,
-        padding: 3
-    },
-    marginBottom: 10,
-})
-
-const PostFeed = glam.div ({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 10,
-    '& img': {
-        height: 25,
-        width: 25,
-        borderRadius: '50%',
-        marginRight: 10
-    },
-
-})
-
-const PostItem = glam.div({
-    marginBottom: 5,
-    padding: 5,
-})
-
-const PostTitle = glam.div ({
-    display: 'flex',
-    background: 'white',
-    borderRadius: 10,
-    padding:5,
-    justifyContent: 'space-between',
-    minWidth: 200
-
-})
-
-const Xxx = glam.div({
-    cursor: 'pointer',
-    '&:hover': {
-        opacity: '1',
-        transform: 'scale(1.2)'
-    },
-    '&:not(:hover)': {
-        opacity: '0.4'
-    }
-})
 
 const mapStateToProps = state => {
     return {

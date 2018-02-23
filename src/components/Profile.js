@@ -38,6 +38,9 @@ class Profile extends Component {
             },
             skills: []
         }
+
+        this.deletePost = this.deletePost.bind(this)
+
     }
 
     componentDidMount(){
@@ -47,6 +50,14 @@ class Profile extends Component {
 
     componentWillReceiveProps(nextProps){
         this.getInfo();
+    }
+
+    deletePost(postId){
+        axios.delete(`/indevr/posts/${postId}`).then(resp=>{
+            axios.get('/indevr/posts').then(res=>{
+                this.setState({posts: res.data})
+            }).catch(error=>console.log(error))
+        }).catch(error=>console.log(error))
     }
 
     getInfo(){
@@ -216,6 +227,7 @@ class Profile extends Component {
                                     <PostsWrapper>
 
                                         {this.state.posts.map((post,i) => {
+                                            let deletePost = this.deletePost.bind(this, post.post_id)
                                             return (
                                                     <PostTile key={i}
                                                         id={post.id}
@@ -223,7 +235,9 @@ class Profile extends Component {
                                                         user_id={post.user_id}
                                                         picture={post.picture}
                                                         content={post.content}
-                                                        timestamp={post.created_at}/>
+                                                        timestamp={post.created_at}
+                                                        deletePost={deletePost}
+                                                    />
                                             )
                                         })}
                                     </PostsWrapper>
