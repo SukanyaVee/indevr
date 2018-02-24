@@ -1,71 +1,15 @@
 import React, { Component } from "react";
 import { login } from "../ducks/reducer";
 import { connect } from "react-redux";
-import axios from "axios";
-import Auth0Lock from "auth0-lock";
 import glam from "glamorous";
 import { css } from 'glamor';
 import Tasks from "./landing-page-assets/taskboard/tasks";
 import Profile from './landing-page-assets/profile/profile';
 import Project from './landing-page-assets/projectview/project';
-import logo from '../assets/lock.png';
 import keys from './landing-page-assets/keys.png';
 
 
-const options = {
-  theme: {
-    primaryColor: "#593c8f",
-    logo: logo,
-  },
-  popupOptions: {width: 300, height: 400},
-  // allowSignUp: false,
-  redirect: true,
-  redirectUrl: "/dashboard",
-  languageDictionary: {
-    title: "inDevr"
-  },
-  additionalSignUpFields: [
-    {
-      name: "first_name",
-      placeholder: "Enter your first name"
-    },
-    {
-      name: "last_name",
-      placeholder: "Enter your last name"
-    }
-  ]
-};
-
 class LandingPage extends Component {
-  constructor() {
-    super();
-    this.state = {};
-    this.lock = null;
-    this.login = this.login.bind(this);
-  }
-
-  //Creating Auth0 Functionality
-  componentDidMount() {
-    console.log(this.props)
-    this.lock = new Auth0Lock(
-      process.env.REACT_APP_AUTH0_CLIENT_ID,
-      process.env.REACT_APP_AUTH0_DOMAIN,
-      options
-    );
-    this.lock.on("authenticated", authResult => {
-      this.lock.getUserInfo(authResult.accessToken, (error, user) => {
-        axios.post("/login", { userId: user.sub }).then(response => {
-            console.log(response.data)
-          this.props.login(response.data.user);
-          this.props.history.push("/dashboard");
-        });
-      });
-    });
-  }
-
-  login() {
-    this.lock.show();
-  }
 
   render() {
     return (

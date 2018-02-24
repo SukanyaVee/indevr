@@ -4,22 +4,16 @@ import { logout, login } from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import router from './router';
-import AltHeader from './components/AltHeader';
+import Header from './components/Header';
 import Footer from './components/Footer';
 import axios from 'axios';
 
 
 class App extends Component {
 
-    // static propTypes = {
-    //     location: PropTypes.object.isRequired,
-
-    // }
-
     componentDidMount(){
        axios.get('/checkSession').then(response => {
            const user = response.data;
-           console.log(response.data)
            this.props.login(user);
            if(!this.props.user){
                this.props.history.push('/')
@@ -33,7 +27,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <AltHeader />
+                <Header />
                 {router}
                 <Footer />
             </div>

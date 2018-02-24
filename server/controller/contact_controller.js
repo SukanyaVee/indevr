@@ -19,11 +19,11 @@ module.exports = {
                 res.status(200).send(contacts)
             }).catch(error => {
                 console.error(error);
-                res.status(500).send(err)
+                res.status(500).send(error)
             })
         }).catch(error => {
             console.error(error);
-            res.status(500).send(err)
+            res.status(500).send(error)
         })
     },
 
@@ -34,7 +34,7 @@ module.exports = {
             res.status(200).send('Connected');
         }).catch(error=>{
             console.error(error);
-            res.status(500).send(err);
+            res.status(500).send(error);
         })
     },
 
@@ -48,7 +48,7 @@ module.exports = {
             res.status(200).send(false);
         }).catch(error=>{
             console.error(error);
-            res.status(500).send(err);
+            res.status(500).send(error);
         })
     },
 

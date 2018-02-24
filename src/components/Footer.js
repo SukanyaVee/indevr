@@ -14,7 +14,6 @@ class Footer extends Component {
     }
 
     render() {
-        console.log(this.props.id, this.props.user)
         return (
             <Foot>
                 <div>
@@ -38,7 +37,7 @@ class Footer extends Component {
 const Foot = glam.div({
     width: '100vw',
     minHeight: 100,
-    
+
     backgroundColor: 'var(--main-purple)',
     display: 'flex',
     flexDirection: 'row',

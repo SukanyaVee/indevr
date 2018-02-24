@@ -10,7 +10,7 @@ class CreateProject extends Component {
         super(props)
         this.state = {
             user_id: this.props.user.id, //HARDCODED
-            proj_id: 0, 
+            proj_id: 0,
             project_name: '',
             description: '',
             pub: true,
@@ -56,21 +56,20 @@ class CreateProject extends Component {
             this.props.history.push(`/project/${this.state.proj_id}`) // HARDCODED
         }).catch(error=>console.log(error))
     }
-    
+
     render() {
-        console.log(this.props.user.id)
         var mapppp = this.state.stack.map(skill=> 
             (<ProjectSkills><div key={skill.id}>{skill.skill} - {skill.level===1?'Worthy Warrior':skill.level===2?'Noble Ninja':'Supreme Samurai'}</div></ProjectSkills>)
         )
         return (
             <Forrrm>
-                {!this.state.showSkillsForm && 
+                {!this.state.showSkillsForm &&
                 <div>
                 Step 1: Create a project. You can add more skills later.<br/><br/>
                     <input placeholder="Project Name" onChange={e=>{this.setState({project_name: e.target.value})}}/><br/>
                     <input placeholder="Description"  onChange={e=>{this.setState({description: e.target.value})}}/><br/>
                     <input placeholder="Link to Github repo" onChange={e=>{this.setState({repo:e.target.value})}}/><br/>
-                    Public? 
+                    Public?
                     <select value={this.state.pub} onChange={e=>{this.setState({pub:e.target.value})}}>
                         <option value={true}>Yes</option>
                         <option value={false}>No</option>
@@ -78,7 +77,7 @@ class CreateProject extends Component {
                     <button onClick={e=>{this.createProj(this.state.project_name, this.state.description, this.state.pub, this.state.repo)}}>Create</button>
                 </div>}
                 {/* CREATES PROJECT IN projects TABLE, THEN ALLOWS USER TO ENTER SKILLS */}
-                {this.state.showSkillsForm && 
+                {this.state.showSkillsForm &&
                     <div>
                         {mapppp}
                         Add more skills and levels to the project you just created<br/><br/>
