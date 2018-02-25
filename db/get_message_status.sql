@@ -1,1 +1,1 @@
-SELECT * FROM add_messages WHERE project_id=$1;
+SELECT * FROM add_messages WHERE project_id=$1 AND contributor_id=$2;
