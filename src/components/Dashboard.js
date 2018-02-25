@@ -117,7 +117,7 @@ class Dashboard extends Component {
 
     render() {
         if(!this.props.user){
-            return 'Loading...'
+            return <Loading><i class="fas fa-spinner fa-pulse fa-7x"></i></Loading>
         }
         return (
             <Main>
@@ -421,6 +421,13 @@ const Form = glam.form({
         fontSize: 18,
         alignItems: 'flex-end'
     }
+})
+
+const Loading = glam.div({
+    minHeight: 'calc(100vh - 230px)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
 })
 
 

@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-// import {Link, Switch, Route} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 // import axios from 'axios';
 import glam from 'glamorous';
 import Overview from './Overview';
 // import Repo from './Repo';
+import {connect} from 'react-redux';
 import Chat from './Chat';
 import TaskBoard from './Taskboard/Taskboard';
 // import Whiteboard from './Whiteboard';
 import ToggleDisplay from 'react-toggle-display';
 import White from './White';
 
-
-
-
-export default class ProjectView extends Component {
+class ProjectView extends Component {
     constructor(props){
         super(props)
             this.state= {
@@ -53,6 +51,14 @@ export default class ProjectView extends Component {
     render() {
         const innerW = window.innerWidth < 767 ? 0 : 150;
         const innerH = window.innerWidth < 767 ? 140 : 105;
+        if(!this.props){
+            setTimeout(function(){
+                if(this.props && !this.props.user){
+                    this.props.history.push('/login')
+                }
+            }, 200)
+        }
+
         return (
             <div>
                 <MobileHeader>
@@ -99,6 +105,14 @@ export default class ProjectView extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(ProjectView));
 
 
 const Main = glam.div({
@@ -187,9 +201,6 @@ const View = glam.div({
     '@media (min-width: 768px)':{
         '& .mobile-show':{
             display: 'none',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
         }
     }
 })

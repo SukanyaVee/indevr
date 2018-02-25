@@ -53,6 +53,7 @@ class Header extends Component {
             options
         );
         this.lock.on("authenticated", authResult => {
+            this.props.history.push('/dashboard')
             this.lock.getUserInfo(authResult.accessToken, (error, user) => {
                 axios.post("/login", { userId: user.sub }).then(response => {
                     this.props.login(response.data.user);
