@@ -96,7 +96,7 @@ const Desc = glam.span({
         alignItems: 'center',
         flexDirection: 'column',
     },
-    '@media (max-width: 1000px)': {
+    '@media (max-width: 1100px)': {
         '& .p': {
             fontSize: '12pt',
         }

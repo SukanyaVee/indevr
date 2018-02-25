@@ -39,7 +39,7 @@ class About extends Component {
                             <p><strong>Andrea Stringham</strong></p>
                         </Person>
                         <Person className='three'>
-                            <a href='' target='_blank' rel="noopener noreferrer">
+                            <a href='https://b-eck37.github.io/#' target='_blank' rel="noopener noreferrer">
                             <div className='opacity'><div className='spot1'><i className="icon fas fa-cog fa-spin fa-7x"  data-fa-transform='grow-8 down-16' color='var(--main-purple)'></i></div></div></a>
                             <p><strong>Brent Eckert</strong></p>
                         </Person>
