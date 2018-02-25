@@ -44,17 +44,14 @@ class CreateProject extends Component {
         axios.post('/indevr/skills', x).then(resp=>{
             axios.get(`indevr/skills/${this.state.proj_id}`).then(resp=>{
                 this.setState({stack: resp.data})
-                this.setState({newLevel: 1})
+                this.setState({newSkill: '', newLevel: 1})
             }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
         // this.setState({newSkill:'',newLevel:0})
     }
 
-    completed(newSkill,newLevel){
-        var x={project_id: this.state.proj_id, skill: newSkill, level: newLevel}
-        axios.post('/indevr/skills', x).then(resp=>{
+    completed(){
             this.props.history.push(`/project/${this.state.proj_id}`) // HARDCODED
-        }).catch(error=>console.log(error))
     }
     
     render() {
@@ -89,7 +86,7 @@ class CreateProject extends Component {
                             <option value="3">Supreme Samurai (advanced)</option>
                         </select> <br/>
                         <button onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel)}}>Submit and add another skill</button>
-                        <button onClick={e=>{this.completed(this.state.newSkill, this.state.newLevel)}}>Submit and complete</button>
+                        <button onClick={e=>{this.completed()}}>Done</button>
                     </div>}
             </Forrrm>
         )
