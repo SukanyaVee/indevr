@@ -1,8 +1,10 @@
+const axios = require('axios');
 const LOGGED_IN = 'LOGGED_IN';
 const LOGOUT = 'LOGOUT';
+const CHECK_SESSION = 'CHECK_SESSION';
 
 const initialState = {
-    user: {id: null},
+    user: null,
     results: [],
     projects: [],
     posts: [],
@@ -19,7 +21,15 @@ export function logout(){
     console.log('We out')
     return {
         type: LOGOUT,
-        payload: {}
+        payload: null
+    }
+}
+
+export function checkLoggedIn(){
+    console.log('Checking login...');
+    return {
+        type: CHECK_SESSION,
+        payload: ''
     }
 }
 
@@ -30,7 +40,22 @@ export default function reducer(state = initialState, action){
             return {...state, user: action.payload};
         case LOGOUT:
         console.log('Action Received:', action)
-            return {...state, user: action.payload};
+        axios.get('/logout').then(res => {
+            console.log('Session destroyed')
+        }).catch( err => console.log(err))
+            return {...state, user: action.payload };
+        case CHECK_SESSION:
+        console.log('Action Received:', action)
+        axios.get('/checkSession').then(response => {
+            console.log('Session Check:', response.data)
+            if(response.data.user){
+                logout();
+            } else {
+                login(response.data.user)
+            }
+        })
+            return state;
+
         default:
             return state;
     }

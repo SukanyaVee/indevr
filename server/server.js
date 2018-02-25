@@ -192,10 +192,10 @@ app.post('/login', auth_ctrl.user);
 
 function checkLoggedIn(req, res, next) {
     if(!req.session.user){
-        req.session.user = {id: null};
+        req.session.user = null;
     }
     next();
-}; 
+};
 
 app.use(checkLoggedIn)
 app.get("/checkSession", auth_ctrl.sessionCheck);

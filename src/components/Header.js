@@ -36,9 +36,12 @@ const options = {
   };
 
 class Header extends Component {
-    constructor(){
-        super();
-        this.state = {};
+    constructor(props){
+        super(props);
+        this.state = {
+            loggedIn: false
+        }
+
         this.lock = null;
         this.login = this.login.bind(this);
     }
@@ -48,26 +51,32 @@ class Header extends Component {
             process.env.REACT_APP_AUTH0_CLIENT_ID,
             process.env.REACT_APP_AUTH0_DOMAIN,
             options
-          );
-          this.lock.on("authenticated", authResult => {
+        );
+        this.lock.on("authenticated", authResult => {
             this.lock.getUserInfo(authResult.accessToken, (error, user) => {
-              axios.post("/login", { userId: user.sub }).then(response => {
-                  console.log(response.data)
-                this.props.login(response.data.user);
-                this.props.history.push("/dashboard");
-              });
+                axios.post("/login", { userId: user.sub }).then(response => {
+                    this.props.login(response.data.user);
+                });
             });
-          });
-        }
+        });
 
-        login() {
-            this.props.history.push('/login');
-            if(this.props.history.location.pathname === '/login'){
-                this.lock.show();
-            } else {
-                this.login();
-            }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.user && !this.props.user){
+            this.setState({loggedIn: true})
         }
+    }
+
+
+    login() {
+        this.props.history.push('/login');
+        if(this.props.history.location.pathname === '/login'){
+            this.lock.show();
+        } else {
+            this.login();
+        }
+    }
 
 
     render() {
@@ -80,7 +89,7 @@ class Header extends Component {
                             <span className="sr-only">Toggle navigation</span>
                             <i className="far fa-chevron-square-down fa-2x" color="white"></i>
                         </button>
-                        <Link to={this.props.user.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
+                        <Link to={this.state.loggedIn ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="topNav">
@@ -92,13 +101,13 @@ class Header extends Component {
                             <li>
                                 <Link to="/explore">Explore</Link>
                             </li>
-                            {this.props.user.id && <li className="mobile-show">
+                            {this.props.user && <li className="mobile-show">
                                 <Link to={`/dev/${this.props.user.id}`}>Profile</Link>
                             </li>}
-                            {!this.props.user.id && <li className="mobile-show">
+                            {!this.props.user && <li className="mobile-show">
                                 <Link to={`/`}>Sign In</Link>
                             </li>}
-                            {this.props.user.id && <li className="dropdown mobile-hide" id="user-img">
+                            {this.props.user && <li className="dropdown mobile-hide" id="user-img">
                                 <a href="" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     <img src={this.props.user.picture} alt="user" className='profilepic'/>
                                     <span className="caret"></span>
@@ -111,12 +120,12 @@ class Header extends Component {
                                         <Link to="/edit">Edit Profile</Link>
                                     </li>
                                     <li role="separator" className="divider"></li>
-                                    <li>
+                                    <li onClick={() => this.props.logout()}>
                                         <Link to="/"><i className="fas fa-sign-out"></i> &nbsp; Logout</Link>
                                     </li>
                                 </ul>
                             </li>}
-                            {!this.props.user.id && <li className="mobile-hide" onClick={this.login}>
+                            {!this.props.user && <li className="mobile-hide" onClick={this.login}>
                                 <Link to={`/`}>Sign In</Link>
                             </li>}
                         </ul>

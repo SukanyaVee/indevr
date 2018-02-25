@@ -20,7 +20,7 @@ class Footer extends Component {
                     <SearchBar className='search'/>
                 </div>
                 <div>
-                    <Link to={this.props.user.id ? '/dashboard' : '/'} className='img-responsive'>
+                    <Link to={this.props.user ? '/dashboard' : '/'} className='img-responsive'>
                     <Image src={logo} alt='' />
                     </Link>
                 </div>

@@ -170,8 +170,14 @@ const Main = glam.div({
 //   }
 // });
 
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
 const mapDispatchToProps = {
   login
 };
 
-export default connect(null, mapDispatchToProps)(LandingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

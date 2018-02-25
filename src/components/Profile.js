@@ -7,19 +7,20 @@ import axios from 'axios';
 import PostTile from './PostTile';
 import UserTile from './UserTile';
 import ProjectTile from './ProjectTile';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {hasData} from '../tests/unit/ProfileTests/profile';
 
 
 
 class Profile extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             showPosts: true,
             showNetwork: false,
             showProjects: false,
+            id: props.history.location.pathname.slice(5),
             user: '',
             picture: '',
             posts: [],
@@ -112,7 +113,7 @@ class Profile extends Component {
         }).catch( err => console.log(err))
 
         //Check for connection
-        axios.get(`/indevr/contacts/check?userID=${this.props.user.id}&friendID=${userID}`).then( res => {
+        axios.get(`/indevr/contacts/check?userID=${this.state.id}&friendID=${userID}`).then( res => {
             this.setState({connected:res.data})
         }).catch( err => console.log(err))
 
@@ -148,7 +149,7 @@ class Profile extends Component {
         if(!this.state.connected){
             console.log('not connected');
             const newConnection = {
-                userID: this.props.user.id,
+                userID: this.state.id,
                 connectWith: this.props.history.location.pathname.slice(5)
             }
             axios.post('/indevr/contacts/connect', newConnection).then(res => {
@@ -288,7 +289,7 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(Profile);
+export default withRouter(connect(mapStateToProps)(Profile));
 
 
 const Main = glam.div({

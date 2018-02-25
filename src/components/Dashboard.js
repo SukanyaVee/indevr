@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-// import {login} from '../ducks/reducer';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import glam from 'glamorous';
@@ -34,19 +33,31 @@ class Dashboard extends Component {
     }
 
     componentDidMount(){
-        axios.get(`/indevr/contacts?user_id=${this.props.user.id}`).then(res=>{
+        if(this.props.user){
+            this.getInfo(this.props.user.id)
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.user && !this.props.user){
+            this.getInfo(nextProps.user.id);
+        }
+    }
+
+    getInfo(userId){
+        axios.get(`/indevr/contacts?user_id=${userId}`).then(res=>{
             this.setState({contacts: res.data})
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/projects?user_id=${this.props.user.id}`).then(res=>{
+        axios.get(`/indevr/projects?user_id=${userId}`).then(res=>{
             res.data[0] ? this.setState({projects: res.data}) : this.setState({projectView: 'others'})
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{
+        axios.get(`/indevr/public?user_id=${userId}`).then(res=>{
             this.setState({publicProj: res.data})
         }).catch(error=>console.log(error))
         axios.get('/indevr/posts').then(res=>{
             this.setState({posts: res.data})
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/messages?user_id=${this.props.user.id}`).then(resp=> {
+        axios.get(`/indevr/messages?user_id=${userId}`).then(resp=> {
             this.setState({messages: resp.data, messageCount: resp.data.length})
         }).catch(error=>console.log(error))
     }
@@ -98,6 +109,9 @@ class Dashboard extends Component {
     }
 
     render() {
+        if(!this.props.user){
+            return 'Loading...'
+        }
         return (
             <Main>
                 <Heading>Hello, Friendly Developer!</Heading>
@@ -333,6 +347,9 @@ const Projects = glam.div ({
     '& .project-wrapper':{
         backgroundColor: 'var(--main-grey)',
         paddingTop: 20
+    },
+    '@media (max-width: 1080px)':{
+        display: 'none'
     }
 })
 
