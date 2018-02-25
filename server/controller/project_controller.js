@@ -64,8 +64,8 @@ module.exports = {
     },
     createSkill: (req, res, next) => {
         const db = req.app.get('db')
-        db.create_skill([req.body.project_id, req.body.skill, req.body.level]).then(()=>{
-            res.status(200).send()
+        db.create_skill([req.body.project_id, req.body.skill, req.body.level]).then(skills=>{
+            res.status(200).send(skills[0])
         }).catch(error=>{
             console.error(error);
             res.status(500).send(error)

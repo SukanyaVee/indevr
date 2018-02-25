@@ -117,7 +117,7 @@ class Dashboard extends Component {
 
     render() {
         if(!this.props.user){
-            return <Loading><i class="fas fa-spinner fa-pulse fa-7x"></i></Loading>
+            return <Loading><i className="fas fa-spinner fa-pulse fa-7x"></i></Loading>
         }
         return (
             <Main>

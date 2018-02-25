@@ -47,14 +47,15 @@ class CreateProject extends Component {
     createSkill(newSkill,newLevel, e){
         e.preventDefault()
         var x={project_id: this.state.proj_id, skill: newSkill, level: newLevel}
-        console.log(x)
-        axios.post('/indevr/skills', x).then(resp=>{
-            axios.get(`indevr/skills/${this.state.proj_id}`).then(resp=>{
-                this.setState({stack: resp.data})
-                this.setState({newLevel: 1})
-            }).catch(error=>console.log(error))
-        }).catch(error=>console.log(error))
-        this.setState({newSkill:'',newLevel:1})
+            if(this.state.newSkill !== ''){
+                axios.post('/indevr/skills', x).then(resp=>{
+                    axios.get(`indevr/skills/${this.state.proj_id}`).then(resp=>{
+                        this.setState({stack: resp.data})
+                        this.setState({newLevel: 1})
+                    }).catch(error=>console.log(error))
+                }).catch(error=>console.log(error))
+                this.setState({newSkill:'',newLevel:1})
+            }
     }
 
     removeSkill(index){
