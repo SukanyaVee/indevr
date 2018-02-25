@@ -72,6 +72,10 @@ class Header extends Component {
         }
     }
 
+    closeMobileNav(){
+        document.getElementById('topNav').classList.remove('in');
+    }
+
 
     login() {
         this.props.history.push('/login');
@@ -107,13 +111,13 @@ class Header extends Component {
                     <div className="collapse navbar-collapse" id="topNav">
 
                         <ul className="nav navbar-nav navbar-right">
-                            <li>
+                            <li onClick={() => this.closeMobileNav()}>
                                 <Link to="/about/indevr">About</Link>
                             </li>
-                            <li>
+                            <li onClick={() => this.closeMobileNav()}>
                                 <Link to="/explore">Explore</Link>
                             </li>
-                            {this.props.user && <li className="mobile-show">
+                            {this.props.user && <li className="mobile-show" onClick={() => this.closeMobileNav()}>
                                 <Link to={`/dev/${this.props.user.id}`}>Profile</Link>
                             </li>}
                             {!this.props.user && <li className="mobile-show"  onClick={this.login}>
@@ -125,10 +129,10 @@ class Header extends Component {
                                     <span className="caret"></span>
                                 </a>
                                 <ul className="dropdown-menu">
-                                    <li>
+                                    <li onClick={() => this.closeMobileNav()}>
                                         <Link to={`/dev/${this.props.user.id}`}>View Profile</Link>
                                     </li>
-                                    <li>
+                                    <li onClick={() => this.closeMobileNav()}>
                                         <Link to="/edit">Edit Profile</Link>
                                     </li>
                                     <li role="separator" className="divider"></li>
@@ -170,6 +174,7 @@ const Nav = glam.nav({
     height: 105,
     marginBottom: 0,
     fontSize: 18,
+    zIndex: 998,
     '& img':{
         maxHeight: 70,
     },

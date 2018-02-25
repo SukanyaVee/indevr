@@ -9,7 +9,7 @@ class Chat extends Component {
     constructor(props){
         super(props);
         this.state = {
-            username: props.user.first_name + ' ' + props.user.last_name,
+            username: '',
             message: '',
             messages: [],
             room: props.room
@@ -45,18 +45,24 @@ class Chat extends Component {
     }
 
     componentDidMount(){
+        if(this.props.user){
+            this.setState({ username: this.props.user.first_name + ' ' + this.props.user.last_name})
+        }
         axios.get(`/indevr/chat?room=${this.state.room}`).then(res => {
             this.setState({messages: res.data})
         }).catch(err => console.log(err))
     }
 
     componentWillReceiveProps(nextProps){
-        if(this.props.user.first_name !== nextProps.user.first_name){
+        if(this.props.user !== nextProps.user){
             this.setState({username: nextProps.user.first_name + ' ' + nextProps.user.last_name})
         }
     }
 
     render(){
+        if(!this.props.user){
+            return 'Loading...'
+        }
         return (
             <Main>
                 <Messages className="messages" id="messages">

@@ -35,10 +35,10 @@ class  Overview extends Component  {
         }).catch(error=>console.log(error))
         axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
             this.setState({contributors: res.data})
-            var x=this.state.contributors.filter(e=> 
+            var x=this.state.contributors.filter(e=>
                 e.id===this.props.user.id
-            )  
-            console.log(x)          
+            )
+            console.log(x)
             this.setState({showReqButton: x})
             console.log('showReqButton', this.state.showReqButton)
             // console.log('contributors', this.state.contributors)
@@ -77,13 +77,15 @@ class  Overview extends Component  {
             this.setState({showReqButton: [1]})
         }).catch(error=>console.log(error))
 
-    } 
+    }
 
     render( ) {
         var inline={marginLeft:'5px', cursor:'pointer'}
         var inline2={fontSize: 16}
-        
-        
+        if(!this.props.user){
+            return 'Loading...'
+        }
+
         return (
             <ProjectOverview>
                 <ProjectTitle>
@@ -102,7 +104,7 @@ class  Overview extends Component  {
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}
                 <ProjectDescription>
                     {this.state.project.description}<br/>
-                    {this.state.editShow===true && 
+                    {this.state.editShow===true &&
                     <Input placeholder="Edit Description" value={this.state.newDescr} onChange={e=>{this.setState({newDescr: e.target.value})}}/>}<br/>
                     {this.state.editShow===true &&
                     <Input placeholder="Edit Repo" value={this.state.newRepo} onChange={e=>{this.setState({newRepo: e.target.value})}}/>}<br/>
