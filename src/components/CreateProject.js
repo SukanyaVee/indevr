@@ -9,8 +9,8 @@ class CreateProject extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            user_id: this.props.user.id, //HARDCODED
-            proj_id: 0, 
+            user_id: '',
+            proj_id: 0,
             project_name: '',
             description: '',
             pub: true,
@@ -26,57 +26,85 @@ class CreateProject extends Component {
 
     }
 
+    componentDidMount(){
+        if(this.props && this.props.user){
+            this.setState({user_id: this.props.user.id})
+        }
+    }
+
     createProj(project_name, description, pub, repo) {
-        var newProj = {user_id: this.props.user.id, project_name: project_name, description:description, pub: pub, repo: repo}
+        var newProj = {user_id: this.state.user_id, project_name: project_name, description:description, pub: pub, repo: repo}
         console.log(newProj)
         axios.post('/indevr/projects', newProj).then(resp=>{
             console.log(resp.data)
             this.setState({proj_id: resp.data[0].id})
-            axios.post('/indevr/contributors', {project_id: resp.data[0].id, user_id: this.props.user.id, owner: true}).then(resp=>{ //HARDCODED
+            axios.post('/indevr/contributors', {project_id: resp.data[0].id, user_id: this.state.user_id, owner: true}).then(resp=>{ //HARDCODED
             }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
         this.setState({showSkillsForm: true})
     }
 
-    createSkill(newSkill,newLevel){
+    createSkill(newSkill,newLevel, e){
+        e.preventDefault()
         var x={project_id: this.state.proj_id, skill: newSkill, level: newLevel}
-        console.log(x)
-        axios.post('/indevr/skills', x).then(resp=>{
-            axios.get(`indevr/skills/${this.state.proj_id}`).then(resp=>{
-                this.setState({stack: resp.data})
-                this.setState({newSkill: '', newLevel: 1})
-            }).catch(error=>console.log(error))
-        }).catch(error=>console.log(error))
-        // this.setState({newSkill:'',newLevel:0})
+            if(this.state.newSkill !== ''){
+                axios.post('/indevr/skills', x).then(resp=>{
+                    axios.get(`indevr/skills/${this.state.proj_id}`).then(resp=>{
+                        this.setState({stack: resp.data})
+                        this.setState({newLevel: 1})
+                    }).catch(error=>console.log(error))
+                }).catch(error=>console.log(error))
+                this.setState({newSkill:'',newLevel:1})
+            }
     }
 
-    completed(){
-            this.props.history.push(`/project/${this.state.proj_id}`) // HARDCODED
+    removeSkill(index){
+        const id = this.state.stack[index].id;
+        const newStack = [...this.state.stack];
+        newStack.splice(index, 1);
+        axios.delete(`indevr/skills/${id}`).then(res => {
+            this.setState({stack: newStack})
+        }).catch(err => console.log(err))
     }
-    
+
+    completed(newSkill,newLevel){
+        this.props.history.push(`/project/${this.state.proj_id}`)
+    }
+
     render() {
-        console.log(this.props.user.id)
-        var mapppp = this.state.stack.map(skill=> 
-            (<ProjectSkills><div key={skill.id}>{skill.skill} - {skill.level===1?'Worthy Warrior':skill.level===2?'Noble Ninja':'Supreme Samurai'}</div></ProjectSkills>)
-        )
         return (
-            <Forrrm>
-                {!this.state.showSkillsForm && 
-                <div>
-                Step 1: Create a project. You can add more skills later.<br/><br/>
-                    <input placeholder="Project Name" onChange={e=>{this.setState({project_name: e.target.value})}}/><br/>
-                    <input placeholder="Description"  onChange={e=>{this.setState({description: e.target.value})}}/><br/>
-                    <input placeholder="Link to Github repo" onChange={e=>{this.setState({repo:e.target.value})}}/><br/>
-                    Public? 
-                    <select value={this.state.pub} onChange={e=>{this.setState({pub:e.target.value})}}>
-                        <option value={true}>Yes</option>
-                        <option value={false}>No</option>
-                    </select><br/>
-                    <button onClick={e=>{this.createProj(this.state.project_name, this.state.description, this.state.pub, this.state.repo)}}>Create</button>
-                </div>}
+            <div>
+                {!this.state.showSkillsForm &&
+                    <Form>
+                        <label>Step 1: Create a project!</label>
+                        <input className="form-control"
+                            placeholder="Project Name"
+                            onChange={e=>{this.setState({project_name: e.target.value})}}/>
+
+                        <textarea className="form-control"
+                            placeholder="Description"
+                            onChange={e=>{this.setState({description: e.target.value})}}></textarea>
+
+                        <input className="form-control"
+                            placeholder="Link to Github repo"
+                            onChange={e=>{this.setState({repo:e.target.value})}}/>
+
+                        <select className="form-control"
+                            value={this.state.pub}
+                            onChange={e=>{this.setState({pub:e.target.value})}}>
+                            <option value={true}>Public</option>
+                            <option value={false}>Private</option>
+                        </select>
+
+                        <button className="btn"
+                            onClick={e=>{this.createProj(this.state.project_name, this.state.description, this.state.pub, this.state.repo)}}>
+                            Create</button>
+                    </Form>}
+
                 {/* CREATES PROJECT IN projects TABLE, THEN ALLOWS USER TO ENTER SKILLS */}
-                {this.state.showSkillsForm && 
+                {this.state.showSkillsForm &&
                     <div>
+<<<<<<< HEAD
                         {mapppp}
                         Add more skills and levels to the project you just created<br/><br/>
                         <input placeholder="Primary Skill" value={this.state.newSkill} required onChange={e=>{this.setState({newSkill:e.target.value})}}/><br/>
@@ -87,40 +115,94 @@ class CreateProject extends Component {
                         </select> <br/>
                         <button onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel)}}>Submit and add another skill</button>
                         <button onClick={e=>{this.completed()}}>Done</button>
+=======
+                        <Form>
+                            <label>Step 2: Build the stack for your project</label>
+                            <input className="form-control"
+                                placeholder="Ex: React"
+                                value={this.state.newSkill}
+                                required onChange={e=>{this.setState({newSkill:e.target.value})}}/>
+
+                            <select className="form-control"
+                                value={this.state.newLevel}
+                                onChange={e=>{this.setState({newLevel:e.target.value})}}>
+                                <option value="1">Worthy Warrior (novice)</option>
+                                <option value="2">Noble Ninja (intermediate)</option>
+                                <option value="3">Supreme Samurai (advanced)</option>
+                            </select>
+                            <button  className="btn"
+                                onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel, e)}}>Add</button>
+                            <button className="btn"
+                                onClick={e=>{this.completed(this.state.newSkill, this.state.newLevel)}}>Finish
+                            </button>
+                        </Form>
+                        <SkillDisplay>
+                            {this.state.stack.map( (skill,i) => {
+                                return (
+                                    <Tag key={i}>
+                                        {skill.skill} - {skill.level}
+                                        <div className="delete" onClick={() => this.removeSkill(i)}> &nbsp; <i className="fas fa-minus-circle"></i></div>
+                                    </Tag>
+                                )
+                            })}
+                        </SkillDisplay>
+>>>>>>> master
                     </div>}
-            </Forrrm>
+            </div>
         )
     }
 }
 
-const Forrrm = glam.div ({
-    '& input': {
+const Form = glam.form ({
+    padding: 10,
+    maxWidth: 400,
+    textAlign: 'center',
+    '& button':{
+        backgroundColor: 'var(--main-purple)',
+        color: '#fff',
+        width: 'calc(50% - 10px)',
+        fontWeight: 'bold',
         margin: 5,
-        padding: 5,
-        borderRadius: 3
+        ':hover':{
+            color: '#fff'
+        }
     },
-    '& select': {
-        margin: 5,
-        padding: 5,
-        borderRadius: 3
+    '& .form-control':{
+        margin: 10,
+        width: 'calc(100% - 20px)'
     }
 })
 
-const ProjectSkills = glam.div ({
-    padding: 10,
-    borderRadius: 10,
-    '& div': {
-        borderRadius: 3,
-        background: 'var(--main-purple)',
-        // margin: 5,
-        padding:5,
-        color: 'white'
-    },
-    '& span': {
-        fontSize: 10,
-        cursor: 'pointer'
-    }
+const SkillDisplay = glam.div({
+    marginTop: 10,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    // '> div':{
+    //     margin: 5,
+    //     color: '#fff',
+    //     backgroundColor: 'var(--main-purple)',
+    //     padding: '3px 5px',
+    //     borderRadius: 5,
+    // }
 })
+
+const Tag = glam.div({
+    backgroundColor: 'var(--main-purple)',
+    borderRadius: 4,
+    padding: '3px 5px',
+    margin: 3,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative',
+    color: '#fff',
+    '& .fa-minus-circle':{
+        fontSize: '.8em',
+        color: 'red',
+    },
+})
+
 
 
 const mapStateToProps = state => {

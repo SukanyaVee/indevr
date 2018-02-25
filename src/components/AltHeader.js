@@ -2,11 +2,69 @@ import React, {Component} from 'react';
 import glam from 'glamorous';
 import logo from '../assets/in_DEV_r.png';
 import {connect} from 'react-redux';
+import { withRouter } from 'react-router'
 import {Link} from 'react-router-dom';
 import SearchBar from './SearchBar';
-import {logout} from '../ducks/reducer';
+import {logout, login} from '../ducks/reducer';
+import axios from 'axios';
+import Auth0Lock from 'auth0-lock';
+import logo2 from '../assets/lock.png';
+
+
+const options = {
+    theme: {
+      primaryColor: "#593c8f",
+      logo: logo2,
+    },
+    popupOptions: {width: 300, height: 400},
+    // allowSignUp: false,
+    redirect: true,
+    redirectUrl: "/dashboard",
+    languageDictionary: {
+      title: "inDevr"
+    },
+    additionalSignUpFields: [
+      {
+        name: "first_name",
+        placeholder: "Enter your first name"
+      },
+      {
+        name: "last_name",
+        placeholder: "Enter your last name"
+      }
+    ]
+  };
 
 class Header extends Component {
+    constructor(){
+        super();
+        this.state = {};
+        this.lock = null;
+        this.login = this.login.bind(this);
+    }
+
+    componentDidMount(){
+        console.log('p', this.props)
+        this.lock = new Auth0Lock(
+            process.env.REACT_APP_AUTH0_CLIENT_ID,
+            process.env.REACT_APP_AUTH0_DOMAIN,
+            options
+          );
+          this.lock.on("authenticated", authResult => {
+            this.lock.getUserInfo(authResult.accessToken, (error, user) => {
+              axios.post("/login", { userId: user.sub }).then(response => {
+                  console.log(response.data)
+                this.props.login(response.data.user);
+                this.props.history.push("/dashboard");
+              });
+            });
+          });
+        }
+      
+        login() {
+          this.lock.show();
+        }
+    
 
     render() {
         return (
@@ -18,7 +76,7 @@ class Header extends Component {
                             <span className="sr-only">Toggle navigation</span>
                             <i className="far fa-chevron-square-down fa-2x" color="white"></i>
                         </button>
-                        <Link to={this.props.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
+                        <Link to={this.props.user.id ? '/dashboard' : '/'} className="navbar-brand"><img src={logo} alt="logo" className="img-responsive"/></Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="topNav">
@@ -54,7 +112,7 @@ class Header extends Component {
                                     </li>
                                 </ul>
                             </li>}
-                            {!this.props.user.id && <li className="mobile-hide">
+                            {!this.props.user.id && <li className="mobile-hide" onClick={this.login}>
                                 <Link to={`/`}>Sign In</Link>
                             </li>}
                         </ul>
@@ -75,10 +133,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-        logout
+        logout,
+        login
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
 
 
 const Nav = glam.nav({

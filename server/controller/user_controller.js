@@ -7,7 +7,7 @@ module.exports = {
             db.get_skills([userID]).then(skills => {
                 users[0].skills = skills
                 res.status(200).send(users[0]);
-            })
+            }).catch(err => console.log('Error getting user skills', err))
         }).catch( err => {
             console.log(err);
             res.status(500).send('Oops, something went wrong!')
@@ -29,7 +29,12 @@ module.exports = {
     delete: (req, res, next) => {
         console.log('connect country')
         const dbInstance = req.app.get('db')
-        dbInstance.delete_user([req.params.id]).then(entry=> {res.status(200).send(entry)}).catch(error=>{console.error(error);res.status(500).send(err)})
+        dbInstance.delete_user([req.params.id]).then(entry=>{
+            res.status(200).send(entry)
+        }).catch(error => {
+            console.error(error);
+            res.status(500).send(err);
+        })
     },
 
     addSkill: (req,res,next) => {

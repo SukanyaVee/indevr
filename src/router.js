@@ -17,6 +17,7 @@ import White from './components/White';
 export default (
     <Switch>
         <Route exact path='/' component={LandingPage} />
+        <Route exact path='/login' component={LandingPage} />
         <Route exact path="/dashboard" component={Dashboard}/>
         <Route path="/project/:id" component={ProjectView}/>
         <Route path="/chat" component={Chat} />

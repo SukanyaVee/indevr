@@ -14,14 +14,13 @@ class Footer extends Component {
     }
 
     render() {
-        console.log(this.props.id, this.props.user)
         return (
             <Foot>
                 <div>
                     <SearchBar className='search'/>
                 </div>
                 <div>
-                    <Link to={this.props.user.id ? '/dashboard' : '/'} className='img-responsive'>
+                    <Link to={this.props.user ? '/dashboard' : '/'} className='img-responsive'>
                     <Image src={logo} alt='' />
                     </Link>
                 </div>
@@ -38,7 +37,7 @@ class Footer extends Component {
 const Foot = glam.div({
     width: '100vw',
     minHeight: 100,
-    
+
     backgroundColor: 'var(--main-purple)',
     display: 'flex',
     flexDirection: 'row',
@@ -47,7 +46,7 @@ const Foot = glam.div({
     flexWrap: 'wrap',
     textDecoration: 'none',
     color: 'white',
-    borderTop: 'Solid black 5px',
+    // borderTop: 'Solid black 5px',
     '> div':{
         // margin: 20
     },

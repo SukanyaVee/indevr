@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
 import glam from 'glamorous';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 class PostTile extends Component {
+
     render(){
         return (
             <Main>
                 <Header>
-                    <img src="http://via.placeholder.com/50x50" alt="" /> &nbsp;
-                    <div>
-                        <strong>{this.props.name}</strong><br/>
-                        <sub>{new Date(this.props.timestamp).toLocaleDateString("en-us", { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" })}</sub>
-                    </div>
+                    <Link to={`/dev/${this.props.user_id}`}>
+                        <img src={this.props.picture} alt="" /> &nbsp;
+                        <div>
+                            <strong>{this.props.name}</strong><br/>
+                            <sub>{new Date(this.props.timestamp).toLocaleDateString("en-us", { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" })}</sub>
+                        </div>
+                    </Link>
+                    {this.props.user.id === this.props.user_id &&
+                        <div onClick={this.props.deletePost}>
+                            <Delete className="far fa-trash-alt"/>
+                        </div>}
                 </Header>
                 <Content>
                     <div>
@@ -22,7 +31,13 @@ class PostTile extends Component {
     }
 }
 
-export default PostTile;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(PostTile);
 
 const Main = glam.div({
     backgroundColor: 'var(--main-grey)',
@@ -36,12 +51,22 @@ const Main = glam.div({
 const Header = glam.div({
     backgroundColor: 'var(--main-purple)',
     color: '#fff',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    position: 'relative',
     padding: 10,
-    '> div':{
+    '> a':{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        color: 'inherit',
+        textDecoration: 'none',
+        width: '100%'
+    },
+    '& div':{
         paddingLeft: 10
+    },
+    '& img':{
+        height: 50,
+        width: 50
     }
 })
 
@@ -52,4 +77,11 @@ const Content = glam.div({
     alignItems: 'center',
     height: 200,
     textAlign: 'center'
+})
+
+const Delete = glam.i({
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    cursor: 'pointer'
 })

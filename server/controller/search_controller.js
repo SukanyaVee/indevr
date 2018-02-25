@@ -17,7 +17,7 @@ module.exports = {
                     skills.push(stacks)
                     let projectSearch = {proj, skills}
                 res.send(projectSearch)
-        })
+        }).catch(err => console.log('Error getting search stacks:', err))
     }).catch(err => console.log('Err', err))
 },
     getPosts: (req,res) => {
@@ -30,6 +30,6 @@ module.exports = {
         const { term } = req.params;
         req.app.get('db').search_skills(term).then(response => {
             res.send(response)
-        })
+        }).catch(err => console.log('Error searching skills:', err))
     }
 }

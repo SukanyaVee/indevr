@@ -7,19 +7,20 @@ import axios from 'axios';
 import PostTile from './PostTile';
 import UserTile from './UserTile';
 import ProjectTile from './ProjectTile';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {hasData} from '../tests/unit/ProfileTests/profile';
 
 
 
 class Profile extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             showPosts: true,
             showNetwork: false,
             showProjects: false,
+            id: props.history.location.pathname.slice(5),
             user: '',
             picture: '',
             posts: [],
@@ -38,6 +39,9 @@ class Profile extends Component {
             },
             skills: []
         }
+
+        this.deletePost = this.deletePost.bind(this)
+
     }
 
     componentDidMount(){
@@ -47,6 +51,14 @@ class Profile extends Component {
 
     componentWillReceiveProps(nextProps){
         this.getInfo();
+    }
+
+    deletePost(postId){
+        axios.delete(`/indevr/posts/${postId}`).then(resp=>{
+            axios.get('/indevr/posts').then(res=>{
+                this.setState({posts: res.data})
+            }).catch(error=>console.log(error))
+        }).catch(error=>console.log(error))
     }
 
     getInfo(){
@@ -101,7 +113,7 @@ class Profile extends Component {
         }).catch( err => console.log(err))
 
         //Check for connection
-        axios.get(`/indevr/contacts/check?userID=${this.props.user.id}&friendID=${userID}`).then( res => {
+        axios.get(`/indevr/contacts/check?userID=${this.state.id}&friendID=${userID}`).then( res => {
             this.setState({connected:res.data})
         }).catch( err => console.log(err))
 
@@ -137,7 +149,7 @@ class Profile extends Component {
         if(!this.state.connected){
             console.log('not connected');
             const newConnection = {
-                userID: this.props.user.id,
+                userID: this.state.id,
                 connectWith: this.props.history.location.pathname.slice(5)
             }
             axios.post('/indevr/contacts/connect', newConnection).then(res => {
@@ -216,13 +228,17 @@ class Profile extends Component {
                                     <PostsWrapper>
 
                                         {this.state.posts.map((post,i) => {
+                                            let deletePost = this.deletePost.bind(this, post.post_id)
                                             return (
                                                     <PostTile key={i}
                                                         id={post.id}
                                                         name={post.first_name + ' ' + post.last_name}
                                                         user_id={post.user_id}
+                                                        picture={post.picture}
                                                         content={post.content}
-                                                        timestamp={post.created_at}/>
+                                                        timestamp={post.created_at}
+                                                        deletePost={deletePost}
+                                                    />
                                             )
                                         })}
                                     </PostsWrapper>
@@ -273,7 +289,7 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(Profile);
+export default withRouter(connect(mapStateToProps)(Profile));
 
 
 const Main = glam.div({

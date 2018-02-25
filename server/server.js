@@ -153,7 +153,7 @@ const skillsAPIurl = '/indevr/skills'
 app.get(`${skillsAPIurl}/:id`, proj.getSkillStack); //uses params
 app.post(skillsAPIurl, proj.createSkill); // uses body
 // app.put(skillsAPIurl, skills.put);
-// app.delete(skillsAPIurl, skills.delete);
+app.delete(`${skillsAPIurl}/:id`, proj.deleteSkill);
 
 const projContributors = '/indevr/contributors'
 
@@ -192,14 +192,14 @@ app.post('/login', auth_ctrl.user);
 
 function checkLoggedIn(req, res, next) {
     if(!req.session.user){
-        req.session.user = {id: null};
+        req.session.user = null;
     }
     next();
-}; 
+};
 
 app.use(checkLoggedIn)
 app.get("/checkSession", auth_ctrl.sessionCheck);
-app.post('/logout', auth_ctrl.logout);
+app.get('/logout', auth_ctrl.logout);
 
 
 //Shhh Listen...

@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-// import {Link, Switch, Route} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 // import axios from 'axios';
 import glam from 'glamorous';
 import Overview from './Overview';
 // import Repo from './Repo';
+import {connect} from 'react-redux';
 import Chat from './Chat';
 import TaskBoard from './Taskboard/Taskboard';
 // import Whiteboard from './Whiteboard';
 import ToggleDisplay from 'react-toggle-display';
 import White from './White';
 
-
-
-
-export default class ProjectView extends Component {
+class ProjectView extends Component {
     constructor(props){
         super(props)
             this.state= {
@@ -31,7 +29,6 @@ export default class ProjectView extends Component {
     }
 
 
-
     // openRepo () {
         // var output = document.getElementById("repo");
         // output.innerHTML=<object type="html" data="https://github.com" width="600px" height="400px" style="overflow:auto;border:5px ridge blue"></object>
@@ -40,6 +37,8 @@ export default class ProjectView extends Component {
     switchTab(tab){
         document.querySelector('.active').classList.remove('active');
         document.getElementById(tab).classList.add('active');
+        document.getElementById('project-tools').classList.remove('in')
+
 
         this.setState({
             showOverview: tab === 'overview' ? true : false,
@@ -52,6 +51,14 @@ export default class ProjectView extends Component {
     render() {
         const innerW = window.innerWidth < 767 ? 0 : 150;
         const innerH = window.innerWidth < 767 ? 140 : 105;
+        if(!this.props){
+            setTimeout(function(){
+                if(this.props && !this.props.user){
+                    this.props.history.push('/login')
+                }
+            }, 200)
+        }
+
         return (
             <div>
                 <MobileHeader>
@@ -87,7 +94,10 @@ export default class ProjectView extends Component {
                             <TaskBoard project={this.state.projectId}/>
                         </ToggleDisplay>
                         <ToggleDisplay show={this.state.showWhiteboard}>
-                            <White width={innerW} height={innerH}/>
+                            <div className="mobile-show">
+                                Whiteboards don't work as well on mobile.  Please use a computer to take advantage of this feature.
+                            </div>
+                            <White width={innerW} height={innerH} className="mobile-hide"/>
                         </ToggleDisplay>
                     </View>
                 </Main>
@@ -95,6 +105,14 @@ export default class ProjectView extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(ProjectView));
 
 
 const Main = glam.div({
@@ -118,6 +136,11 @@ const Sidebar = glam.div({
     width: 150,
     paddingTop: 20,
     position: 'fixed',
+    zIndex: 999,
+    '@media (max-width: 767px)':{
+        position: 'static',
+        width: 0
+    }
 
 })
 
@@ -170,6 +193,14 @@ const View = glam.div({
     marginLeft: 150,
     padding: 20,
     '@media (max-width: 767px)':{
-        marginLeft: 0
+        marginLeft: 0,
+        '& .mobile-hide':{
+            display: 'none'
+        },
+    },
+    '@media (min-width: 768px)':{
+        '& .mobile-show':{
+            display: 'none',
+        }
     }
 })

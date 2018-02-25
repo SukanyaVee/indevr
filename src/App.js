@@ -1,39 +1,54 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-import { logout, login } from './ducks/reducer';
+import {login,logout} from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import router from './router';
-import AltHeader from './components/AltHeader';
+import Header from './components/Header';
 import Footer from './components/Footer';
 import axios from 'axios';
 
 
 class App extends Component {
 
-    // static propTypes = {
-    //     location: PropTypes.object.isRequired,
-
-    // }
-
     componentDidMount(){
-       axios.get('/checkSession').then(response => {
-           const user = response.data;
-           console.log(response.data)
-           this.props.login(user);
-           if(!this.props.user){
-               this.props.history.push('/')
-           }
-       }).catch(err => {
-           console.log(err, 'user error')
-           this.props.history.push('/')
-       });
+        if(!this.props.user){
+            this.checkSession()
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.user && !this.props.user){
+            this.checkSession()
+        }
+    }
+
+
+
+    checkSession(){
+        const getSession = async () => {
+            const session = await axios.get('/checkSession');
+            //If session is active, set user data in redux
+            if(session.data.user){
+                this.props.login(session.data.user);
+                //Redirect to dashboard if coming from login
+                if(this.props.history.location.pathname === '/login'){
+                    this.props.history.push('/dashboard')
+                }
+            }
+
+            //If no session, logout and redirect to login
+            if(this.props.history.location.pathname !== '/login' && !session.data.user){
+                this.props.logout();
+                this.props.history.push('/login')
+            }
+        }
+        getSession()
     }
 
     render() {
         return (
             <div>
-                <AltHeader />
+                <Header />
                 {router}
                 <Footer />
             </div>
@@ -49,7 +64,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     login,
-    logout
+    logout,
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
