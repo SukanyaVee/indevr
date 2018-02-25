@@ -1,0 +1,118 @@
+{
+	"id": "bbc73e5f-bf6c-5d34-2751-c6d84ae92439",
+	"name": "InDevrSukanya",
+	"description": "Sukanya's endpoint tests for group Project InDevr",
+	"order": [
+		"3cb6ad21-d64d-a6b3-bb2e-848e2b00585a",
+		"3a398bc7-8986-d3f5-4bce-9fc75ee73bbb"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1519583415637,
+	"owner": 0,
+	"public": false,
+	"events": [],
+	"variables": [],
+	"auth": null,
+	"requests": [
+		{
+			"id": "3a398bc7-8986-d3f5-4bce-9fc75ee73bbb",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:3483/indevr/projects/3",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b84147de-0b6f-4922-85f4-d00c20372d66",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"const project3 = {",
+							"    \"id\": 3,",
+							"    \"user_id\": 14,",
+							"    \"project_name\": \"The IInnDDeevvrr\",",
+							"    \"description\": \"The all to rule them one\",",
+							"    \"public\": true,",
+							"    \"repo\": \"http://www.github.com\"",
+							"}",
+							"",
+							"",
+							"",
+							"pm.test('Correct Project', function () {",
+							"    pm.expect(response[0].id).to.eq(3)",
+							"    pm.expect(response[0].public).to.eq(true)",
+							"    pm.expect(response[0].project_name).to.eq(\"The IInnDDeevvrr\")",
+							"",
+							"});"
+						]
+					}
+				}
+			],
+			"auth": null,
+			"method": "GET",
+			"collectionId": "bbc73e5f-bf6c-5d34-2751-c6d84ae92439",
+			"data": null,
+			"dataMode": "params",
+			"name": "http://localhost:3483/indevr/projects/3",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1519583619799,
+			"version": 2,
+			"responses": [],
+			"preRequestScript": null,
+			"tests": "const response = pm.response.json();\nconst project3 = {\n    \"id\": 3,\n    \"user_id\": 14,\n    \"project_name\": \"The IInnDDeevvrr\",\n    \"description\": \"The all to rule them one\",\n    \"public\": true,\n    \"repo\": \"http://www.github.com\"\n}\n\n\n\npm.test('Correct Project', function () {\n    pm.expect(response[0].id).to.eq(3)\n    pm.expect(response[0].public).to.eq(true)\n    pm.expect(response[0].project_name).to.eq(\"The IInnDDeevvrr\")\n\n});",
+			"currentHelper": null,
+			"helperAttributes": null
+		},
+		{
+			"id": "3cb6ad21-d64d-a6b3-bb2e-848e2b00585a",
+			"url": "http://localhost:3483/indevr/projects?user_id=1",
+			"queryParams": [
+				{
+					"key": "user_id",
+					"value": "1",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"method": "GET",
+			"headers": "",
+			"headerData": [],
+			"data": null,
+			"dataMode": "params",
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea65eecb-1762-4229-905b-557ed1d784b8",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json();",
+							"",
+							"pm.test('Projects', function () {",
+							"    pm.expect(response.length).to.eq(11)",
+							"});"
+						]
+					}
+				}
+			],
+			"auth": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"version": 2,
+			"name": "http://localhost:3483/indevr/projects?user_id=1",
+			"description": "",
+			"descriptionFormat": "html",
+			"collectionId": "bbc73e5f-bf6c-5d34-2751-c6d84ae92439",
+			"preRequestScript": null,
+			"tests": "const response = pm.response.json();\n\npm.test('Projects', function () {\n    pm.expect(response.length).to.eq(11)\n});",
+			"currentHelper": null,
+			"helperAttributes": null
+		}
+	]
+}
