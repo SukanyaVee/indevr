@@ -199,7 +199,7 @@ function checkLoggedIn(req, res, next) {
 
 app.use(checkLoggedIn)
 app.get("/checkSession", auth_ctrl.sessionCheck);
-app.post('/logout', auth_ctrl.logout);
+app.get('/logout', auth_ctrl.logout);
 
 
 //Shhh Listen...

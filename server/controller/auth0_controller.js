@@ -51,6 +51,7 @@ user: (req, res) => {
   //Destroy user session, facilitate logout
   logout: (req, res) => {
     req.session.destroy();
+    console.log('destroyed:', req.session)
     res.status(200).send("You have been successfully logged out.");
   },
 };

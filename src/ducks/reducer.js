@@ -40,20 +40,9 @@ export default function reducer(state = initialState, action){
             return {...state, user: action.payload};
         case LOGOUT:
         console.log('Action Received:', action)
-        axios.get('/logout').then(res => {
-            console.log('Session destroyed')
-        }).catch( err => console.log(err))
             return {...state, user: action.payload };
         case CHECK_SESSION:
         console.log('Action Received:', action)
-        axios.get('/checkSession').then(response => {
-            console.log('Session Check:', response.data)
-            if(response.data.user){
-                logout();
-            } else {
-                login(response.data.user)
-            }
-        })
             return state;
 
         default:

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {login,logout,checkLoggedIn} from './ducks/reducer';
+import {login,logout} from './ducks/reducer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import router from './router';
@@ -65,7 +65,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     login,
     logout,
-    checkLoggedIn
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -66,6 +66,10 @@ class Header extends Component {
         if(nextProps.user && !this.props.user){
             this.setState({loggedIn: true})
         }
+
+        if(this.props.user && !nextProps.user){
+            this.setState({loggedIn: false})
+        }
     }
 
 
@@ -78,6 +82,14 @@ class Header extends Component {
         }
     }
 
+    logout(){
+        console.log('logout here')
+        axios.get('/logout').then(res => {
+            console.log('Session destroyed')
+            this.props.logout();
+            this.props.history.push('/login');
+        }).catch( err => console.log(err))
+    }
 
     render() {
         return (
@@ -120,7 +132,7 @@ class Header extends Component {
                                         <Link to="/edit">Edit Profile</Link>
                                     </li>
                                     <li role="separator" className="divider"></li>
-                                    <li onClick={() => this.props.logout()}>
+                                    <li onClick={() => this.logout()}>
                                         <Link to="/"><i className="fas fa-sign-out"></i> &nbsp; Logout</Link>
                                     </li>
                                 </ul>
