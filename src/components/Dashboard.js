@@ -27,6 +27,7 @@ class Dashboard extends Component {
             showMine: true,
             showExplore: false,
             showCreate: false,
+            showProjects: false
         };
         this.submitPost = this.submitPost.bind(this)
         this.deletePost = this.deletePost.bind(this)
@@ -108,6 +109,12 @@ class Dashboard extends Component {
         }).catch(error=>console.log(error))
     }
 
+    toggleProjectsMobile(){
+        this.setState({showProjects: !this.state.showProjects});
+        const projects = document.getElementById('projects');
+        projects.classList.toggle('hidden');
+    }
+
     render() {
         if(!this.props.user){
             return 'Loading...'
@@ -151,10 +158,10 @@ class Dashboard extends Component {
                 <div className="container">
                     <h4  className="clickable" onClick={() => this.setState({showConnections: !this.state.showConnections})}>
                         My Network &nbsp;
-                        <ToggleDisplay show={this.state.showConnections}>
+                        <ToggleDisplay show={!this.state.showConnections}>
                             <i className="fas fa-chevron-up"></i>
                         </ToggleDisplay>
-                        <ToggleDisplay show={!this.state.showConnections}>
+                        <ToggleDisplay show={this.state.showConnections}>
                             <i className="fas fa-chevron-down"></i>
                         </ToggleDisplay>
                     </h4>
@@ -174,9 +181,20 @@ class Dashboard extends Component {
                     </ToggleDisplay>
                 </Network>
 
+                <div className="container">
+                    <h4  className="clickable mobile-show" onClick={() => this.toggleProjectsMobile()}>
+                        Projects &nbsp;
+                        <ToggleDisplay show={this.state.showProjects}>
+                            <i className="fas fa-chevron-up"></i>
+                        </ToggleDisplay>
+                        <ToggleDisplay show={!this.state.showProjects}>
+                            <i className="fas fa-chevron-down"></i>
+                        </ToggleDisplay>
+                    </h4>
+                </div>
                 <Content className="container">
+                    <Projects id="projects">
 
-                    <Projects>
                         <Tabs>
                             <div onClick={ () => this.switchProjectView('mine')} id="mine" className="active">
                                 My projects
@@ -331,6 +349,11 @@ const Content = glam.div({
             width: '100vw',
             minWidth: '100vw'
         }
+    },
+    '@media (min-width: 1081)':{
+        '& .mobile-show':{
+            display: 'none'
+        }
     }
 })
 
@@ -348,8 +371,8 @@ const Projects = glam.div ({
         backgroundColor: 'var(--main-grey)',
         paddingTop: 20
     },
-    '@media (max-width: 1080px)':{
-        display: 'none'
+    '@media (max-width: 1080)':{
+        marginTop: -50
     }
 })
 

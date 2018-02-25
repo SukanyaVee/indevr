@@ -156,7 +156,6 @@ const SkillDisplay = glam.div({
     justifyContent: 'center',
     '> div':{
         margin: 5,
-        padding: '3px 5px',
         color: '#fff',
         backgroundColor: 'var(--main-purple)',
         padding: '3px 5px',

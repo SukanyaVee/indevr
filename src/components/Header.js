@@ -116,7 +116,7 @@ class Header extends Component {
                             {this.props.user && <li className="mobile-show">
                                 <Link to={`/dev/${this.props.user.id}`}>Profile</Link>
                             </li>}
-                            {!this.props.user && <li className="mobile-show">
+                            {!this.props.user && <li className="mobile-show"  onClick={this.login}>
                                 <Link to={`/`}>Sign In</Link>
                             </li>}
                             {this.props.user && <li className="dropdown mobile-hide" id="user-img">

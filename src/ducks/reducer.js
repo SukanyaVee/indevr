@@ -1,4 +1,3 @@
-const axios = require('axios');
 const LOGGED_IN = 'LOGGED_IN';
 const LOGOUT = 'LOGOUT';
 const CHECK_SESSION = 'CHECK_SESSION';
