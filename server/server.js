@@ -153,7 +153,7 @@ const skillsAPIurl = '/indevr/skills'
 app.get(`${skillsAPIurl}/:id`, proj.getSkillStack); //uses params
 app.post(skillsAPIurl, proj.createSkill); // uses body
 // app.put(skillsAPIurl, skills.put);
-// app.delete(skillsAPIurl, skills.delete);
+app.delete(`${skillsAPIurl}/:id`, proj.deleteSkill);
 
 const projContributors = '/indevr/contributors'
 

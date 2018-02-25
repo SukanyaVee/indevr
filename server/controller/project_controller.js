@@ -125,4 +125,14 @@ module.exports = {
             res.status(500).send(err)
         })
     },
+
+    deleteSkill: (req, res) => {
+        const db = req.app.get('db');
+        db.delete_project_skill([req.params.id]).then( () => {
+            res.status(200).send();
+        }).catch(error=>{
+            console.error(error);
+            res.status(500).send(err)
+        })
+    }
 }

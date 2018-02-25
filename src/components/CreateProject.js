@@ -9,7 +9,7 @@ class CreateProject extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            user_id: 1, //HARDCODED
+            user_id: '',
             proj_id: 0,
             project_name: '',
             description: '',
@@ -24,6 +24,12 @@ class CreateProject extends Component {
         this.createSkill = this.createSkill.bind(this)
         this.completed = this.completed.bind(this)
 
+    }
+
+    componentDidMount(){
+        if(this.props && this.props.user){
+            this.setState({user_id: this.props.user.id})
+        }
     }
 
     createProj(project_name, description, pub, repo) {
@@ -48,26 +54,23 @@ class CreateProject extends Component {
                 this.setState({newLevel: 1})
             }).catch(error=>console.log(error))
         }).catch(error=>console.log(error))
-        // this.setState({newSkill:'',newLevel:0})
+        this.setState({newSkill:'',newLevel:1})
+    }
+
+    removeSkill(index){
+        const id = this.state.stack[index].id;
+        const newStack = [...this.state.stack];
+        newStack.splice(index, 1);
+        axios.delete(`indevr/skills/${id}`).then(res => {
+            this.setState({stack: newStack})
+        }).catch(err => console.log(err))
     }
 
     completed(newSkill,newLevel){
-        var x={project_id: this.state.proj_id, skill: newSkill, level: newLevel}
-        axios.post('/indevr/skills', x).then(resp=>{
-            this.props.history.push(`/project/${this.state.proj_id}`) // HARDCODED
-        }).catch(error=>console.log(error))
+        this.props.history.push(`/project/${this.state.proj_id}`)
     }
 
     render() {
-        var skills = this.state.stack.map(skill=> {
-            return (
-                <div key={skill.id}>
-                    {skill.skill} - {skill.level === 1 ? 'Worthy Warrior':skill.level === 2 ? 'Noble Ninja':'Supreme Samurai'}
-                </div>
-            )
-        }
-
-        )
         return (
             <div>
                 {!this.state.showSkillsForm &&
@@ -115,13 +118,20 @@ class CreateProject extends Component {
                                 <option value="3">Supreme Samurai (advanced)</option>
                             </select>
                             <button  className="btn"
-                                onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel, e)}}>Submit and add another </button>
+                                onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel, e)}}>Add</button>
                             <button className="btn"
-                                onClick={e=>{this.completed(this.state.newSkill, this.state.newLevel)}}>Submit and complete
+                                onClick={e=>{this.completed(this.state.newSkill, this.state.newLevel)}}>Finish
                             </button>
                         </Form>
                         <SkillDisplay>
-                            {skills}
+                            {this.state.stack.map( (skill,i) => {
+                                return (
+                                    <Tag key={i}>
+                                        {skill.skill} - {skill.level}
+                                        <div className="delete" onClick={() => this.removeSkill(i)}> &nbsp; <i className="fas fa-minus-circle"></i></div>
+                                    </Tag>
+                                )
+                            })}
                         </SkillDisplay>
                     </div>}
             </div>
@@ -154,13 +164,29 @@ const SkillDisplay = glam.div({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    '> div':{
-        margin: 5,
-        color: '#fff',
-        backgroundColor: 'var(--main-purple)',
-        padding: '3px 5px',
-        borderRadius: 5,
-    }
+    // '> div':{
+    //     margin: 5,
+    //     color: '#fff',
+    //     backgroundColor: 'var(--main-purple)',
+    //     padding: '3px 5px',
+    //     borderRadius: 5,
+    // }
+})
+
+const Tag = glam.div({
+    backgroundColor: 'var(--main-purple)',
+    borderRadius: 4,
+    padding: '3px 5px',
+    margin: 3,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative',
+    color: '#fff',
+    '& .fa-minus-circle':{
+        fontSize: '.8em',
+        color: 'red',
+    },
 })
 
 

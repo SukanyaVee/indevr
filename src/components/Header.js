@@ -205,7 +205,7 @@ const Nav = glam.nav({
     },
     '& .dropdown img':{
         height: 50,
-
+        width: 50
     },
     '& .navbar-header':{
         height: 100,
