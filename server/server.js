@@ -129,7 +129,7 @@ app.get(`${contactAPIurl}/check`, contact.check); //Check for existing connectio
 //
 //
 
-//-------------PUBLIC POST FEED--------------
+//------------- POST FEED--------------
 const postAPIurl = '/indevr/posts'
 app.get(postAPIurl, posts.get)
 app.get(`${postAPIurl}/:userID`, news_feed_ctrl.getProfileFeed)
@@ -142,6 +142,7 @@ const projAPIurl = '/indevr/projects';
 
 app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
 app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
+app.get(`/indevr/pubproj`, proj.getPubProj); 
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
 app.post(projAPIurl, proj.createProj); //uses body
 app.put(projAPIurl, proj.updateProj); //uses body

@@ -27,6 +27,18 @@ class  Overview extends Component  {
     }
 
     componentDidMount(){
+        if(this.props.user){
+            this.getInfo(this.props.user.id)
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.user && !this.props.user){
+            this.getInfo(nextProps.user.id);
+        }
+    }
+
+    getInfo(userId){
         axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
             this.setState({project: res.data[0]})
             console.log('single project', res.data[0])
@@ -39,19 +51,19 @@ class  Overview extends Component  {
         axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
             this.setState({contributors: res.data})
             var x=this.state.contributors.filter(e=>
-                e.id===this.props.user.id
+                e.id===userId
             )
             console.log(x)
             this.setState({showReqButton: x})
             console.log('showReqButton', this.state.showReqButton)
             // console.log('contributors', this.state.contributors)
         }).catch(error=>console.log(error))
-        axios.get(`/indevr/mesg?project_id=${this.state.projectId}`).then(resp=> {
-            resp.data.map(e=>{
-                if (e.contributor_id===this.props.user.id) {
-                    this.setState({pending: true, showReqButton:[]})
-                }
-            })
+        axios.get(`/indevr/mesg?project_id=${this.state.projectId}&contributor_id=${userId}`).then(resp=> {
+            console.log('join status pending ', this.state.pending, resp.data)
+            if (resp.data[0]) {
+                this.setState({pending: true})
+                console.log('join status pending ', this.state.pending)
+            }
         }).catch(error=>console.log(error))
     }
 
@@ -114,7 +126,7 @@ class  Overview extends Component  {
         var inline={marginLeft:'5px', cursor:'pointer'}
         var inline2={fontSize: 16}
         if(!this.props.user){
-            return 'Loading...'
+            return 'Are you logged in?'
         }
 
         return (
@@ -129,8 +141,8 @@ class  Overview extends Component  {
                         <Edit onClick={e=>{this.setState({editShow: true})}}>edit details</Edit>
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
                     </div>}
-                    {!this.state.showReqButton.length && <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
-                    {this.state.pending && <Edit style={inline2}>request pending</Edit>}
+                    {!this.state.showReqButton.length && !this.state.pending && <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
+                    {!this.state.showReqButton.length && this.state.pending && <Edit style={inline2}>request pending</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}

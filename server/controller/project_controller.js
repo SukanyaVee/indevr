@@ -1,8 +1,8 @@
 module.exports = {
     getUserProj: (req, res) => {
         const db = req.app.get('db')
-        db.get_projects([req.query.user_id]).then(posts=> {
-            res.status(200).send(posts)
+        db.get_projects([req.query.user_id]).then(projects=> {
+            res.status(200).send(projects)
         }).catch(error=>{
             console.error(error);
             res.status(500).send(error)
@@ -10,8 +10,18 @@ module.exports = {
     },
     getPublicProj: (req, res) => {
         const db = req.app.get('db')
-        db.get_public_projects([req.query.user_id]).then(posts=> {
-            res.status(200).send(posts)
+        db.get_public_projects([req.query.user_id]).then(projects=> {
+            res.status(200).send(projects)
+        }).catch(error=>{
+            console.error(error);
+            res.status(500).send(error)
+        })
+    },
+    getPubProj: (req, res) => {
+        const db = req.app.get('db')
+        db.get_pub_proj().then(projects=> {
+            console.log('public [public projects ', projects)
+            res.status(200).send(projects)
         }).catch(error=>{
             console.error(error);
             res.status(500).send(error)
@@ -28,8 +38,8 @@ module.exports = {
     },
     getMessageStatus: (req, res) => {
         const db = req.app.get('db')
-        db.get_message_status([req.query.project_id]).then(messages=> {
-            res.status(200).send(messages)
+        db.get_message_status([req.query.project_id, req.query.contributor_id]).then(message=> {
+            res.status(200).send(message)
         }).catch(error=>{
             console.error(error);
             res.status(500).send(error)

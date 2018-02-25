@@ -7,7 +7,7 @@ import ProjectTile from './ProjectTile';
 import {connect} from 'react-redux';
 
 
-class Explorer extends Component {
+class PublicExplore extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -16,17 +16,10 @@ class Explorer extends Component {
     }
 
     componentDidMount(){
-    axios.get(`/indevr/public?user_id=${this.props.user.id}`).then(res=>{//HARDCODED
-        const projects = _.uniqBy(res.data, 'project_id');
-        projects.forEach(project => {
-            project.skills = [];
-            res.data.forEach(skill => {
-                if (skill.project_id === project.project_id){
-                    project.skills.push(skill.skill);
-                }
-            })
-        })
-        this.setState({ publicProj: projects })
+    axios.get(`/indevr/pubproj`).then(res=>{
+        console.log(res.data)
+        
+        this.setState({ publicProj: res.data })
     }).catch(error=>console.log(error))
     }
 
@@ -59,11 +52,4 @@ const Main = glam.div({
 })
 
 
-const mapStateToProps = state => {
-    return {
-      user: state.user
-    }
-  }
-
-
-export default connect(mapStateToProps)(Explorer);
+export default PublicExplore;
