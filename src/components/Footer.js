@@ -46,15 +46,16 @@ const Foot = glam.div({
     flexWrap: 'wrap',
     textDecoration: 'none',
     color: 'white',
-    // borderTop: 'Solid black 5px',
-    '> div':{
-        // margin: 20
-    },
     '& a':{
         margin: 20
     },
     '& .search': {
         marginTop: 30,
+    },
+    '@media (max-width: 729px)': {
+        '@ .search': {
+            margin: 20,
+        }
     }
 })
 

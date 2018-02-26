@@ -210,9 +210,9 @@ const server = app.listen(port, () => console.log(`Up and running on port ${port
 //Socket.io chat Setup
 const io = socket(server);
 io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+    // console.log('User connected:', socket.id);
     socket.on('disconnect', function(){
-        console.log('User disconnected:', socket.id);
+        // console.log('User disconnected:', socket.id);
     });
 
     socket.on('SEND_MESSAGE', function(data){

@@ -19,7 +19,10 @@ class About extends Component {
                        The idea behind inDevr stemmed from the mind of one of the most creative creatures in the office who wanted a better way to communicate with the various teams they worked with in their professional career, as well as their personal life. As a result, inDevr ended up as a website that is intended for those who need a little extra when they're discussing their next project or deciphering their upcoming plan.
                         <br/>
                         <br/>
-                        Built by developers for developers, inDevr continues to find top-notch tools that can assist with breaking down the 
+                        For example, since being built with a purpose for developers, inDevr continues to find top-notch tools that can assist with breaking down the project process. Using quick links to a vast majority of the developer spread across the internet, and capitalizing on the social aspects of today's networking prowess, inDevr brings everything you as a developer needs to stay focused. Sign up for free and begin your inDevr today!
+                        <br/>
+                        <br/>
+                        This site was designed and completed as a groupe project by three DevMountain students.
                     </p>
                 </Description>
                 </div>
@@ -129,7 +132,7 @@ const Section = glam.section({
         borderRadius: '50%',
         boxShadow: '5px 5px 5px 0px black',
         '& .icon': {
-            marginTop: -180,
+            marginTop: -190,
             // fontSize: '14pt'
         },
         // backgroundColor: 'var(--main-purple)',

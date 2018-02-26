@@ -127,9 +127,9 @@ clearText(){
                     Submit & Send
                     </Submit>
                     <Submit 
-                    className='btn' 
+                    id='button' 
                     onClick={this.clearText}>
-                    Clear
+                    Clear{' '}
                     </Submit>
                 </Buttons>
             </Form>
@@ -163,13 +163,6 @@ const Form = glam.form({
     '> input': {
         margin: '20px auto',
     },
-    // '& .alert': {
-    //     fontSize: 12,
-    //     heigth: 60,
-    //     display: 'flex',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // }
 })
 
 const Inputs = glam.div({
@@ -179,8 +172,17 @@ const Inputs = glam.div({
     '& label': {
         color: 'white',
         fontSize: '14pt',
-    }
-    // backgroundColor: 'aqua',
+    },
+    '& #mailAlert':{
+        '& .alert': {
+            textAlign: 'center',
+            display:'flex',
+            color: 'white',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }   
+    },
 })
 
 const TopRow = glam.div({
@@ -217,6 +219,7 @@ const Text = glam.textarea({
     width: '100%',
     minHeight: '300px',
     margin: 'auto',
+
     boxShadow: '5px 5px 5px 0px',
     '@media (max-width: 729px)': {
         minHeight: 200,
@@ -226,12 +229,17 @@ const Text = glam.textarea({
 const Buttons = glam.div({
     width: 200,
     margin: 'auto',
+    marginTop: 75,
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
 })
 
 const Submit = glam.button({
     margin: 10,
+    padding: 5,
+    borderRadius: 3,
+
 })
 export default Contact;

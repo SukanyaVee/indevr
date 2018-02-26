@@ -31,24 +31,7 @@ class LandingPage extends Component {
                 Welcome to your one-stop-shop developer platform.
               </Desc>
             </Heading>
-            {/* <Btnlogin onClick={this.login}>
-              <b>Login/Register</b>
-            </Btnlogin> */}
           </Main>
-          {/* <Aside>
-                <Signup>
-                Email:
-                <Field placeholder='yours@example.com'/>
-                Password:
-                <Field placeholder='Your Password'/>
-                First Name:
-                <Field placeholder='First Name'/>
-                Last Name:
-                <Field placeholder='Last Name'/>
-                <button style={btnlogin}>Sign Up</button>
-                </Signup>
-            </Aside> */}
-        {/* </Initial> */}
         <Project />
         <Profile />
         <Tasks />
@@ -63,60 +46,21 @@ const bounce = css.keyframes({
   '100%': {transform: `scale(1.0)`}
 })
 
-// const Initial = glam.section({
-//   display: "flex",
-//   flexDirection: "row",
-//   backgroundColor: "#593c8f",
-//   backgroundBlendMode: 10,
-//   color: "white"
-// });
-
 const Desc = glam.p({
   textAlign: 'center',
   width: "100%",
-  // animation: `${bounce} 5s ease-in-out alternate`,
   "hover & .text": {
     color: 'black'
 },
   '@media (max-width: 729px)': {
     textAlign: 'center',
     width: '100%',
-    // height: '25%',
   }
 });
 
-// const Logo = glam.img({
-//   height: '100%',
-//   width: '50%',
-//   '@media (max-width: 729px)': {
-//     visibility: 'collapse',
-//   }
-// })
-
-// const LogoSmall = glam.img({
-//   visibility: 'hidden',
-//   '@media (max-width: 729px)': {
-//     visibility: 'visible',
-//     marginLeft: 5,
-//   }
-// })
-
-// const Header = glam.header({
-//   height: "150",
-//   width: "100vw",
-//   backgroundColor: 'var(--main-black)',
-//   display: "flex",
-//   flexDirection: "row",
-//   justifyContent: "space-between",
-//   alignItems: "center",
-//   marginTop: "0",
-//   })
-
-// });
-
 const Heading = glam.h1({
   fontSize: "2.5em",
-  width: "50%",
+  width: "75vw",
   padding: 20,
   textAlign: 'center',
   backgroundColor: 'rgba(255, 255, 255, .8)',
@@ -130,7 +74,7 @@ const Heading = glam.h1({
     border: 'solid var(--main-black) 2px',
   },
   '@media (max-width: 729px)':{
-    width: '100vw',
+    width: '75vw',
     // minHeight: '50%',
     fontSize: '12pt',
     textAlign: 'center',
@@ -144,7 +88,7 @@ const Main = glam.div({
   justifyContent: "center",
   alignItems: "center",
   width: "100vw",
-  height: "90vh",
+  height: "85vh",
   color: 'var(--main-purple)',
   backgroundImage: `url(${keys})`,
   backgroundSize: 'cover',
