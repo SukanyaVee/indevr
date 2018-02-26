@@ -34,12 +34,11 @@ class App extends Component {
                 if(this.props.history.location.pathname === '/login'){
                     this.props.history.push('/dashboard')
                 }
-            }
-
-            //If no session, logout and redirect to login
-            if(this.props.history.location.pathname !== '/login' && !session.data.user){
-                this.props.logout();
-                this.props.history.push('/login')
+            } else {
+                if(this.props.history.location.pathname !== '/login' && !session.data.user){
+                    this.props.logout();
+                    this.props.history.push('/login')
+                }
             }
         }
         getSession()
