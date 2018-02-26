@@ -33,15 +33,19 @@ class CreateProject extends Component {
     }
 
     createProj(project_name, description, pub, repo) {
-        var newProj = {user_id: this.state.user_id, project_name: project_name, description:description, pub: pub, repo: repo}
-        console.log(newProj)
-        axios.post('/indevr/projects', newProj).then(resp=>{
-            console.log(resp.data)
-            this.setState({proj_id: resp.data[0].id})
-            axios.post('/indevr/contributors', {project_id: resp.data[0].id, user_id: this.state.user_id, owner: true}).then(resp=>{ //HARDCODED
+        if (project_name!=='' && description!=='' && repo!=='') {
+            var newProj = {user_id: this.state.user_id, project_name: project_name, description:description, pub: pub, repo: repo}
+            console.log(newProj)
+            axios.post('/indevr/projects', newProj).then(resp=>{
+                console.log(resp.data)
+                this.setState({proj_id: resp.data[0].id})
+                axios.post('/indevr/contributors', {project_id: resp.data[0].id, user_id: this.state.user_id, owner: true}).then(resp=>{ //HARDCODED
+                }).catch(error=>console.log(error))
             }).catch(error=>console.log(error))
-        }).catch(error=>console.log(error))
-        this.setState({showSkillsForm: true})
+            this.setState({showSkillsForm: true})
+        } else {
+            alert('Please do not leave any fields blank')
+        }
     }
 
     createSkill(newSkill,newLevel, e){
@@ -104,18 +108,6 @@ class CreateProject extends Component {
                 {/* CREATES PROJECT IN projects TABLE, THEN ALLOWS USER TO ENTER SKILLS */}
                 {this.state.showSkillsForm &&
                     <div>
-<<<<<<< HEAD
-                        {mapppp}
-                        Add more skills and levels to the project you just created<br/><br/>
-                        <input placeholder="Primary Skill" value={this.state.newSkill} required onChange={e=>{this.setState({newSkill:e.target.value})}}/><br/>
-                        <select value={this.state.newLevel} onChange={e=>{this.setState({newLevel:e.target.value})}}>
-                            <option value="1">Worthy Warrior (novice)</option>
-                            <option value="2">Noble Ninja (intermediate)</option>
-                            <option value="3">Supreme Samurai (advanced)</option>
-                        </select> <br/>
-                        <button onClick={e=>{this.createSkill(this.state.newSkill, this.state.newLevel)}}>Submit and add another skill</button>
-                        <button onClick={e=>{this.completed()}}>Done</button>
-=======
                         <Form>
                             <label>Step 2: Build the stack for your project</label>
                             <input className="form-control"
@@ -146,7 +138,6 @@ class CreateProject extends Component {
                                 )
                             })}
                         </SkillDisplay>
->>>>>>> master
                     </div>}
             </div>
         )

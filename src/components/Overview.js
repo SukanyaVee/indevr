@@ -17,6 +17,7 @@ class  Overview extends Component  {
             skills:[],
             editShow: false,
             showReqButton: [],
+            pending: false,
             newTitle: '',
             newDescr: '',
             newRepo: '',
@@ -44,6 +45,13 @@ class  Overview extends Component  {
             this.setState({showReqButton: x})
             console.log('showReqButton', this.state.showReqButton)
             // console.log('contributors', this.state.contributors)
+        }).catch(error=>console.log(error))
+        axios.get(`/indevr/mesg?project_id=${this.state.projectId}`).then(resp=> {
+            resp.data.map(e=>{
+                if (e.contributor_id===this.props.user.id) {
+                    this.setState({pending: true, showReqButton:[]})
+                }
+            })
         }).catch(error=>console.log(error))
     }
 
@@ -122,6 +130,7 @@ class  Overview extends Component  {
                         <Edit onClick={e=>{this.deleteProj()}}>delete</Edit>
                     </div>}
                     {!this.state.showReqButton.length && <Edit style={inline2} onClick={e=>{this.requestJoin()}}>request to join</Edit>}
+                    {this.state.pending && <Edit style={inline2}>request pending</Edit>}
                 </ProjectTitle>
                     {this.state.editShow===true &&
                     <Input placeholder="New Title"  value={this.state.newTitle} onChange={e=>{this.setState({newTitle: e.target.value})}}/>}

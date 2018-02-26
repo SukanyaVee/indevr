@@ -94,11 +94,14 @@ class Dashboard extends Component {
     }
 
     submitPost(content) {
-        axios.post('/indevr/posts', {user_Id: this.props.user.id, content:content}).then(resp=>{
-            axios.get('/indevr/posts').then(res=>{
-                this.setState({posts: res.data, postContent: ''})
+        if (content!=='') {
+            var date1 = new Date();
+            axios.post('/indevr/posts', {user_Id: this.props.user.id, content:content}).then(resp=>{
+                axios.get('/indevr/posts').then(res=>{
+                    this.setState({posts: res.data, postContent: ''})
+                }).catch(error=>console.log(error))
             }).catch(error=>console.log(error))
-        }).catch(error=>console.log(error))
+        }
     }
 
     deletePost(postId){
@@ -152,7 +155,6 @@ class Dashboard extends Component {
                             )
                         })}
                     </ToggleDisplay>
-
                 </Messages>
 
                 <div className="container">
@@ -253,7 +255,7 @@ class Dashboard extends Component {
                                     key={i}
                                     id={item.post_id}
                                     name={item.first_name + ' ' + item.last_name}
-                                    timestamp={item.created_at}
+                                    timestamp={item.created_at.slice(0,10)}
                                     content={item.content}
                                     user_id={item.user_id}
                                     picture={item.picture}

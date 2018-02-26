@@ -19,8 +19,17 @@ module.exports = {
     },
     getMessages: (req, res) => {
         const db = req.app.get('db')
-        db.get_messages([req.query.user_id]).then(posts=> {
-            res.status(200).send(posts)
+        db.get_messages([req.query.user_id]).then(messages=> {
+            res.status(200).send(messages)
+        }).catch(error=>{
+            console.error(error);
+            res.status(500).send(error)
+        })
+    },
+    getMessageStatus: (req, res) => {
+        const db = req.app.get('db')
+        db.get_message_status([req.query.project_id]).then(messages=> {
+            res.status(200).send(messages)
         }).catch(error=>{
             console.error(error);
             res.status(500).send(error)

@@ -164,6 +164,7 @@ app.delete(`${projContributors}/:id`, proj.removeContr) //uses body
 const projMessages = '/indevr/messages'
 
 app.get(projMessages, proj.getMessages); //uses query
+app.get('/indevr/mesg', proj.getMessageStatus); //uses query
 app.post(projMessages, proj.createMessage); //uses body
 app.delete(`${projMessages}/:id`, proj.deleteMessage) // uses params
 
