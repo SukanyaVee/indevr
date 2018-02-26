@@ -360,8 +360,8 @@ const Content = glam.div({
 const Projects = glam.div ({
     color: '#333',
     padding: 10,
-    width: '40%',
-    minWidth: 400,
+    width: 400,
+    maxWidth: '100%',
     minHeight: '50vh',
     '& a':{
         textDecoration: 'none',
@@ -378,7 +378,7 @@ const Projects = glam.div ({
 
 const Feed = glam.div({
     color: '#fff',
-    width: '60%',
+    width: '50%',
     minWidth: 400,
     display: 'flex',
     alignItems: 'center',
