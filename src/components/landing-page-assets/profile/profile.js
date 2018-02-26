@@ -21,7 +21,7 @@ class profile extends Component {
                 </Topic>
                 <Topic2>
                 <Desc2>
-                    <div className='p'>Customize and personalize your profile page with information to grow your brand, influence the industry and display your skills. <strong>With a multitude of partnering sites,</strong> inDevr can help you take the next step in your development career.</div>
+                    <div className='p'>Customize and personalize your profile page with information to grow your brand, influence the industry and display your skills. With a multitude of partnering sites, inDevr can help you <strong>take the next step in your development career.</strong></div>
                 </Desc2>
                 <Image2 src={one} className="img-responsive"/>
                 </Topic2>

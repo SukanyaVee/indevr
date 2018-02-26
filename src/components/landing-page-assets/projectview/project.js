@@ -15,13 +15,13 @@ class Project extends Component {
                 <h3 className='heading'><strong>Project Matching</strong></h3>
                 <h1 className='heading'><i>Collaborate on Inventions</i></h1>
                 <Topic>
-                    <Desc><div className='p'><strong>Hey</strong>{" "}
-                    Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. blasdan</div></Desc>
+                    <Desc><div className='p'><strong>Explore and find</strong>
+                    projects that interest you. Any public project provides the chance to team up and contribute towards something beyond your current skillset. </div></Desc>
                 <Image src={''} className='img-responsive' />
                 </Topic>
                 <Topic2>
-                    <Desc2><div className='p'><strong>Hey</strong>{" "}
-                    Blabbity duh blah blah dum ditty doo-Op dedo. Shibop tibbity tado tado dee ditty sitty blitty blab. blasdan</div></Desc2>
+                    <Desc2><div className='p'><strong>Influence, mentor and learn</strong> as a developer by using the huge array of inDevr communication tools to improve your team and yourself. Using the Team chat or share a whiteboard session with a teammate to unify your vision{" "}
+                    </div></Desc2>
                 <Image2 src={''} className='img-responsive' />
                 </Topic2>
                 </div>

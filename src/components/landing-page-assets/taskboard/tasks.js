@@ -24,7 +24,7 @@ class tasks extends Component {
                 </Topic>
                 <Topic2>
                 <Desc2>
-                    <div className='p'>Blabbity duh blah blah. I was walking around and forgot where I was going. I then said something but can't remember that either. <strong>Please send help!</strong></div>
+                    <div className='p'><strong>Need to have a morning<br/>stand-up flexability?</strong>The taskboard brings simplicity to the way you handle your responsibilities. You can use the drag and drop feature to easily assign throughout the team. As well as complete, delete and update a task as needed.</div>
                 </Desc2>
                 <Image2 src={one} className="img-responsive"/>
                 </Topic2>
