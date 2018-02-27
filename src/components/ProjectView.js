@@ -28,6 +28,12 @@ class ProjectView extends Component {
         // this.openRepo = this.openRepo.bind(this)
     }
 
+    componentDidMount(){
+        if(this.props && !this.props.user){
+            this.props.history.push('/login')
+        }
+    }
+
 
     // openRepo () {
         // var output = document.getElementById("repo");
@@ -59,6 +65,9 @@ class ProjectView extends Component {
             }, 200)
         }
 
+        if(this.props && !this.props.user){
+            return <Loading><i className="fas fa-spinner fa-pulse fa-7x"></i></Loading>
+        }
         return (
             <div>
                 <MobileHeader>
@@ -203,4 +212,12 @@ const View = glam.div({
             display: 'none',
         }
     }
+})
+
+
+const Loading = glam.div({
+    minHeight: 'calc(100vh - 230px)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
 })
