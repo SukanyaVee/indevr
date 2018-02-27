@@ -65,17 +65,9 @@ const Heading = glam.h1({
   textAlign: 'center',
   backgroundColor: 'rgba(255, 255, 255, .8)',
   borderRadius: '3px',
-  // boxShadow: '0px 0px 0px 4px var(--main-purple)',
-  // border: 'solid var(--main-purple) 2px',
   animation: `${bounce} 5s ease-in-out alternate`,
-  // '& :hover': {
-  //   backgroundColor: 'var(--main-purple)',
-  //   color: 'white',
-  //   border: 'solid var(--main-black) 2px',
-  // },
   '@media (max-width: 729px)':{
     width: '75vw',
-    // minHeight: '50%',
     fontSize: '12pt',
     textAlign: 'center',
 }
@@ -97,31 +89,5 @@ const Main = glam.div({
   },
 });
 
-// const Btnlogin = glam.button({
-//   // color: "white",
-//   backgroundColor: "var(--main-grey)",
-//   borderRadius: 5,
-//   fontSize: "18pt",
-//   height: 100,
-//   width: 200,
-//   marginLeft: 20,
-//   animation: `${bounce} 5s ease-in-out alternate`,
-//   '@media (max-width: 729px)': {
-//     fontSize: '14pt',
-//     height: 75,
-//     width: 150,
-//     marginLeft: 0,
-//   }
-// });
 
-const mapStateToProps = state => {
-    return {
-        user: state.user
-    }
-}
-
-const mapDispatchToProps = {
-  login
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default LandingPage;

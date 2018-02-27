@@ -16,7 +16,7 @@ class PostTile extends Component {
                             <sub>{new Date(this.props.timestamp).toLocaleDateString("en-us", { hour: 'numeric', minute: 'numeric', timeZone: "America/Los_Angeles" })}</sub>
                         </div>
                     </Link>
-                    {this.props.user.id === this.props.user_id &&
+                    {this.props.user && this.props.user.id === this.props.user_id && 
                         <div onClick={this.props.deletePost}>
                             <Delete className="far fa-trash-alt"/>
                         </div>}

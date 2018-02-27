@@ -26,16 +26,14 @@ module.exports = {
            post.map((elem, i) => {
                 let id = elem.user_id
                 req.app.get('db').search_postsID(id).then(response => {
-                    // console.log(response[0].first_name)
                     elem.first_name = response[0].first_name;
                     elem.last_name = response[0].last_name;
                     elem.picture = response[0].picture;
-                    console.log(elem)
                     return elem;
                 })
             })
             setTimeout(() => {
-            console.log('Hey', post)
+            // console.log('Hey', post)
             // if(!post.length){
             //     req.app.get('db').search_users(term).then(user => {
             //         user.map((elem, i) => {

@@ -83,11 +83,6 @@ class SearchPage extends Component {
         posts: response.data
       });
     });
-    // axios.get(`/search/skills/${term}`).then(response => {
-    //   this.setState({
-    //     skills: response.data
-    //   })
-    // })
   }
 
   switchTab(tab) {
@@ -98,7 +93,6 @@ class SearchPage extends Component {
       showPeople: tab === "people" ? true : false,
       showProjects: tab === "projects" ? true : false,
       showPosts: tab === "posts" ? true : false
-      //   showSkills: tab === 'skills' ? true : false,
     });
   }
 
@@ -120,7 +114,6 @@ class SearchPage extends Component {
             <div id="posts" onClick={() => this.switchTab("posts")}>
               Posts
             </div>
-            {/* <div id="skills" onClick={() => this.switchTab('skills')}>Skills</div> */}
           </Nav>
 
           <ToggleDisplay show={this.state.showPeople}>
@@ -166,7 +159,7 @@ class SearchPage extends Component {
             <Posts>
               {this.state.posts.length ? (
                 this.state.posts.map((post, i) => {
-                  console.log(post);
+                  // console.log(post);
                   return (
                     <Link to={`/dev/${post.user_id}`}>
                       <PostTile
@@ -186,18 +179,6 @@ class SearchPage extends Component {
               )}
             </Posts>
           </ToggleDisplay>
-
-          {/* <ToggleDisplay show={this.state.showSkills}>
-                    <Skills>
-                        {this.state.skills.length ? this.state.skills.map((skill, i) => {
-                            return (
-                                <SkillTile key={i}>
-                                    <h1>{skill.skill}</h1>
-                                </SkillTile>
-                            )
-                        }) : <div> No skill results available </div>}
-                    </Skills>
-                </ToggleDisplay> */}
         </div>
       </Main>
     );
