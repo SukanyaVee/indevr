@@ -60,6 +60,7 @@ const Topic = glam.section({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -74,6 +75,7 @@ const Topic2 = glam.section({
     flexDirection: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,

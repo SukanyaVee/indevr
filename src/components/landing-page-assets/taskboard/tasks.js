@@ -18,16 +18,19 @@ class tasks extends Component {
                 <h3 className='heading'><strong>Task Management</strong></h3>
                 <h1 className='heading'><i>Improve the way you focus</i></h1>
                 <Topic>
-                <Desc><div className='p'><strong>Delegate and Celebrate,</strong>
-                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc>
+                {/* <Desc><div className='p'><strong>Delegate and Celebrate,</strong>
+                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc> */}
                 <Image src={two} className="img-responsive"/>
                 </Topic>
-                {/* <Topic2>
+                <Topic2>
+                <Desc><div className='p'><strong>Delegate and Celebrate,</strong>
+                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div>
+                </Desc>
                 <Desc2>
-                    <div className='p'><strong>Need to have a morning<br/>stand-up flexability?</strong>The taskboard brings simplicity to the way you handle your responsibilities. You can use the drag and drop feature to easily assign throughout the team. As well as complete, delete and update a task as needed.</div>
+                    <div className='p'>Also, the drag and drop feature facilitates easily assigning throughout the team. When project plans change, the taskboard is just the thing to help you <strong>handle the change with grace.</strong></div>
                 </Desc2>
-                <Image2 src={two} className="img-responsive"/>
-                </Topic2> */}
+                {/* <Image2 src={two} className="img-responsive"/> */}
+                </Topic2>
                 </div>
             </Main>
         )
@@ -57,6 +60,7 @@ const Topic = glam.section({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -68,8 +72,9 @@ const Topic2 = glam.section({
     height: '45%',
     width: '100%',
     display: 'flex',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
