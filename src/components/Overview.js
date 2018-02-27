@@ -163,18 +163,22 @@ class  Overview extends Component  {
                 <hr></hr>
                 <h4>Contributors</h4>
                 <ProjectCollaborators>
-                    {this.state.contributors.map(contributor =>
-                    <div key={contributor.id}>
-                        <Link to={`/dev/${contributor.id}`}>
-                            <UserTile
-                                name={contributor.first_name + ' ' + contributor.last_name}
-                                img={contributor.picture} />
-                        </Link>
-                        {this.state.project.length > 0 && this.state.project.user_id===this.props.user.id && !this.state.contributor.owner &&
-                        <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</Edit>}
-                        {this.state.project.length > 0 && contributor.id===this.props.user.id && !this.state.contributor.owner &&
-                        <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</Edit>}
-                    </div>)}
+                    {this.state.contributors.map(con => {
+                        console.log(con);
+                    return (
+                        <div key={con.id}>
+                            <Link to={`/dev/${con.id}`}>
+                                <UserTile
+                                    name={con.first_name + ' ' + con.last_name}
+                                    img={con.picture} />
+                            </Link>
+                            {con.id !==this.props.user.id &&
+                            <Edit onClick={e=>{this.removeContributor(con.contributor_id)}}>remove</Edit>}
+                            {con.id===this.props.user.id &&
+                            <Edit onClick={e=>{this.removeContributor(con.contributor_id)}}>leave</Edit>}
+                        </div>)}
+                    )
+                    }
                 </ProjectCollaborators>
                 <hr></hr>
                 <h4>Skill Stack</h4>
@@ -342,6 +346,7 @@ const SkillsDisplay = glam.div({
     minWidth: 300,
     height: '100%',
     display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     width: 'calc(100% - 25vw - 150px)'
