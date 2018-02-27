@@ -22,7 +22,7 @@ class Project extends Component {
                 <Image src={one} className='img-responsive' />
                 </Topic>
                 <Topic2>
-                    <Desc2><div className='p'><strong>Influence, mentor and learn</strong> as a developer by using the huge array of inDevr communication tools to improve your team and yourself. Using the Team chat or share a whiteboard session with a teammate to unify your vision{" "}
+                    <Desc2><div className='p'><strong>Need to have morning stand-up flexability?</strong>Influence, mentor and learn as a developer by using the huge array of inDevr communication tools to help your team move forward. Try the team chat or a whiteboard session with a teammate to see how.{" "}
                     </div></Desc2>
                 <Image2 src={two} className='img-responsive' />
                 </Topic2>
@@ -35,7 +35,7 @@ class Project extends Component {
 
 const Main = glam.div({
     minHeight: '100vh',
-    color: 'var(--main-purple)',
+    color: 'white',
     backgroundColor: 'var(--main-black)',
     fontFamily: 'Helvetica Neue',
     display: 'flex',
@@ -60,6 +60,7 @@ const Topic = glam.section({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -74,6 +75,7 @@ const Topic2 = glam.section({
     flexDirection: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,

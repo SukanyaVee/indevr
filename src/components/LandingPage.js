@@ -68,11 +68,11 @@ const Heading = glam.h1({
   // boxShadow: '0px 0px 0px 4px var(--main-purple)',
   // border: 'solid var(--main-purple) 2px',
   animation: `${bounce} 5s ease-in-out alternate`,
-  '& :hover': {
-    backgroundColor: 'var(--main-purple)',
-    color: 'white',
-    border: 'solid var(--main-black) 2px',
-  },
+  // '& :hover': {
+  //   backgroundColor: 'var(--main-purple)',
+  //   color: 'white',
+  //   border: 'solid var(--main-black) 2px',
+  // },
   '@media (max-width: 729px)':{
     width: '75vw',
     // minHeight: '50%',
