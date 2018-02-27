@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
+import two from '../projectview/tools.gif'
+import one from '../projectview/search.gif'
 
 class Project extends Component {
     constructor(props) {
@@ -17,12 +19,12 @@ class Project extends Component {
                 <Topic>
                     <Desc><div className='p'><strong>Explore and find</strong>
                     projects that interest you. Any public project provides the chance to team up and contribute towards something beyond your current skillset. </div></Desc>
-                <Image src={''} className='img-responsive' />
+                <Image src={one} className='img-responsive' />
                 </Topic>
                 <Topic2>
                     <Desc2><div className='p'><strong>Influence, mentor and learn</strong> as a developer by using the huge array of inDevr communication tools to improve your team and yourself. Using the Team chat or share a whiteboard session with a teammate to unify your vision{" "}
                     </div></Desc2>
-                <Image2 src={''} className='img-responsive' />
+                <Image2 src={two} className='img-responsive' />
                 </Topic2>
                 </div>
             </Main>
@@ -143,8 +145,8 @@ const Desc2 = glam.span({
 })
 
 const Image = glam.img({
-    height: '99%',
-    width: '60%',
+    minHeight: '99%',
+    minWidth: '60%',
     // float: 'right',
     margin: '5px 10px',
     border: '3px solid black',

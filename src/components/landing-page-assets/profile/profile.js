@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import one from './Screen Shot 2018-02-16 at 10.41.49 AM.png'
+import one from './profile.png'
 import glam from 'glamorous'
+import profile1 from './profile.gif'
+
 
 class profile extends Component {
     constructor() {
@@ -23,7 +25,7 @@ class profile extends Component {
                 <Desc2>
                     <div className='p'>Customize and personalize your profile page with information to grow your brand, influence the industry and display your skills. With a multitude of partnering sites, inDevr can help you <strong>take the next step in your development career.</strong></div>
                 </Desc2>
-                <Image2 src={one} className="img-responsive"/>
+                <Image2 src={profile1} className="img-responsive"/>
                 </Topic2>
                 </div>
             </Main>
@@ -149,7 +151,7 @@ const Desc2 = glam.span({
 })
 
 const Image = glam.img({
-    height: '99%',
+    height: '85%',
     width: '60%',
     // float: 'right',
     margin: '5px 10px',
@@ -164,8 +166,8 @@ const Image = glam.img({
     }
 })
 const Image2 = glam.img({
-    height: '99%',
-    width: '60%',
+    minHeight: '85%',
+    minWidth: '65%',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
