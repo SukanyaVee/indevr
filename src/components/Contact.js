@@ -140,7 +140,8 @@ clearText(){
 
 const Main = glam.div({
     minHeight: '80vh',
-    backgroundColor: 'var(--main-grey)',
+    // backgroundColor: 'var(--main-grey)',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

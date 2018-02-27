@@ -22,12 +22,12 @@ class tasks extends Component {
                 with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc>
                 <Image src={two} className="img-responsive"/>
                 </Topic>
-                <Topic2>
+                {/* <Topic2>
                 <Desc2>
                     <div className='p'><strong>Need to have a morning<br/>stand-up flexability?</strong>The taskboard brings simplicity to the way you handle your responsibilities. You can use the drag and drop feature to easily assign throughout the team. As well as complete, delete and update a task as needed.</div>
                 </Desc2>
                 <Image2 src={two} className="img-responsive"/>
-                </Topic2>
+                </Topic2> */}
                 </div>
             </Main>
         )
@@ -45,7 +45,6 @@ const Main = glam.div({
     '& .heading': {
         textAlign: 'center',
         margin: 10,
-        // paddingTop: 10,
     },
     '& .container': {
         width: '85%',
