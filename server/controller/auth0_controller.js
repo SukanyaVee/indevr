@@ -20,9 +20,7 @@ user: (req, res) => {
             console.log('sec resp', users)
             if (users.length) {
                 req.session.user = users[0];
-                let {id, picture} = req.session.user;
-                console.log({ user: {id, picture} })
-                res.status(200).json({ user: {id, picture} });
+                res.status(200).send(req.session.user);
             } else {
                 req.app.get("db").create_user([
                     userData.user_id,

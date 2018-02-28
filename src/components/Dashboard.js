@@ -29,7 +29,6 @@ class Dashboard extends Component {
             showCreate: false,
             showProjects: false
         };
-        this.submitPost = this.submitPost.bind(this)
         this.deletePost = this.deletePost.bind(this)
     }
 
@@ -93,7 +92,8 @@ class Dashboard extends Component {
         })
     }
 
-    submitPost(content) {
+    submitPost(content, e) {
+        e.preventDefault()
         if (content!=='') {
             var date1 = new Date();
             axios.post('/indevr/posts', {user_Id: this.props.user.id, content:content}).then(resp=>{
@@ -243,7 +243,7 @@ class Dashboard extends Component {
                                 ></textarea>
                             <button
                                 className="btn btn-default pull-right"
-                                onClick={e=>{this.submitPost(this.state.postContent)}}
+                                onClick={e=> this.submitPost(this.state.postContent, e)}
                                 >Post</button>
                         </Form>
 

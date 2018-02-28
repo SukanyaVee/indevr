@@ -10,17 +10,17 @@ import axios from 'axios';
 
 class App extends Component {
 
-    // componentDidMount(){
-    //     if(!this.props.user){
-    //         this.checkSession()
-    //     }
-    // }
+    componentDidMount(){
+        if(!this.props.user){
+            this.checkSession()
+        }
+    }
 
-    // componentWillReceiveProps(nextProps){
-    //     if(nextProps.user && !this.props.user){
-    //         this.checkSession()
-    //     }
-    // }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.user && !this.props.user){
+            this.checkSession()
+        }
+    }
 
 
 
