@@ -189,13 +189,6 @@ app.get('/search/posts/:term', search.getPosts);
 app.get('/search/skills/:term', search.getSkills);
 
 
-
-const path = require('path')
-app.get('*', (req, res)=>{
-  res.sendFile(path.join(__dirname, '../build/index.html'));
-})
-
-
 // //----------------AUTH0----------------
 app.post('/login', auth_ctrl.user);
 
@@ -207,8 +200,14 @@ function checkLoggedIn(req, res, next) {
 };
 
 app.use(checkLoggedIn)
-app.get("/checkSession", auth_ctrl.sessionCheck);
+app.get('/checkSession', auth_ctrl.sessionCheck);
 app.get('/logout', auth_ctrl.logout);
+
+
+const path = require('path')
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+})
 
 
 //Shhh Listen...

@@ -65,7 +65,7 @@ const Topic = glam.section({
         height: '45%',
         marginTop: 30,
         flexDirection: 'column',
-        
+
     }
 })
 const Topic2 = glam.section({
@@ -79,7 +79,7 @@ const Topic2 = glam.section({
         height: '45%',
         marginTop: 30,
         flexDirection: 'column',
-        
+
     }
 })
 
@@ -139,7 +139,7 @@ const Desc2 = glam.span({
         width: '100%',
         marginTop: 20,
         textAlign: 'center',
-    //   '& .p': {  
+    //   '& .p': {
     //     fontSize: '12pt',
     //     marginTop: 50,
     //     marginLeft: 205,
@@ -165,17 +165,17 @@ const Image = glam.img({
         // marginBottom: 20,
     }
 })
-const Image2 = glam.img({
-    height: '99%',
-    width: '60%',
-    margin: '5px 10px',
-    border: '3px solid black',
-    '@media (max-width: 729px)':{
-        width: '75%',
-        maxHeight: '60%',
-        margin: '30px auto',
-        marginBottom: 0,
-    }
-})
+// const Image2 = glam.img({
+//     height: '99%',
+//     width: '60%',
+//     margin: '5px 10px',
+//     border: '3px solid black',
+//     '@media (max-width: 729px)':{
+//         width: '75%',
+//         maxHeight: '60%',
+//         margin: '30px auto',
+//         marginBottom: 0,
+//     }
+// })
 
 export default tasks;

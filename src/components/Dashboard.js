@@ -95,7 +95,7 @@ class Dashboard extends Component {
     submitPost(content, e) {
         e.preventDefault()
         if (content!=='') {
-            var date1 = new Date();
+            // var date1 = new Date();
             axios.post('/indevr/posts', {user_Id: this.props.user.id, content:content}).then(resp=>{
                 axios.get('/indevr/posts').then(res=>{
                     this.setState({posts: res.data, postContent: ''})

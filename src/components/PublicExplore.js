@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import glam from 'glamorous';
-import _ from 'lodash';
 import ProjectTile from './ProjectTile';
-import {connect} from 'react-redux';
 
 
 class PublicExplore extends Component {
@@ -18,7 +16,7 @@ class PublicExplore extends Component {
     componentDidMount(){
     axios.get(`/indevr/pubproj`).then(res=>{
         console.log(res.data)
-        
+
         this.setState({ publicProj: res.data })
     }).catch(error=>console.log(error))
     }

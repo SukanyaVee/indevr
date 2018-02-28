@@ -7,7 +7,6 @@ import TaskBoard from './components/Taskboard/Taskboard';
 import LandingPage from './components/LandingPage';
 import Profile from './components/Profile';
 import SearchPage from './components/SearchPage';
-import ExplorePage from './components/ExplorePage';
 import PublicExplore from './components/PublicExplore';
 import EditProfile from './components/EditProfile';
 import About from './components/About';
