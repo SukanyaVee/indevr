@@ -18,18 +18,17 @@ class tasks extends Component {
                 <h3 className='heading'><strong>Task Management</strong></h3>
                 <h1 className='heading'><i>Improve the way you focus</i></h1>
                 <Topic>
-                {/* <Desc><div className='p'><strong>Delegate and Celebrate,</strong>
-                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div></Desc> */}
                 <Image src={two} className="img-responsive"/>
                 </Topic>
                 <Topic2>
-                <Desc><div className='p'><strong>Delegate and Celebrate,</strong>
-                with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div>
+                <Desc>
+                    <div className='p'><strong>Delegate and Celebrate,</strong>
+                     with an in-house taskboard that allows the entire team to identify, from anywhere with an internet connection, who is working on what task at any point in the project.</div>
                 </Desc>
                 <Desc2>
                     <div className='p'>Also, the drag and drop feature facilitates easily assigning throughout the team. When project plans change, the taskboard is just the thing to help you <strong>handle the change with grace.</strong></div>
                 </Desc2>
-                {/* <Image2 src={two} className="img-responsive"/> */}
+
                 </Topic2>
                 </div>
             </Main>
@@ -139,21 +138,12 @@ const Desc2 = glam.span({
         width: '100%',
         marginTop: 20,
         textAlign: 'center',
-    //   '& .p': {
-    //     fontSize: '12pt',
-    //     marginTop: 50,
-    //     marginLeft: 205,
-    //     marginBottom: 50,
-    //     width: '100%',
-    //     textAlign: 'center'
-    //   }
     }
 })
 
 const Image = glam.img({
     height: '99%',
     width: '60%',
-    // float: 'right',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
@@ -161,8 +151,6 @@ const Image = glam.img({
         maxHeight: '60%',
         margin: '60px auto',
         marginBottom: 0,
-        // margin: '30px auto',
-        // marginBottom: 20,
     }
 })
 // const Image2 = glam.img({

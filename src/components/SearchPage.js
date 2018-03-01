@@ -21,7 +21,6 @@ class SearchPage extends Component {
       showPeople: true,
       showProjects: false,
       showPosts: false
-      //   showSkills: false
     };
     this.getSearch = this.getSearch.bind(this);
   }
@@ -45,7 +44,6 @@ class SearchPage extends Component {
   }
 
   getSearch() {
-    // console.log(this.props);
     let { term } = this.props;
     if (term === undefined) {
       term = this.props.location.pathname.substr(
@@ -79,6 +77,7 @@ class SearchPage extends Component {
       });
     });
     axios.get(`/search/posts/${term}`).then(response => {
+      console.log('res', response)
       this.setState({
         posts: response.data
       });
@@ -159,7 +158,7 @@ class SearchPage extends Component {
             <Posts>
               {this.state.posts.length ? (
                 this.state.posts.map((post, i) => {
-                  // console.log(post);
+                  console.log(post);
                   return (
                     <Link to={`/dev/${post.user_id}`}>
                       <PostTile

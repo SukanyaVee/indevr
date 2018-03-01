@@ -46,7 +46,6 @@ const Main = glam.div({
     '& .heading': {
         textAlign: 'center',
         margin: 10,
-        // paddingTop: 10,
     },
     '& .container': {
         width: '85%',
@@ -141,21 +140,12 @@ const Desc2 = glam.span({
         width: '100%',
         marginTop: 20,
         textAlign: 'center',
-    //   '& .p': {  
-    //     fontSize: '12pt',
-    //     marginTop: 50,
-    //     marginLeft: 205,
-    //     marginBottom: 50,
-    //     width: '100%',
-    //     textAlign: 'center'
-    //   }
     }
 })
 
 const Image = glam.img({
     height: '85%',
     width: '60%',
-    // float: 'right',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
@@ -163,8 +153,6 @@ const Image = glam.img({
         maxHeight: '60%',
         margin: '60px auto',
         marginBottom: 0,
-        // margin: '30px auto',
-        // marginBottom: 20,
     }
 })
 const Image2 = glam.img({
