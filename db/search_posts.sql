@@ -1,1 +1,1 @@
-SELECT * FROM posts WHERE LOWER(content) LIKE '%' || LOWER($1) || '%';
+SELECT * FROM posts JOIN users ON posts.user_id = users.id WHERE LOWER(content) LIKE '%' || LOWER($1) || '%';

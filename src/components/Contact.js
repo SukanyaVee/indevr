@@ -67,10 +67,6 @@ sendMail(e){
             button.innderHTML = 'Try Again'
         }
         }).catch(err => console.log(err))
-
-        // setTimeout(() => {
-        //     document.getElementById('form').reset();
-        // }, 100);
 }
 }
 
@@ -141,7 +137,6 @@ clearText(){
 const Main = glam.div({
     minHeight: '80vh',
     fontFamily: 'Lucida Grande',
-    // backgroundColor: 'var(--main-grey)',
     backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',

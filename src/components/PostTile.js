@@ -5,6 +5,10 @@ import {connect} from 'react-redux';
 
 class PostTile extends Component {
 
+    componentWillReceiveProps(nextProps){
+       return this.props = nextProps;
+    }
+    
     render(){
         return (
             <Main>

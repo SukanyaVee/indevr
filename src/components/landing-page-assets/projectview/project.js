@@ -46,7 +46,6 @@ const Main = glam.div({
     '& .heading': {
         textAlign: 'center',
         margin: 10,
-        // paddingTop: 10,
     },
     '& .container': {
         width: '85%',
@@ -149,7 +148,6 @@ const Desc2 = glam.span({
 const Image = glam.img({
     minHeight: '99%',
     minWidth: '60%',
-    // float: 'right',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
@@ -157,8 +155,6 @@ const Image = glam.img({
         maxHeight: '60%',
         margin: '60px auto',
         marginBottom: 0,
-        // margin: '30px auto',
-        // marginBottom: 20,
     }
 })
 const Image2 = glam.img({
