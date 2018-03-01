@@ -168,9 +168,9 @@ class  Overview extends Component  {
                                 name={contributor.first_name + ' ' + contributor.last_name}
                                 img={contributor.picture} />
                         </Link>
-                        {this.state.project.user_id===this.props.user.id && !this.state.contributor.owner &&
+                        {this.state.project.user_id===this.props.user.id && !contributor.owner &&
                         <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</Edit>}
-                        {contributor.id===this.props.user.id && !this.state.contributor.owner && 
+                        {contributor.id===this.props.user.id && !contributor.owner && 
                         <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</Edit>}
                     </div>)}
                 </ProjectCollaborators>
