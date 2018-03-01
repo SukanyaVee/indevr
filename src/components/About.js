@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
-// import { css } from 'glamor'
 
 class About extends Component {
     constructor(props) {
@@ -28,7 +27,6 @@ class About extends Component {
                 </div>
 
 
-            {/* <Bottom> */}
                     <SectionBig>
                 <Title2>Meet the Team</Title2>
                     <Section>
@@ -48,29 +46,19 @@ class About extends Component {
                         </Person>
                     </Section>
                 </SectionBig>
-                {/* </Bottom> */}
             </Main>
         )
     }
 }
 
-// const grow = css.keyframes({
-//     '0%': { transform: `scale(1.3)`},
-//     '100%': { transform: `scale(1.0)`}
-// })
 
 const Main = glam.div({
     minHeight: '100vh',
     width: '100vw',
-    // backgroundColor: 'var(--main-grey)',
     backgroundColor: 'var(--main-purple)',
     textAlign: 'center',
     marginTop: 0,
-    // color: 'var(--main-purple)'
     color: 'var(--main-grey)'
-    // '& .heading': {
-    //     marginTop: 0,
-    // }
 })
 
 const Title = glam.p({
@@ -80,7 +68,6 @@ const Title = glam.p({
     fontSize: '36pt',
     color: 'white',
     fontWeight: '700',
-    // borderBottom: 'solid var(--main-purple) 3px',
     borderBottom: 'solid white 3px',
     boxShadow: '0px 0px 0px 0px',
     width: 400,
@@ -94,9 +81,7 @@ const Title2 = glam.p({
     marginBottom: 20,
     paddingTop: 50,
     fontSize: '36pt',
-    // color: '#fff',
     fontWeight: '700',
-    // borderBottom: 'solid var() 3px',
     borderBottom: 'solid white 3px',
     boxShadow: '0px 0px 0px 0px',
     width: 400,
@@ -108,7 +93,6 @@ const Title2 = glam.p({
 
 const Description = glam.section({
     margin: 'auto',
-    // color: 'var(--main-purple)',
     color: 'white',
     fontSize: '14pt',
     width: '75%',
@@ -133,29 +117,20 @@ const Section = glam.section({
         boxShadow: '5px 5px 5px 0px black',
         '& .icon': {
             marginTop: -190,
-            // fontSize: '14pt'
         },
-        // backgroundColor: 'var(--main-purple)',
-        // backgroundColor: 'var(--main-grey)',
         '@media (max-width: 729px)': {
             height: 200,
             width: 200,
-            // marginLeft: 5,
         }
     },
     '@media (max-width: 729px)': {
         '& .icon': {
             marginTop: -85,
-            // fontSize: '14pt'
         }
     }
 })
 
 const Person = glam.div({
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'space-around',
-    // alignItems: 'center',
     margin: 50, 
     marginBottom: 20,
     '& .opacity': {
@@ -166,7 +141,6 @@ const Person = glam.div({
         width: 275,
         backgroundColor: 'rgba(255, 255, 255, .1)',
         borderRadius: '50%',
-        // padding: 50,
     },
     '.three': {
         marginBottom: 0,
