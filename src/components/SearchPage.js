@@ -184,23 +184,8 @@ class SearchPage extends Component {
   }
 }
 
-// const SkillTile = glam.div({
-//   color: "white",
-//   backgroundColor: "var(--main-purple)",
-//   padding: "3px 8px",
-//   borderRadius: 5,
-//   margin: 10,
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-//   "& h1": {
-//     margin: 0
-//   }
-// });
-
 const Main = glam.section({
   minHeight: "calc(100vh - 200px)",
-  border: "solid black 2px",
   backgroundColor: "var(--main-purple)",
   overflow: "contain",
   "& a": {
