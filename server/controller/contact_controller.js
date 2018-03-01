@@ -12,15 +12,15 @@ module.exports = {
         const db = req.app.get('db')
         const {userID, friendID} = req.query;
         db.get_contacts([req.query.user_id]).then(contacts=> {
-            db.get_contacts2([req.query.user_id]).then(altContacts => {
-                altContacts.forEach( c => {
-                    contacts.push(c)
-                });
-                res.status(200).send(contacts)
-            }).catch(error => {
-                console.error(error);
-                res.status(500).send(error)
-            })
+            // db.get_contacts2([req.query.user_id]).then(altContacts => {
+            //     altContacts.forEach( c => {
+            //         contacts.push(c)
+            //     });
+            // }).catch(error => {
+            //     console.error(error);
+            //     res.status(500).send(error)
+            // })
+            res.status(200).send(contacts)
         }).catch(error => {
             console.error(error);
             res.status(500).send(error)
@@ -30,6 +30,7 @@ module.exports = {
     connect: (req, res, next) => {
         const db = req.app.get('db')
         const {userID, connectWith} = req.body;
+        console.log(userID, connectWith)
         db.connect_with_user([userID, connectWith]).then(contacts => {
             res.status(200).send('Connected');
         }).catch(error=>{
