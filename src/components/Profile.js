@@ -20,7 +20,7 @@ class Profile extends Component {
             showPosts: true,
             showNetwork: false,
             showProjects: false,
-            id: props.history.location.pathname.slice(5),
+            id: '',
             user: '',
             picture: '',
             posts: [],
@@ -46,11 +46,16 @@ class Profile extends Component {
 
     componentDidMount(){
         this.getInfo();
-
+        if(this.props.user){
+            this.setState({id: this.props.user.id})
+        }
     }
 
     componentWillReceiveProps(nextProps){
         this.getInfo();
+        if(this.props.user){
+            this.setState({id: this.props.user.id})
+        }
     }
 
     deletePost(postId){
@@ -131,6 +136,7 @@ class Profile extends Component {
         axios.get(`/indevr/projects?user_id=${userID}`).then(res => {
             this.setState({projects: res.data})
         }).catch( err => console.log(err))
+
     }
 
     switchTab(tab){
@@ -145,13 +151,13 @@ class Profile extends Component {
     }
 
     connectWithUser(){
-        console.log('click');
         if(!this.state.connected){
             console.log('not connected');
             const newConnection = {
                 userID: this.state.id,
                 connectWith: this.props.history.location.pathname.slice(5)
             }
+            console.log(newConnection)
             axios.post('/indevr/contacts/connect', newConnection).then(res => {
                 console.log(res.data);
                 this.setState({ connected: true})

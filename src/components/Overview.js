@@ -13,7 +13,7 @@ class  Overview extends Component  {
         this.state={
             projectId: this.props.match.params.id,
             contributors: [],
-            project: [],
+            project: [{user_id: ''}],
             skills:[],
             editShow: false,
             showReqButton: [],
@@ -22,7 +22,7 @@ class  Overview extends Component  {
             newDescr: '',
             newRepo: '',
             newSkill: '',
-            newLevel: 1
+            newLevel: 1,
         }
     }
 
@@ -39,32 +39,34 @@ class  Overview extends Component  {
     }
 
     getInfo(userId){
-        axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
-            this.setState({project: res.data[0]})
-            console.log('single project', res.data[0])
-            this.setState({newDescr: this.state.project.description, newTitle: this.state.project.project_name, newRepo: this.state.project.repo})
-        }).catch(error=>console.log(error))
-        axios.get(`/indevr/skills/${this.state.projectId}`).then(res=>{
-            this.setState({skills: res.data})
-            // console.log('skill stack', this.state.skills)
-        }).catch(error=>console.log(error))
-        axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
-            this.setState({contributors: res.data})
-            var x=this.state.contributors.filter(e=>
-                e.id===userId
-            )
-            console.log(x)
-            this.setState({showReqButton: x})
-            console.log('showReqButton', this.state.showReqButton)
-            // console.log('contributors', this.state.contributors)
-        }).catch(error=>console.log(error))
-        axios.get(`/indevr/mesg?project_id=${this.state.projectId}&contributor_id=${userId}`).then(resp=> {
-            console.log('join status pending ', this.state.pending, resp.data)
-            if (resp.data[0]) {
-                this.setState({pending: true})
-                console.log('join status pending ', this.state.pending)
-            }
-        }).catch(error=>console.log(error))
+
+            axios.get(`/indevr/projects/${this.state.projectId}`).then(res=>{
+                this.setState({project: res.data[0]})
+                console.log('single project', res.data[0])
+                this.setState({newDescr: this.state.project.description, newTitle: this.state.project.project_name, newRepo: this.state.project.repo})
+            }).catch(error=>console.log(error))
+            axios.get(`/indevr/skills/${this.state.projectId}`).then(res=>{
+                this.setState({skills: res.data})
+                // console.log('skill stack', this.state.skills)
+            }).catch(error=>console.log(error))
+            axios.get(`/indevr/contributors?projectId=${this.state.projectId}`).then(res=>{
+                this.setState({contributors: res.data})
+                var x=this.state.contributors.filter(e=>
+                    e.id===userId
+                )
+                console.log(x)
+                this.setState({showReqButton: x})
+                console.log('showReqButton', this.state.showReqButton)
+                // console.log('contributors', this.state.contributors)
+            }).catch(error=>console.log(error))
+            axios.get(`/indevr/mesg?project_id=${this.state.projectId}&contributor_id=${userId}`).then(resp=> {
+                console.log('join status pending ', this.state.pending, resp.data)
+                if (resp.data[0]) {
+                    this.setState({pending: true})
+                    console.log('join status pending ', this.state.pending)
+                }
+            }).catch(error=>console.log(error))
+
     }
 
     removeContributor = (contributorId) => {
@@ -125,8 +127,8 @@ class  Overview extends Component  {
     render( ) {
         var inline={marginLeft:'5px', cursor:'pointer'}
         var inline2={fontSize: 16}
-        if(!this.props.user){
-            return 'Are you logged in?'
+        if(this.props && !this.props.user){
+            return <Loading><i className="fas fa-spinner fa-pulse fa-7x"></i></Loading>
         }
 
         return (
@@ -161,18 +163,22 @@ class  Overview extends Component  {
                 <hr></hr>
                 <h4>Contributors</h4>
                 <ProjectCollaborators>
-                    {this.state.contributors.map(contributor =>
-                    <div key={contributor.id}>
-                        <Link to={`/dev/${contributor.id}`}>
-                            <UserTile
-                                name={contributor.first_name + ' ' + contributor.last_name}
-                                img={contributor.picture} />
-                        </Link>
-                        {this.state.project.user_id===this.props.user.id && !contributor.owner &&
-                        <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>remove</Edit>}
-                        {contributor.id===this.props.user.id && !contributor.owner && 
-                        <Edit onClick={e=>{this.removeContributor(contributor.contributor_id)}}>leave</Edit>}
-                    </div>)}
+                    {this.state.contributors.map(con => {
+                        console.log(con);
+                    return (
+                        <div key={con.id}>
+                            <Link to={`/dev/${con.id}`}>
+                                <UserTile
+                                    name={con.first_name + ' ' + con.last_name}
+                                    img={con.picture} />
+                            </Link>
+                            {con.id !==this.props.user.id &&
+                            <Edit onClick={e=>{this.removeContributor(con.contributor_id)}}>remove</Edit>}
+                            {con.id===this.props.user.id &&
+                            <Edit onClick={e=>{this.removeContributor(con.contributor_id)}}>leave</Edit>}
+                        </div>)}
+                    )
+                    }
                 </ProjectCollaborators>
                 <hr></hr>
                 <h4>Skill Stack</h4>
@@ -340,9 +346,17 @@ const SkillsDisplay = glam.div({
     minWidth: 300,
     height: '100%',
     display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
     width: 'calc(100% - 25vw - 150px)'
+})
+
+const Loading = glam.div({
+    minHeight: 'calc(100vh - 230px)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
 })
 
 

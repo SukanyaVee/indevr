@@ -21,7 +21,6 @@ class SearchPage extends Component {
       showPeople: true,
       showProjects: false,
       showPosts: false
-      //   showSkills: false
     };
     this.getSearch = this.getSearch.bind(this);
   }
@@ -45,7 +44,6 @@ class SearchPage extends Component {
   }
 
   getSearch() {
-    // console.log(this.props);
     let { term } = this.props;
     if (term === undefined) {
       term = this.props.location.pathname.substr(
@@ -79,15 +77,11 @@ class SearchPage extends Component {
       });
     });
     axios.get(`/search/posts/${term}`).then(response => {
+      console.log('res', response)
       this.setState({
         posts: response.data
       });
     });
-    // axios.get(`/search/skills/${term}`).then(response => {
-    //   this.setState({
-    //     skills: response.data
-    //   })
-    // })
   }
 
   switchTab(tab) {
@@ -98,7 +92,6 @@ class SearchPage extends Component {
       showPeople: tab === "people" ? true : false,
       showProjects: tab === "projects" ? true : false,
       showPosts: tab === "posts" ? true : false
-      //   showSkills: tab === 'skills' ? true : false,
     });
   }
 
@@ -120,7 +113,6 @@ class SearchPage extends Component {
             <div id="posts" onClick={() => this.switchTab("posts")}>
               Posts
             </div>
-            {/* <div id="skills" onClick={() => this.switchTab('skills')}>Skills</div> */}
           </Nav>
 
           <ToggleDisplay show={this.state.showPeople}>
@@ -186,41 +178,14 @@ class SearchPage extends Component {
               )}
             </Posts>
           </ToggleDisplay>
-
-          {/* <ToggleDisplay show={this.state.showSkills}>
-                    <Skills>
-                        {this.state.skills.length ? this.state.skills.map((skill, i) => {
-                            return (
-                                <SkillTile key={i}>
-                                    <h1>{skill.skill}</h1>
-                                </SkillTile>
-                            )
-                        }) : <div> No skill results available </div>}
-                    </Skills>
-                </ToggleDisplay> */}
         </div>
       </Main>
     );
   }
 }
 
-const SkillTile = glam.div({
-  color: "white",
-  backgroundColor: "var(--main-purple)",
-  padding: "3px 8px",
-  borderRadius: 5,
-  margin: 10,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  "& h1": {
-    margin: 0
-  }
-});
-
 const Main = glam.section({
   minHeight: "calc(100vh - 200px)",
-  border: "solid black 2px",
   backgroundColor: "var(--main-purple)",
   overflow: "contain",
   "& a": {
@@ -281,9 +246,9 @@ const Posts = glam.div({
   }
 });
 
-const Skills = glam.div({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  flexWrap: "wrap"
-});
+// const Skills = glam.div({
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+//   flexWrap: "wrap"
+// });

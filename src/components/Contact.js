@@ -67,10 +67,6 @@ sendMail(e){
             button.innderHTML = 'Try Again'
         }
         }).catch(err => console.log(err))
-
-        // setTimeout(() => {
-        //     document.getElementById('form').reset();
-        // }, 100);
 }
 }
 
@@ -140,7 +136,8 @@ clearText(){
 
 const Main = glam.div({
     minHeight: '80vh',
-    backgroundColor: 'var(--main-grey)',
+    fontFamily: 'Lucida Grande',
+    backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -213,13 +210,18 @@ const Name = glam.input({
     width: '100%',
     height: '30%',
     boxShadow: '5px 5px 5px 0px',
+    color: 'var(--main-purple)',
+    fontWeight: 900,
+    fontSize: '14pt',
 })
 
 const Text = glam.textarea({
     width: '100%',
     minHeight: '300px',
     margin: 'auto',
-
+    color: 'var(--main-purple)',
+    fontWeight: 900,
+    fontSize: '16pt',
     boxShadow: '5px 5px 5px 0px',
     '@media (max-width: 729px)': {
         minHeight: 200,
@@ -238,8 +240,8 @@ const Buttons = glam.div({
 
 const Submit = glam.button({
     margin: 10,
-    padding: 5,
-    borderRadius: 3,
+    padding: 10,
+    borderRadius: 8,
 
 })
 export default Contact;

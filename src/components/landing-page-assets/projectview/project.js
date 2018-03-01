@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import glam from 'glamorous'
+import two from '../projectview/tools.gif'
+import one from '../projectview/search.gif'
 
 class Project extends Component {
     constructor(props) {
@@ -17,12 +19,12 @@ class Project extends Component {
                 <Topic>
                     <Desc><div className='p'><strong>Explore and find</strong>
                     projects that interest you. Any public project provides the chance to team up and contribute towards something beyond your current skillset. </div></Desc>
-                <Image src={''} className='img-responsive' />
+                <Image src={one} className='img-responsive' />
                 </Topic>
                 <Topic2>
-                    <Desc2><div className='p'><strong>Influence, mentor and learn</strong> as a developer by using the huge array of inDevr communication tools to improve your team and yourself. Using the Team chat or share a whiteboard session with a teammate to unify your vision{" "}
+                    <Desc2><div className='p'><strong>Need to have morning stand-up flexability?</strong>Influence, mentor and learn as a developer by using the huge array of inDevr communication tools to help your team move forward. Try the team chat or a whiteboard session with a teammate to see how.{" "}
                     </div></Desc2>
-                <Image2 src={''} className='img-responsive' />
+                <Image2 src={two} className='img-responsive' />
                 </Topic2>
                 </div>
             </Main>
@@ -33,7 +35,7 @@ class Project extends Component {
 
 const Main = glam.div({
     minHeight: '100vh',
-    color: 'var(--main-purple)',
+    color: 'white',
     backgroundColor: 'var(--main-black)',
     fontFamily: 'Helvetica Neue',
     display: 'flex',
@@ -44,7 +46,6 @@ const Main = glam.div({
     '& .heading': {
         textAlign: 'center',
         margin: 10,
-        // paddingTop: 10,
     },
     '& .container': {
         width: '85%',
@@ -58,6 +59,7 @@ const Topic = glam.section({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -72,6 +74,7 @@ const Topic2 = glam.section({
     flexDirection: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -143,9 +146,8 @@ const Desc2 = glam.span({
 })
 
 const Image = glam.img({
-    height: '99%',
-    width: '60%',
-    // float: 'right',
+    minHeight: '99%',
+    minWidth: '60%',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
@@ -153,8 +155,6 @@ const Image = glam.img({
         maxHeight: '60%',
         margin: '60px auto',
         marginBottom: 0,
-        // margin: '30px auto',
-        // marginBottom: 20,
     }
 })
 const Image2 = glam.img({

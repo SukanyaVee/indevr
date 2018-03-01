@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:3000/indevr/users/1",
+			"name": "http://localhost:3483/indevr/users/1",
 			"event": [
 				{
 					"listen": "test",
@@ -39,12 +39,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:3000/indevr/users/1",
+					"raw": "http://localhost:3483/indevr/users/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3483",
 					"path": [
 						"indevr",
 						"users",
@@ -56,7 +56,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:3000/indevr/taskboard/1",
+			"name": "http://localhost:3483/indevr/taskboard/1",
 			"event": [
 				{
 					"listen": "test",
@@ -92,12 +92,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:3000/indevr/taskboard/1",
+					"raw": "http://localhost:3483/indevr/taskboard/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3483",
 					"path": [
 						"indevr",
 						"taskboard",

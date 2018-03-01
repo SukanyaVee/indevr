@@ -27,7 +27,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 24 * 60 * 60 * 1000 } //24 hours
 }));
-app.use(express.static(`${__dirname}/../build`));
+app.use( express.static( `${__dirname}/../build` ) );
 
 
 // AWS declare
@@ -142,7 +142,7 @@ const projAPIurl = '/indevr/projects';
 
 app.get(projAPIurl, proj.getUserProj); //uses query to fetch user's projects
 app.get(`/indevr/public`, proj.getPublicProj); //uses query to fetch public cprojects that don't belong to user
-app.get(`/indevr/pubproj`, proj.getPubProj); 
+app.get(`/indevr/pubproj`, proj.getPubProj);
 app.get(`${projAPIurl}/:id`, proj.getSingle); //uses params
 app.post(projAPIurl, proj.createProj); //uses body
 app.put(projAPIurl, proj.updateProj); //uses body
@@ -200,8 +200,14 @@ function checkLoggedIn(req, res, next) {
 };
 
 app.use(checkLoggedIn)
-app.get("/checkSession", auth_ctrl.sessionCheck);
+app.get('/checkSession', auth_ctrl.sessionCheck);
 app.get('/logout', auth_ctrl.logout);
+
+
+const path = require('path')
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+})
 
 
 //Shhh Listen...

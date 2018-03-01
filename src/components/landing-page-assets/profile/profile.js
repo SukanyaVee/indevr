@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import one from './Screen Shot 2018-02-16 at 10.41.49 AM.png'
+import one from './profile.png'
 import glam from 'glamorous'
+import profile1 from './profile.gif'
+
 
 class profile extends Component {
     constructor() {
@@ -23,7 +25,7 @@ class profile extends Component {
                 <Desc2>
                     <div className='p'>Customize and personalize your profile page with information to grow your brand, influence the industry and display your skills. With a multitude of partnering sites, inDevr can help you <strong>take the next step in your development career.</strong></div>
                 </Desc2>
-                <Image2 src={one} className="img-responsive"/>
+                <Image2 src={profile1} className="img-responsive"/>
                 </Topic2>
                 </div>
             </Main>
@@ -44,7 +46,6 @@ const Main = glam.div({
     '& .heading': {
         textAlign: 'center',
         margin: 10,
-        // paddingTop: 10,
     },
     '& .container': {
         width: '85%',
@@ -58,6 +59,7 @@ const Topic = glam.section({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -72,6 +74,7 @@ const Topic2 = glam.section({
     flexDirection: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 65,
     '@media (max-width: 729px)':{
         height: '45%',
         marginTop: 30,
@@ -137,21 +140,12 @@ const Desc2 = glam.span({
         width: '100%',
         marginTop: 20,
         textAlign: 'center',
-    //   '& .p': {  
-    //     fontSize: '12pt',
-    //     marginTop: 50,
-    //     marginLeft: 205,
-    //     marginBottom: 50,
-    //     width: '100%',
-    //     textAlign: 'center'
-    //   }
     }
 })
 
 const Image = glam.img({
-    height: '99%',
+    height: '85%',
     width: '60%',
-    // float: 'right',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
@@ -159,13 +153,11 @@ const Image = glam.img({
         maxHeight: '60%',
         margin: '60px auto',
         marginBottom: 0,
-        // margin: '30px auto',
-        // marginBottom: 20,
     }
 })
 const Image2 = glam.img({
-    height: '99%',
-    width: '60%',
+    minHeight: '85%',
+    minWidth: '65%',
     margin: '5px 10px',
     border: '3px solid black',
     '@media (max-width: 729px)':{
